@@ -1,0 +1,159 @@
+/*
+Description:  Designed by shahi010ster@gmail.com.
+Author:  Padam Raj Shahi
+Purchase:  http://www.23e2.com
+*/
+
+/*-----------------------------------------------------------------------------------*/
+/*  01: GENERAL STYLING
+/*-----------------------------------------------------------------------------------*/ 
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Medium.eot');
+    src: url('../fonts/Raleway-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Medium.woff') format('woff'),
+        url('../fonts/Raleway-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Black.eot');
+    src: url('../fonts/Raleway-Black.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Black.woff') format('woff'),
+        url('../fonts/Raleway-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url('../fonts/CenturyGothic-Bold.eot');
+    src: url('../fonts/CenturyGothic-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/CenturyGothic-Bold.woff') format('woff'),
+        url('../fonts/CenturyGothic-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url('../fonts/CenturyGothic-BoldItalic.eot');
+    src: url('../fonts/CenturyGothic-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/CenturyGothic-BoldItalic.woff') format('woff'),
+        url('../fonts/CenturyGothic-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url('../fonts/CenturyGothic-Italic.eot');
+    src: url('../fonts/CenturyGothic-Italic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/CenturyGothic-Italic.woff') format('woff'),
+        url('../fonts/CenturyGothic-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Bold.eot');
+    src: url('../fonts/Raleway-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Bold.woff') format('woff'),
+        url('../fonts/Raleway-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Light.eot');
+    src: url('../fonts/Raleway-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Light.woff') format('woff'),
+        url('../fonts/Raleway-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Regular.eot');
+    src: url('../fonts/Raleway-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Regular.woff') format('woff'),
+        url('../fonts/Raleway-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Thin.eot');
+    src: url('../fonts/Raleway-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-Thin.woff') format('woff'),
+        url('../fonts/Raleway-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-SemiBold.eot');
+    src: url('../fonts/Raleway-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-SemiBold.woff') format('woff'),
+        url('../fonts/Raleway-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url('../fonts/CenturyGothic.eot');
+    src: url('../fonts/CenturyGothic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/CenturyGothic.woff') format('woff'),
+        url('../fonts/CenturyGothic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-ExtraLight.eot');
+    src: url('../fonts/Raleway-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Raleway-ExtraLight.woff') format('woff'),
+        url('../fonts/Raleway-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+/***********************CSS Start*************************/
+body{
+    font-family: 'Century Gothic';
+    background: white;
+    color: #575757;
+    font-size: 18px;
+}
+h1,h2,h3{ font-family: 'Raleway';}
+.positionRelative{ position: relative;}
+.header{ background: #cc0347; text-align: center;}
+.logo { margin: 40px 0 0;}
+.logo img{ margin: 0 auto; display: block;}
+.introTxt{ color: #3d0010; font-size: 18px; font-weight: 600;}
+.formHolder{ margin: 20px 0;}
+.input-group{  display: inline-block;}
+.input-group input{ border-radius: 5px !important;}
+.checkbox{ display: inline-block; margin-top: 0px;  color: white; font-size: 18px; font-weight: 600;}
+.checkbox label{ padding: 0 20px;}
+.checkbox input[type=checkbox]{position: relative; vertical-align: middle; bottom: 3px; margin-right: 5px;}
+.joinUs{
+    background: url(../images/night-1080547_1920.jpg) top center ;
+    z-index: 1!important;
+    width: 100%;
+    height: 600px;
+    display: block;
+    -webkit-background-size: cover !important ;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
+  }
+.joinUs .btn{ display: block;  margin: 0 auto; padding: 0 40px; line-height: 40px; font-size: 40px; color: #bc0033; font-weight: 600; text-transform: uppercase;}
