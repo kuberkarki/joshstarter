@@ -41,15 +41,15 @@
         </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                @include('admin.layouts._messages')
-                @include('admin.layouts._notifications')
+              <?php /*  @include('admin.layouts._messages')
+                @include('admin.layouts._notifications') */?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         @if(Sentinel::getUser()->pic)
                             <img src="{!! url('/').'/uploads/users/'.Sentinel::getUser()->pic !!}" alt="img"
                                  class="img-circle img-responsive pull-left" height="35px" width="35px"/>
                         @else
-                            <img src="{!! asset('assets/img/authors/avatar3.jpg') !!} " width="35"
+                            <img src="{!! asset('assets/img/authors/avatar2.jpg') !!} " width="35"
                                  class="img-circle img-responsive pull-left" height="35" alt="riot">
                         @endif
                         <div class="riot">
@@ -113,7 +113,7 @@
     <aside class="left-side sidebar-offcanvas">
         <section class="sidebar ">
             <div class="page-sidebar  sidebar-nav">
-                <div class="nav_icons">
+                <!-- <div class="nav_icons">
                     <ul class="sidebar_threeicons">
                         <li>
                             <a href="{{ URL::to('admin/form_builder') }}">
@@ -140,7 +140,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <div class="clearfix"></div>
                 <!-- BEGIN SIDEBAR MENU -->
                 @include('admin.layouts._left_menu')

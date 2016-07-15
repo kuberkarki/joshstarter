@@ -173,7 +173,8 @@ Route::group(['middleware' => 'web'], function () {
 
 #frontend views
     Route::get('/', array('as' => 'home', function () {
-        return View::make('index');
+        //return View::make('index');
+        return View::make('welcome');
     }));
 
     Route::get('blog', array('as' => 'blog', 'uses' => 'BlogController@getIndexFrontend'));
