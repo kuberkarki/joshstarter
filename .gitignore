@@ -7,3 +7,6 @@ Homestead.json
 composer.lock
 .idea/
 _ide_helper.php
+.DS_Store
+composer.phar
+
