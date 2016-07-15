@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | Josh Admin Template
+            | Event Day Planner Admin
         @show
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -68,7 +68,7 @@
                                 <img src="{!! url('/').'/uploads/users/'.Sentinel::getUser()->pic !!}" alt="img"
                                      class="img-circle img-bor"/>
                             @else
-                                <img src="{!! asset('assets/img/authors/avatar3.jpg') !!}"
+                                <img src="{!! asset('assets/img/authors/avatar2.jpg') !!}"
                                      class="img-responsive img-circle" alt="User Image">
                             @endif
                             <p class="topprofiletext">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }}</p>
