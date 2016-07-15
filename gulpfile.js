@@ -24,8 +24,8 @@ gulp.task('delete', function()
  |--------------------------------------------------------------------------
  | Elixir Asset Management
  |--------------------------------------------------------------------------
- */
-config.publicPath = 'public/assets';
+*/
+var publicPath = 'public/assets';
 var vendors = 'resources/assets/vendors/';
 var resourcesAssets = 'resources/assets/';
 var srcCss = resourcesAssets + 'css/';
