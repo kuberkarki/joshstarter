@@ -18,6 +18,8 @@ use Reminder;
 use Sentinel;
 use URL;
 use View;
+use Newsletter;
+
 
 
 class FrontEndController extends JoshController
@@ -28,6 +30,10 @@ class FrontEndController extends JoshController
      * and set to true makes user activated while creation
      */
     private $user_activation = true;
+
+    public function index(){
+        return View::make('welcome');
+    }
 
     /**
      * Account sign in.
@@ -356,23 +362,168 @@ class FrontEndController extends JoshController
     public function postContact(Request $request)
     {
 
+        $subscribes=$request->get('subscribe');
+        $subscribed='';
+        if(count($subscribes))
+        foreach($subscribes as $s){
+            $subscribed =$s;
+        }
+
+        //echo $subscribed;exit;
+        
+
         // Data to be used on the email view
         $data = array(
             'contact-name' => $request->get('contact-name'),
             'contact-email' => $request->get('contact-email'),
-            'contact-msg' => $request->get('contact-msg'),
+            'contact-msg' => $subscribed,
         );
+
+        if(($data['contact-name']=='') || ($data['contact-email']=='')){
+            
+             return redirect()->route("home")->with('error','Please fill the form!!');
+
+         }
+
+         Newsletter::subscribe($data['contact-email'], ['FNAME'=>$data['contact-name'], 'MMERGE3'=>$subscribed]);
 
         // Send the activation code through email
         Mail::send('emails.contact', compact('data'), function ($m) use ($data) {
             $m->from($data['contact-email'], $data['contact-name']);
-            $m->to('email@domain.com', @trans('general.site_name'));
+            $m->to('karki.kuber@gmail.com', 'Event Day Planner');
             $m->subject('Received a mail from ' . $data['contact-name']);
 
         });
 
         //Redirect to contact page
-        return Redirect::to("contact")->with('success', Lang::get('auth/message.contact.success'));
+        return Redirect::to("/")->with('success','Thankyou!!');
+    }
+
+    /**
+     * Carrer form processing.
+     * @param Request $request
+     * @return Redirect
+     */
+    public function postCareer(Request $request)
+    {
+
+        
+        
+
+        // Data to be used on the email view
+        $data = array(
+            'name' => $request->get('name'),
+            'expertised' => $request->get('expertised'),
+            'email' => $request->get('email'),
+            'location' => $request->get('location'),
+            'message' => $request->get('message'),
+            );
+
+        if(($data['name']=='') || ($data['location']=='') || ($data['email']=='') || ($data['expertised']=='')){
+            
+             return redirect()->route("home")->with('error','Please fill the form!!');
+
+         }
+
+        // Newsletter::subscribe($data['contact-email'], ['FNAME'=>$data['contact-name'], 'MMERGE3'=>$subscribed]);
+
+        // Send the activation code through email
+        Mail::send('emails.career', compact('data'), function ($m) use ($data) {
+            $m->from('info@eventdayplanner.com', "Event Day Planner");
+            $m->to('info@eventdayplanner.comm', 'Eventdayplanner');
+            $m->cc('karki.kuber@gmail.com', 'Eventdayplanner');
+            $m->subject('Carrer contact mail from Eventdayplanner');
+
+        });
+
+        //Redirect to contact page
+        return Redirect::to("/")->with('success','Thankyou!!');
+    }
+
+    /**
+     * Investor form processing.
+     * @param Request $request
+     * @return Redirect
+     */
+    public function postInvestor(Request $request)
+    {
+
+
+
+        
+        
+
+        // Data to be used on the email view
+        $data = array(
+            'name' => $request->get('name'),
+            'company' => $request->get('company'),
+            'email' => $request->get('email'),
+            //'location' => $request->get('location'),
+            'message' => $request->get('message'),
+            );
+
+       
+
+        if(($data['name']=='') || ($data['email']=='') || ($data['company']=='')){
+            
+             return redirect()->route("home")->with('error','Please fill the form!!');
+
+         }
+
+        // Newsletter::subscribe($data['contact-email'], ['FNAME'=>$data['contact-name'], 'MMERGE3'=>$subscribed]);
+
+        // Send the activation code through email
+        Mail::send('emails.investor', compact('data'), function ($m) use ($data) {
+            $m->from('info@eventdayplanner.com', "Event Day Planner");
+            $m->to('info@eventdayplanner.com', 'Eventdayplanner');
+            $m->cc('karki.kuber@gmail.com', 'Eventdayplanner');
+            $m->subject('Inversor contact mail from Eventdayplanner');
+
+        });
+
+        //Redirect to contact page
+        return Redirect::to("/")->with('success','Thankyou!!');
+    }
+
+    /**
+     * Partner form processing.
+     * @param Request $request
+     * @return Redirect
+     */
+    public function postPartner(Request $request)
+    {
+
+        
+        
+
+        // Data to be used on the email view
+        $data = array(
+            'name' => $request->get('name'),
+            'company' => $request->get('company'),
+            'email' => $request->get('email'),
+            //'location' => $request->get('location'),
+            'message' => $request->get('message'),
+            );
+
+        if(($data['name']=='') || ($data['email']=='') || ($data['company']=='')){
+            
+             return redirect()->route("home")->with('error','Please fill the form!!');
+
+         }
+
+        // Newsletter::subscribe($data['contact-email'], ['FNAME'=>$data['contact-name'], 'MMERGE3'=>$subscribed]);
+
+        // Send the activation code through email
+        Mail::send('emails.partner', compact('data'), function ($m) use ($data) {
+            $m->from('info@eventdayplanner.com', "Event Day Planner");
+            $m->to('info@eventdayplanner.com', 'Eventdayplanner');
+            $m->cc('karki.kuber@gmail.com', 'Eventdayplanner');
+            $m->subject('Partner contact mail from Eventdayplanner');
+
+        });
+
+        //Redirect to contact page
+        return Redirect::to("/")->with('success','Thankyou!!');
     }
 
     /**
@@ -388,6 +539,7 @@ class FrontEndController extends JoshController
         // Redirect to the users page
         return Redirect::to('login')->with('success', 'You have successfully logged out!');
     }
+
 
 
 }

@@ -149,11 +149,23 @@ h1,h2,h3{ font-family: 'Raleway';}
     background: url(../images/night-1080547_1920.jpg) top center ;
     z-index: 1!important;
     width: 100%;
-    height: 600px;
+    height: 1060px;
     display: block;
     -webkit-background-size: cover !important ;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
     background-size: cover !important;
+    position: relative;
   }
-.joinUs .btn{ display: block;  margin: 0 auto; padding: 0 40px; line-height: 40px; font-size: 40px; color: #bc0033; font-weight: 600; text-transform: uppercase;}
+.joinUs .btn{ display: block;  margin: 40px auto; padding: 0 40px; line-height: 60px; font-size: 40px; color: #bc0033; font-weight: 600; text-transform: uppercase;}
+@media screen and (max-width: 767px){
+    .joinUs .btn{ padding: 0 20px; font-size: 30px; line-height: 40px;}
+}
+.social{}
+.social ul{ list-style: none; text-align: center; padding-left: 0;}
+.social li{ display: inline-block; border-radius:50px; height: 60px; width: 60px; text-align: center; border: 2px solid #fff; margin: 0 5px;}
+.social li .fa{ font-size: 30px; color: white; padding-top: 13px;}
+.footer{ bottom: 20px; text-align: center; color: white; position: absolute; width: 100%;}
+.footer a{ color: white; cursor: pointer;}
+.footer a:hover{ text-decoration: none;}
+.modal-footer .btn-primary{ background: #cc0347 !important; border: 1px solid #a90c41;}

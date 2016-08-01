@@ -170,6 +170,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('logout', array('as' => 'logout', 'uses' => 'FrontEndController@getLogout'));
 # contact form
     Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@postContact'));
+    Route::post('partner', array('as' => 'partner', 'uses' => 'FrontEndController@postPartner'));
+    Route::post('investor', array('as' => 'investor', 'uses' => 'FrontEndController@postInvestor'));
+    Route::post('career', array('as' => 'career', 'uses' => 'FrontEndController@postcareer'));
 
 #frontend views
     Route::get('/', array('as' => 'home', function () {
