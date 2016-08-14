@@ -175,10 +175,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('career', array('as' => 'career', 'uses' => 'FrontEndController@postcareer'));
 
 #frontend views
-    Route::get('/', array('as' => 'home', function () {
+   /* Route::get('/', array('as' => 'home', function () {
         //return View::make('index');
-        return View::make('welcome');
-    }));
+        return View::make('index');
+    }));*/
+
+    Route::get('/',array('as'=>'home','uses'=>'FrontEndController@home'));
 
     Route::get('blog', array('as' => 'blog', 'uses' => 'BlogController@getIndexFrontend'));
     Route::get('blog/{slug}/tag', 'BlogController@getBlogTagFrontend');

@@ -19,6 +19,8 @@ use Sentinel;
 use URL;
 use View;
 use Newsletter;
+use App\Event;
+use Carbon\Carbon ;
 
 
 
@@ -33,6 +35,11 @@ class FrontEndController extends JoshController
 
     public function index(){
         return View::make('welcome');
+    }
+
+    public function home(){
+        $events=Event::All();
+        return View::make('index')->with('events',$events);
     }
 
     /**

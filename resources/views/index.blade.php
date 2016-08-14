@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends('layouts/eventday')
 
 {{-- Page title --}}
 @section('title')
@@ -6,8 +6,387 @@ Home
 @parent
 @stop
 
-{{-- page level styles --}}
 @section('header_styles')
+@stop
+
+@section('top')
+<section class="bannerWrapper">
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+    <div class="adsBanner">
+      <div class="adsBannerTop"><img src="{{ asset('assets/images/eventday/ads1.jpg')}}" class="img-responsive"></div>
+      <div class="adsBannerBtm">
+      <div class="row">
+        <div class="col-sm-4"><img src="{{ asset('assets/images/eventday/ads2.jpg')}}" class="img-responsive"></div>
+        <div class="col-sm-4"><img src="{{ asset('assets/images/eventday/ads3.jpg')}}" class="img-responsive"></div>
+        <div class="col-sm-4"><img src="{{ asset('assets/images/eventday/ads4.jpg')}}" class="img-responsive"></div>
+      </div>
+      </div>
+    </div>
+      <div class="navHighlight">
+        <ul>
+          <li><a href="#">Venue</a></li>
+          <li><a href="#">Sound System</a></li>
+          <li><a href="#">Decoration</a></li>
+          <li><a href="#">Catering</a></li>
+          <li><a href="#">Photographer</a></li>
+          <li><a href="#">Videographer</a></li>
+          <li><a href="#">More <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>
+  <div class="searchWrap">
+    <div class="container">
+        <h1>What are you looking for</h1>
+
+           <div class="col-sm-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-12 five-three">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    
+                   <label><input type="checkbox" /> Business Search</label>
+                   <label><input type="checkbox" /> Events Search</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Enter Your keyword" aria-describedby="basic-addon1">
+                    </div>
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                    </div>
+                    </div><!-- end inner row -->
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 five-two">
+                  <div class="row">
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                      <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                      <button type="button" class="btn btn-secondary searchBtn">Search</button>
+                      <a href="#" class="advSearch"> Advance Search </a>
+                    </div>
+                  </div><!-- end inner row -->
+                </div>
+              </div><!-- end outer row -->
+              </div>
+               </div>
+    </div>
+  </div>
+</section>
+@stop
+
+@section('content')
+<section class="mainContainer">
+<div class="contantWrapper">
+    <div class="container">
+      <div class="row">
+        <h2><span>Welcome to EventdayPlanner</span></h2>
+        <div class="welcomeTxt">If you are looking for live wedding music at your ceremony, or to find a performer who will amaze the guests at your drinks reception, you are in the right place! Warble Entertainment provides musicians, such as string quartets and harpists who are perfect to create a romantic ambience, and unique and fun wedding entertainment ideas with magicians, caricaturists and more!</div>
+      </div>
+      <div class="searchContent">
+      <div class="row">
+      <div class="filterSearch">
+        <div class="col-sm-9">
+        <h3>Upcomming events near you</h3></div>
+        <div class="col-sm-3">
+        <div class="fliterR">
+        <div class="filter"> Filter by </div>
+        <select id="price" class="form-control">
+                    <option>Price</option>
+                    <option>1500</option>
+                    <option>2000</option>
+        </select>
+        </div>
+        </div>
+      </div>
+      </div>
+      <div class="row">
+        <div class="boxContent">
+    @foreach($events as $event)
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+            
+                <img class="img-responsive img-hover" src="uploads/crudfiles/{!! $event->photo !!}" alt="">
+            
+            </div>
+             <div class="panel-body">
+              <h3>{!! $event->name !!}</h3>
+              <!-- <div class="date">Date 25th June2016</div> -->
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> 
+              
+              {!! date('D, M d, g a ',strtotime($event->date)) !!}
+              <!-- Fri, May 6, 10pm --></div>
+                  <p>{!! $event->highlight !!}</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+    @endforeach
+
+
+      <!-- <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
+                        </div>
+                        <div class="panel-body">
+              <h3>Everest base camp Trek</h3>
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
+                        </div>
+                        <div class="panel-body">
+              <h3>Everest base camp Trek</h3>
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
+                        </div>
+                        <div class="panel-body">
+              <h3>Everest base camp Trek</h3>
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
+                        </div>
+                        <div class="panel-body">
+              <h3>Everest base camp Trek</h3>
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-image">
+                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
+                        </div>
+                        <div class="panel-body">
+              <h3>Everest base camp Trek</h3>
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+              <div class="property-meta">
+              <ul>
+                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+      </div> -->
+          <!-- <div class="col-sm-8">
+            <div class="box1 clearfix">
+              <div class="imgContent"><img src="{{ asset('assets/images/eventday/post1.jpg')}}" class="img-responsive"></div>
+              <div class="txtContent">
+              <div class="date">Date 25th June2016</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                  tempor incididunt ut labore et dolore</p>
+                  <div class="buttmLink">
+                    <div class="moreInfo">More Info</div>
+                    <div class="bookTickets">Book Tickets</div>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      </div>
+      <div class="newSetion">
+        <div class="row">
+          <div class="col-sm-4">
+          <h3>latest News</h3>
+          <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+
+                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+
+                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+
+                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+
+                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+
+                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
+          <span> 10 May  1:10 am</span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          </a></p>
+          </div>
+          <div class="col-sm-4">
+            <h3>Popular Events in London, UK</h3>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          </div>
+          
+          <div class="col-sm-4">
+            <h3>Events Around the World</h3>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+          </a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+<section class="contantWrapper testimonial">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-3"><span class="borderBtm"></span></div>
+      <div class="col-xs-6">
+        <h2 class="noBorder"><span>What People Think</span></h2>
+      </div>
+      <div class="col-xs-3"><span class="borderBtm"></span></div>
+    </div>
+    <div class="row"> 
+      
+      <!-- <h2 class="padT6px"><span class="testiBG">What People Think</span></h2> -->
+      
+      <div class="col-sm-2">
+        <p><i class="fa fa-quote-left" aria-hidden="true"></i></p>
+      </div>
+      <div class="col-sm-8">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<span><strong>Magda Guzman</strong><br>
+          Business owner<br>
+          Hacienda Las Americas</span></p>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+</section>
+@stop
+
+@section('footer_scripts')
+@stop
+
+
+
+{{-- page level styles --}}
+@section('header_styles_comingsoon')
     <!--page level css starts-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/tabbular.css') }}">
 <link href="{{ asset('assets/vendors/animate/animate.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -18,7 +397,7 @@ Home
 @stop
 
 {{-- slider --}}
-@section('top')
+@section('top_comingsoon')
     <!--Carousel Start -->
     <div id="owl-demo" class="owl-carousel owl-theme">
         <div class="item"><img src="{{ asset('assets/images/slide_1.jpg') }}" alt="slider-image">
@@ -32,7 +411,7 @@ Home
 @stop
 
 {{-- content --}}
-@section('content')
+@section('content_comingsoon')
     <div class="container">
         <section class="purchas-main">
             <div class="container bg-border wow pulse" data-wow-duration="2.5s">
@@ -571,7 +950,7 @@ Home
 @stop
 
 {{-- footer scripts --}}
-@section('footer_scripts')
+@section('footer_scripts_comingsoon')
     <!-- page level js starts-->
     <script type="text/javascript" src="{{ asset('assets/js/frontend/jquery.circliful.js') }}"></script>
     <script src="{{ asset('assets/vendors/wow/js/wow.min.js') }}" type="text/javascript"></script>
