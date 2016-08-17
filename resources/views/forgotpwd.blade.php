@@ -26,7 +26,7 @@ Login
     </div>
   </div>
 </section>
-<div class="container">
+<div class="container textsmall">
     <div class="row">
         <div class="box animation flipInX">
             <div class="box1">

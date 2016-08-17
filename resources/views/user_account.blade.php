@@ -28,7 +28,7 @@
     </div>
   </div>
 </section>
-    <div class="container">
+    <div class="container textsmall">
         
         <div class="row">
             <div class="row">
