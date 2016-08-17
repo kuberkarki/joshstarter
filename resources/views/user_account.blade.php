@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.eventday')
 
 {{-- Page title --}}
 @section('title')
@@ -20,10 +20,16 @@
 
 {{-- Page content --}}
 @section('content')
+<section class="bannerWrapper innerBanner">
+  <div class="searchWrap">
     <div class="container">
-        <div class="welcome">
-            <h3>My Account</h3>
-        </div>
+        <h1>My Account</h1>
+           
+    </div>
+  </div>
+</section>
+    <div class="container">
+        
         <div class="row">
             <div class="row">
                 <div class="col-md-12">
@@ -253,8 +259,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-lg-offset-2 col-lg-10">
-                                    <button class="btn btn-primary" type="submit">Save</button>
+                                <div class="col-lg-offset-2 col-lg-4">
+                                    <button class="btn btn-default" type="submit">Save</button>
                                 </div>
                             </div>
 

@@ -58,8 +58,15 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
+                        @if(Sentinel::guest())
                           <li><a href="{{ url('register')}}">Sign Up</a></li>
                           <li><a href="{{ url('login')}}">Login </a></li>
+                       @else
+                            <li {{ (Request::is('my-account') ? 'class=active' : '') }}><a href="{{ URL::to('my-account') }}">My Account</a>
+                            </li>
+                            <li><a href="{{ URL::to('logout') }}">Logout</a>
+                            </li>
+                        @endif
                           <li><a href="#">Country</a></li>
                           <li><a href="#">Currency</a></li>
                   </ul>
