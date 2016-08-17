@@ -22,7 +22,9 @@ class NewsController extends JoshController
     public function __construct()
     {
         parent::__construct();
-        $this->tags = array();//News::tagArray();
+        $news=new News();
+        
+        $this->tags = $news->tagArray;
     }
 
     /**
@@ -133,7 +135,7 @@ class NewsController extends JoshController
             $request->file('image')->move($destinationPath, $picture);
         }
 
-        //$news->tag($request->tags);
+        $news->tag($request->tags);
 
         if ($news->id) {
             return redirect('admin/news')->with('success', trans('news/message.success.create'));
@@ -188,7 +190,7 @@ class NewsController extends JoshController
             $destinationPath = public_path() . $folderName;
             $request->file('image')->move($destinationPath, $picture);
         }
-        //$news->retag($request['tags']);
+        $news->retag($request['tags']);
 
         if ($news->update($request->except('image', '_method', 'tags'))) {
             return redirect('admin/news')->with('success', trans('news/message.success.update'));

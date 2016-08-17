@@ -4,14 +4,16 @@ namespace App;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Cviebrock\EloquentTaggable\Contracts\Taggable;
-use Cviebrock\EloquentTaggable\Traits\Taggable as TaggableImpl;
+//use Cviebrock\EloquentTaggable\Contracts\Taggable;
+use Cviebrock\EloquentTaggable\Taggable;
+//use Cviebrock\EloquentTaggable\Traits\Taggable as TaggableImpl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class News extends Model  {
 
     use SoftDeletes;
+    use Taggable;
     /*use SluggableTrait;
     use TaggableImpl;*/
 
