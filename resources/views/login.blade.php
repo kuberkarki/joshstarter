@@ -1,28 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | Welcome to Josh Frontend</title>
-    <!--global css starts-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <!--end of global css-->
-    <!--page level css starts-->
+@extends('layouts/eventday')
+
+{{-- Page title --}}
+@section('title')
+Login
+@parent
+@stop
+
+{{-- page level styles --}}
+@section('header_styles')    
+    
+    <link href="{{ asset('assets/css/pages/alertmessage.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/pages/mail_box.css') }}" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/iCheck/css/all.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/login.css') }}">
-    <!--end of page level css-->
-</head>
-<body>
+    <!-- page level css ends-->
+@stop
+
+{{-- Page content --}}
+@section('content')
+<section class="bannerWrapper innerBanner">
+  <div class="searchWrap">
+    <div class="container">
+        <h1>Login !!</h1>
+           
+    </div>
+  </div>
+</section>
 <div class="container">
     <!--Content Section Start -->
     <div class="row">
         <div class="box animation flipInX">
             <div class="box1">
-            <img src="{{ asset('assets/images/josh-new.png') }}" alt="logo" class="img-responsive mar">
-            <h3 class="text-primary">Login</h3>
+            
                 <!-- Notifications -->
                 @include('notifications')
 
@@ -45,7 +54,7 @@
                         </label>
 
                     </div>
-                    <input type="submit" class="btn btn-block btn-primary" value="Login">
+                    <input type="submit" class="btn btn-block btn-default" value="Login">
                     Don't have an account? <a href="{{ route('register') }}"><strong> Sign up</strong></a>
                 </form>
             </div>
@@ -56,6 +65,9 @@
     </div>
     <!-- //Content Section End -->
 </div>
+@stop
+
+@section('footer_script')
 <!--global js starts-->
 <script type="text/javascript" src="{{ asset('assets/js/frontend/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/frontend/bootstrap.min.js') }}"></script>
@@ -68,5 +80,4 @@
         });
     });
 </script>
-</body>
-</html>
+@stop

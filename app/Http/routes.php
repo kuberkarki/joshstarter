@@ -16,6 +16,8 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::model('blogcategory', 'App\BlogCategory');
     Route::model('blog', 'App\Blog');
+    Route::model('newscategory', 'App\NewsCategory');
+    Route::model('news', 'App\News');
     Route::model('file', 'App\File');
     Route::model('task', 'App\Task');
     Route::model('users', 'App\User');
@@ -186,6 +188,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('blog/{slug}/tag', 'BlogController@getBlogTagFrontend');
     Route::get('blogitem/{slug?}', 'BlogController@getBlogFrontend');
     Route::post('blogitem/{blog}/comment', 'BlogController@storeCommentFrontend');
+
+    Route::get('news', array('as' => 'news', 'uses' => 'NewsController@getIndexFrontend'));
+    Route::get('news/{slug}/tag', 'NewsController@getNewsTagFrontend');
+    Route::get('newsitem/{slug?}', 'NewsController@getNewsFrontend');
+    Route::post('newsitem/{news}/comment', 'NewsController@storeCommentFrontend');
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
 # End of frontend views

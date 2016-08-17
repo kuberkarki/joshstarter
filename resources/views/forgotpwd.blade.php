@@ -1,25 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {{--<meta charset="utf-8">--}}
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Forgot_password | Welcome to Josh Frontend</title>
-    <!--global css starts-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <!--end of global css-->
-    <!--page level css starts-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/forgot.css') }}">
-    <!--end of page level css-->
-</head>
-<body>
+@extends('layouts/eventday')
+
+{{-- Page title --}}
+@section('title')
+Login
+@parent
+@stop
+
+{{-- page level styles --}}
+@section('header_styles')    
+    
+    <link href="{{ asset('assets/css/pages/alertmessage.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/pages/mail_box.css') }}" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="{{asset('assets/vendors/iCheck/css/all.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/login.css') }}">
+    <!-- page level css ends-->
+@stop
+
+{{-- Page content --}}
+@section('content')
+<section class="bannerWrapper innerBanner">
+  <div class="searchWrap">
+    <div class="container">
+        <h1>Forgot Password</h1>
+           
+    </div>
+  </div>
+</section>
 <div class="container">
     <div class="row">
         <div class="box animation flipInX">
-            <img src="{{ asset('assets/images/josh-new.png') }}" alt="logo" class="img-responsive mar">
-            <h3 class="text-primary">Forgot Password</h3>
+            <div class="box1">
+            
             <p>Enter your email to send the password</p>
             @include('notifications')
             <form action="{{ route('forgot-password') }}" class="omb_loginForm" autocomplete="off" method="POST">
@@ -31,15 +42,18 @@
                     <span class="help-block">{{ $errors->first('email', ':message') }}</span>
                 </div>
                 <div class="form-group">
-                    <input class="form-control btn btn-primary btn-block" type="submit" value="Reset Your Password">
+                    <input class="form-control btn btn-default btn-block" type="submit" value="Reset Your Password">
                 </div>
             </form>
         </div>
+        </div>
     </div>
 </div>
+@stop
+
+@section('footer_script')
 <!--global js starts-->
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <!--global js end-->
-</body>
-</html>
+@stop

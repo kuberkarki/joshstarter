@@ -52,14 +52,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/images/eventday/eventdayPlanner.png')}}" class="img-responsive"></a><span class="slogan">Help to find everything you need about your event</span>
+                  <a class="navbar-brand" href="{{ url('/')}}"><img src="{{ asset('assets/images/eventday/eventdayPlanner.png')}}" class="img-responsive"></a><span class="slogan">Help to find everything you need about your event</span>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                          <li><a href="#">Sign Up</a></li>
-                          <li><a href="#">Login </a></li>
+                          <li><a href="{{ url('register')}}">Sign Up</a></li>
+                          <li><a href="{{ url('login')}}">Login </a></li>
                           <li><a href="#">Country</a></li>
                           <li><a href="#">Currency</a></li>
                   </ul>
