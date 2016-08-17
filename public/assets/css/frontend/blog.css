@@ -3,6 +3,12 @@
 .content {
     margin: 15px 0px;
 }
+.textsmall{
+    font-size:14px;
+}
+.thumbnail .btn{
+    width: 150px;
+}
 /* ---------- Featured-post-wide Css ---------- */
 .featured-post-wide {
     position: relative;

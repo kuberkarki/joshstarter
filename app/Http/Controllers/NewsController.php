@@ -33,11 +33,11 @@ class NewsController extends JoshController
     public function getIndexFrontend()
     {
         // Grab all the newss
-        $news = News::latest()->simplePaginate(5);
-        $news->setPath('news');
+        $newss = News::latest()->simplePaginate(5);
+        $newss->setPath('news');
         $tags = $this->tags;
         // Show the page
-        return View('news', compact('news', 'tags'));
+        return View('news', compact('newss', 'tags'));
     }
 
     /**
@@ -50,11 +50,12 @@ class NewsController extends JoshController
             $news = News::first();
         }
         try {
-            $news = News::findBySlugOrIdOrFail($slug);
+            $news = News::where('slug',$slug)->first();
             $news->increment('views');
         } catch (ModelNotFoundException $e) {
             return Response::view('404', array(), 404);
         }
+        
         // Show the page
         return View('newsitem', compact('news'));
 

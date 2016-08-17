@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends('layouts/eventday')
 
 {{-- Page title --}}
 @section('title')
