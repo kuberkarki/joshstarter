@@ -22,7 +22,7 @@ class NewsController extends JoshController
     public function __construct()
     {
         parent::__construct();
-        $this->tags = News::tagArray();
+        $this->tags = array();//News::tagArray();
     }
 
     /**
@@ -30,7 +30,7 @@ class NewsController extends JoshController
      */
     public function getIndexFrontend()
     {
-        // Grab all the blogs
+        // Grab all the newss
         $news = News::latest()->simplePaginate(5);
         $news->setPath('news');
         $tags = $this->tags;
@@ -65,20 +65,20 @@ class NewsController extends JoshController
     public function getNewsTagFrontend($tag)
     {
         $newss = News::withAnyTags($tag)->simplePaginate(5);
-        $newss->setPath('blog/' . $tag . '/tag');
+        $newss->setPath('news/' . $tag . '/tag');
         $tags = $this->tags;
         return View('news', compact('newss', 'tags'));
     }
 
     /**
-     * @param BlogCommentRequest $request
-     * @param Blog $news
+     * @param newsCommentRequest $request
+     * @param news $news
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function storeCommentFrontend(NewsCommentRequest $request, Blog $news)
+    public function storeCommentFrontend(NewsCommentRequest $request, news $news)
     {
-        $newscooment = new BlogComment($request->all());
-        $newscooment->blog_id = $news->id;
+        $newscooment = new newsComment($request->all());
+        $newscooment->news_id = $news->id;
         $newscooment->save();
 
         return redirect('newsitem/' . $news->slug);
@@ -91,7 +91,7 @@ class NewsController extends JoshController
      */
     public function index()
     {
-        // Grab all the blogs
+        // Grab all the newss
         $newss = News::all();
         // Show the page
         return View('admin.news.index', compact('newss'));
@@ -121,7 +121,7 @@ class NewsController extends JoshController
             $file = $request->file('image');
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension() ?: 'png';
-            $folderName = '/uploads/blog/';
+            $folderName = '/uploads/news/';
             $picture = str_random(10) . '.' . $extension;
             $news->image = $picture;
         }
@@ -133,12 +133,12 @@ class NewsController extends JoshController
             $request->file('image')->move($destinationPath, $picture);
         }
 
-        $news->tag($request->tags);
+        //$news->tag($request->tags);
 
         if ($news->id) {
-            return redirect('admin/news')->with('success', trans('blog/message.success.create'));
+            return redirect('admin/news')->with('success', trans('news/message.success.create'));
         } else {
-            return Redirect::route('admin/news')->withInput()->with('error', trans('blog/message.error.create'));
+            return Redirect::route('admin/news')->withInput()->with('error', trans('news/message.error.create'));
         }
 
     }
@@ -146,7 +146,7 @@ class NewsController extends JoshController
     /**
      * Display the specified resource.
      *
-     * @param  Blog $news
+     * @param  news $news
      * @return view
      */
     public function show(News $news)
@@ -158,13 +158,13 @@ class NewsController extends JoshController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Blog $news
+     * @param  news $news
      * @return view
      */
     public function edit(News $news)
     {
         $newscategory = NewsCategory::lists('title', 'id');
-        return view('admin.news.edit', compact('news', 'NewsCategory'));
+        return view('admin.news.edit', compact('news', 'newscategory'));
     }
 
     /**
@@ -179,7 +179,7 @@ class NewsController extends JoshController
             $file = $request->file('image');
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension() ?: 'png';
-            $folderName = '/uploads/blog/';
+            $folderName = '/uploads/news/';
             $picture = str_random(10) . '.' . $extension;
             $news->image = $picture;
         }
@@ -188,17 +188,17 @@ class NewsController extends JoshController
             $destinationPath = public_path() . $folderName;
             $request->file('image')->move($destinationPath, $picture);
         }
-        $news->retag($request['tags']);
+        //$news->retag($request['tags']);
 
         if ($news->update($request->except('image', '_method', 'tags'))) {
-            return redirect('admin/news')->with('success', trans('blog/message.success.update'));
+            return redirect('admin/news')->with('success', trans('news/message.success.update'));
         } else {
-            return Redirect::route('admin/news')->withInput()->with('error', trans('blog/message.error.update'));
+            return Redirect::route('admin/news')->withInput()->with('error', trans('news/message.error.update'));
         }
     }
 
     /**
-     * Remove blog.
+     * Remove news.
      *
      * @param $website
      * @return Response
@@ -227,9 +227,9 @@ class NewsController extends JoshController
     {
 
         if ($news->delete()) {
-            return redirect('admin/news')->with('success', trans('blog/message.success.delete'));
+            return redirect('admin/news')->with('success', trans('news/message.success.delete'));
         } else {
-            return Redirect::route('admin/news')->withInput()->with('error', trans('blog/message.error.delete'));
+            return Redirect::route('admin/news')->withInput()->with('error', trans('news/message.error.delete'));
         }
     }
 
@@ -238,10 +238,10 @@ class NewsController extends JoshController
      *
      * @return Response
      */
-    public function storecomment(NewsCommentRequest $request, Blog $news)
+    public function storecomment(NewsCommentRequest $request, news $news)
     {
         $newscooment = new NewsComment($request->all());
-        $newscooment->blog_id = $news->id;
+        $newscooment->news_id = $news->id;
         $newscooment->save();
 
         return redirect('admin/news/' . $news->id . '/show');

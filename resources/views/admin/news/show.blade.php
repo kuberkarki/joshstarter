@@ -2,13 +2,13 @@
 
 {{-- Page title --}}
 @section('title')
-    @lang('blog/title.blogdetail')
+    @lang('news/title.newsdetail')
 @parent
 @stop
 
 {{-- page level styles --}}
 @section('header_styles')
-<link rel="stylesheet" href="{{ asset('assets/css/pages/blog.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/pages/news.css') }}" />
 @stop
 
 
@@ -16,15 +16,15 @@
 @section('content')
 <section class="content-header">
     <!--section starts-->
-    <h1>{!! $blog->title!!}</h1>
+    <h1>{!! $news->title!!}</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('dashboard') }}"> <i class="livicon" data-name="home" data-size="14" data-c="#000" data-loop="true"></i>
                 @lang('general.dashboard')
             </a>
         </li>
-        <li> @lang('blog/title.blog')</li>
-        <li class="active">@lang('blog/title.blogdetail')</li>
+        <li> @lang('news/title.news')</li>
+        <li class="active">@lang('news/title.newsdetail')</li>
     </ol>
 </section>
 <!--section ends-->
@@ -32,25 +32,25 @@
     <!--main content-->
     <div class="row">
         <div class="col-sm-11 col-md-12 col-full-width-right">
-            <div class="blog-detail-image">
-                @if(!empty($blog->image))
-                <img src="{{URL::to('uploads/blog/'.$blog->image)}}" class="img-responsive" alt="Image">
+            <div class="news-detail-image">
+                @if(!empty($news->image))
+                <img src="{{URL::to('uploads/news/'.$news->image)}}" class="img-responsive" alt="Image">
                 @else
                 <img data-src="holder.js/791x380/#6cc66c:#fff" class="img-responsive" alt="Image">
                 @endif
                 </div>
-            <!-- /.blog-detail-image -->
-            <div class="the-box no-border blog-detail-content">
+            <!-- /.news-detail-image -->
+            <div class="the-box no-border news-detail-content">
                 <p>
-                    <span class="label label-danger square">{!! $blog->created_at!!}</span>
+                    <span class="label label-danger square">{!! $news->created_at!!}</span>
                 </p>
                 <p class="text-justify">
-                {!! $blog->content !!}
+                {!! $news->content !!}
                 </p>
-                <p><strong>Tags:</strong> {!! $blog->tagList !!}</p>
+                <p><strong>Tags:</strong> {!! $news->tagList !!}</p>
                 <hr>
                     <p>
-                        <span class="label label-success square">@lang('blog/title.comments')</span>
+                        <span class="label label-success square">@lang('news/title.comments')</span>
                     </p>
                     @if(!empty($comments))
                         <ul class="media-list media-sm media-dotted recent-post">
@@ -73,29 +73,29 @@
                     @endif
                 <hr>
                 <p>
-                    <span class="label label-info square">@lang('blog/title.leavecomment')</span>
+                    <span class="label label-info square">@lang('news/title.leavecomment')</span>
                 </p>
-                 {!! Form::open(array('url' => URL::to('admin/blog/'.$blog->id.'/storecomment'), 'method' => 'post', 'class' => 'bf', 'files'=> true)) !!}
+                 {!! Form::open(array('url' => URL::to('admin/news/'.$news->id.'/storecomment'), 'method' => 'post', 'class' => 'bf', 'files'=> true)) !!}
 
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    {!! Form::text('name', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>trans('blog/form.ph-name'))) !!}
+                    {!! Form::text('name', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>trans('news/form.ph-name'))) !!}
                     <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                 </div>
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                    {!! Form::text('email', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>trans('blog/form.ph-email'))) !!}
+                    {!! Form::text('email', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>trans('news/form.ph-email'))) !!}
                     <span class="help-block">{{ $errors->first('email', ':message') }}</span>
                 </div>
                 <div class="form-group {{ $errors->has('website') ? 'has-error' : '' }}">
-                    {!! Form::text('website', null, array('class' => 'form-control input-lg', 'placeholder'=>trans('blog/form.ph-website'))) !!}
+                    {!! Form::text('website', null, array('class' => 'form-control input-lg', 'placeholder'=>trans('news/form.ph-website'))) !!}
                         <span class="help-block">{{ $errors->first('website', ':message') }}</span>
                 </div>
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
-                    {!! Form::textarea('comment', null, array('class' => 'form-control input-lg no-resize','required' => 'required', 'style'=>'height: 200px', 'placeholder'=>trans('blog/form.ph-comment'))) !!}
+                    {!! Form::textarea('comment', null, array('class' => 'form-control input-lg no-resize','required' => 'required', 'style'=>'height: 200px', 'placeholder'=>trans('news/form.ph-comment'))) !!}
                     <span class="help-block">{{ $errors->first('comment', ':message') }}</span>
                 </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-md"><i class="fa fa-comment"></i>
-                            @lang('blog/form.save-comment')
+                            @lang('news/form.save-comment')
                         </button>
                     </div>
                 {!! Form::close() !!}

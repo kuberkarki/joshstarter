@@ -7,9 +7,9 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
+        "cviebrock/eloquent-sluggable": "^4.0",
         "laravelcollective/html": "5.2.",
         "cartalyst/sentinel": "2.0.",
-        "cviebrock/eloquent-sluggable": "dev-master",
         "cviebrock/eloquent-taggable": "2.0.0",
         "yajra/laravel-datatables-oracle": "~5.0"
     },

@@ -1,19 +1,19 @@
 <?php
 /**
-* Language file for blog section titles
+* Language file for news section titles
 *
 */
 
 return array(
 
     'title' => 'Title',
-    'create'			=> 'Create New Blog Category',
-    'edit' 				=> 'Edit Blog Category',
-    'management' => 'Manage Blog Categories',
-    'blogcategories' => 'Blog Categories',
+    'create'			=> 'Create New News Category',
+    'edit' 				=> 'Edit News Category',
+    'management' => 'Manage News Categories',
+    'newscategories' => 'News Categories',
     'groups' => 'Groups',
     'categories' => 'Categories',
-    'blogcategorylist' => 'Blog Categories List',
+    'newscategorylist' => 'News Categories List',
 
 
     

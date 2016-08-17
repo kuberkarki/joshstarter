@@ -1,6 +1,6 @@
 <?php
 /**
-* Language file for blog category table headings
+* Language file for news category table headings
 *
 */
 
@@ -8,7 +8,7 @@ return array(
 
     'id'         => 'Id',
     'name'       => 'Name',
-    'blogs'      => 'No. of Blogs',
+    'newss'      => 'No. of News',
     'created_at' => 'Created at',
     'actions'	 => 'Actions',
 

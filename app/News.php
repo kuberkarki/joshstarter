@@ -9,11 +9,11 @@ use Cviebrock\EloquentTaggable\Traits\Taggable as TaggableImpl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class News extends Model implements SluggableInterface, Taggable {
+class News extends Model  {
 
     use SoftDeletes;
-    use SluggableTrait;
-    use TaggableImpl;
+    /*use SluggableTrait;
+    use TaggableImpl;*/
 
     protected $dates = ['deleted_at'];
 

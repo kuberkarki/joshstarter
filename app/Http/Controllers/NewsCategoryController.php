@@ -17,9 +17,10 @@ class NewsCategoryController extends JoshController
     public function index()
     {
         // Grab all the blog category
-        $blogscategories = NewsCategory::all();
+        $newscategories = NewsCategory::all();
+        //var_dump($newscategories);exit;
         // Show the page
-        return View('admin.newscategory.index', compact('blogscategories'));
+        return View('admin.newscategory.index', compact('newscategories'));
     }
 
     /**

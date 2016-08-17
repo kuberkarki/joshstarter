@@ -122,6 +122,32 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('{blogcategory}/restore', array('as' => 'restore/blogcategory', 'uses' => 'BlogCategoryController@getRestore'));
         });
 
+        /*routes for news*/
+        Route::group(array('prefix' => 'news'), function () {
+            Route::get('/', array('as' => 'news', 'uses' => 'NewsController@index'));
+            Route::get('create', array('as' => 'create/news', 'uses' => 'NewsController@create'));
+            Route::post('create', 'NewsController@store');
+            Route::get('{news}/edit', array('as' => 'update/news', 'uses' => 'NewsController@edit'));
+            Route::post('{news}/edit', 'NewsController@update');
+            Route::get('{news}/delete', array('as' => 'delete/news', 'uses' => 'NewsController@destroy'));
+            Route::get('{news}/confirm-delete', array('as' => 'confirm-delete/news', 'uses' => 'NewsController@getModalDelete'));
+            Route::get('{news}/restore', array('as' => 'restore/news', 'uses' => 'NewsController@getRestore'));
+            Route::get('{news}/show', array('as' => 'news/show', 'uses' => 'NewsController@show'));
+            Route::post('{news}/storecomment', array('as' => 'restore/news', 'uses' => 'NewsController@storecomment'));
+        });
+
+        /*routes for News category*/
+        Route::group(array('prefix' => 'newscategory'), function () {
+            Route::get('/', array('as' => 'newscategories', 'uses' => 'NewsCategoryController@index'));
+            Route::get('create', array('as' => 'create/newscategory', 'uses' => 'NewsCategoryController@create'));
+            Route::post('create', 'NewsCategoryController@store');
+            Route::get('{newscategory}/edit', array('as' => 'update/newscategory', 'uses' => 'NewsCategoryController@edit'));
+            Route::post('{newscategory}/edit', 'NewsCategoryController@update');
+            Route::get('{newscategory}/delete', array('as' => 'delete/newscategory', 'uses' => 'NewsCategoryController@destroy'));
+            Route::get('{newscategory}/confirm-delete', array('as' => 'confirm-delete/newscategory', 'uses' => 'NewsCategoryController@getModalDelete'));
+            Route::get('{newscategory}/restore', array('as' => 'restore/newscategory', 'uses' => 'NewsCategoryController@getRestore'));
+        });
+
         /*routes for file*/
         Route::group(array('prefix' => 'file'), function () {
             Route::post('create', 'FileController@store');
