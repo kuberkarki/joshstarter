@@ -14,7 +14,7 @@
         "yajra/laravel-datatables-oracle": "~5.0",
         "mews/captcha": "^2.1",
         "laravel/socialite": "^2.0",
-        "cartalyst/sentinel-social": "2.0.*",
+        
         "cmgmyr/messenger": "~2.0"
     },
     "require-dev": {
