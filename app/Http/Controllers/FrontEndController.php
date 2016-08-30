@@ -336,7 +336,7 @@ class FrontEndController extends JoshController
      *
      * @return Redirect
      */
-    public function postFreelancer(UserRequest $request)
+    public function postRegister(UserRequest $request)
     {
 
         

@@ -38,7 +38,7 @@ Register
                     <div class="text-danger">{{ $error }}</div>
                 @endforeach
             @endif
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('register-business') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
