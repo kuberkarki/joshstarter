@@ -17,6 +17,7 @@ class NewsController extends JoshController
 {
 
 
+
     private $tags;
 
     public function __construct()
@@ -37,7 +38,7 @@ class NewsController extends JoshController
         $newss->setPath('news');
         $tags = $this->tags;
         // Show the page
-        return View('news', compact('newss', 'tags'));
+        return View('news', compact('newss', 'tags'))->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -55,9 +56,10 @@ class NewsController extends JoshController
         } catch (ModelNotFoundException $e) {
             return Response::view('404', array(), 404);
         }
+
         
         // Show the page
-        return View('newsitem', compact('news'));
+        return View('newsitem', compact('news'))->with('frontarray',$this->frontarray);
 
     }
 
@@ -70,7 +72,7 @@ class NewsController extends JoshController
         $newss = News::withAnyTags($tag)->simplePaginate(5);
         $newss->setPath('news/' . $tag . '/tag');
         $tags = $this->tags;
-        return View('news', compact('newss', 'tags'));
+        return View('news', compact('newss', 'tags'))->with('frontarray',$this->frontarray);
     }
 
     /**

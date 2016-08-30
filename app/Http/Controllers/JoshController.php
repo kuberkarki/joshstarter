@@ -3,6 +3,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use Sentinel;
 use View;
+use App\News;
+use App\Page;
 
 class JoshController extends Controller {
 
@@ -243,6 +245,10 @@ class JoshController extends Controller {
 			"ZM" => "Zambia",
 			"ZW" => "Zimbabwe"
 	);
+protected $frontarray;
+
+    
+
 	/**
 	 * Message bag.
 	 *
@@ -258,6 +264,8 @@ class JoshController extends Controller {
 	public function __construct()
 	{
 		$this->messageBag = new MessageBag;
+		$this->frontarray['onenews'] = News::latest()->first();
+		$this->frontarray['mainmenu']=Page::where('type','Main Menu')->get();
 
 	}
 

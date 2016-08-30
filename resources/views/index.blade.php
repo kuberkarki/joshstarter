@@ -123,7 +123,12 @@ Home
         <div class="panel panel-default">
             <div class="panel-image">
             
+                @if($event->photo)
                 <img class="img-responsive img-hover" src="uploads/crudfiles/{!! $event->photo !!}" alt="">
+                @else
+                <img class="img-responsive img-hover" src="uploads/crudfiles/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
+                @endif
+
             
             </div>
              <div class="panel-body">
@@ -134,10 +139,10 @@ Home
               
               {!! date('D, M d, g a ',strtotime($event->date)) !!}
               <!-- Fri, May 6, 10pm --></div>
-                  <p>{!! $event->highlight !!}</p>
+                  <p style="height: 100px;">{!! str_limit($event->description,150, '...') !!}</p>
               <div class="property-meta">
               <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li><a href="{{ URL::to('event/'.$event->slug) }}"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
                 <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
               </ul>
               </div>
@@ -275,39 +280,19 @@ Home
         <div class="row">
           <div class="col-sm-4">
           <h3>latest News</h3>
-          <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+          @foreach($news as $newsitem)
+          <p><a href="{{ URL::to('newsitem/'.$newsitem->slug) }}"><strong> {{$newsitem->title}} </strong>
+          <span> {{$newsitem->created_at->diffForHumans()}}</span>
+          
+          {!! str_limit($newsitem->content,150, '...') !!}
           </a></p>
+          @endforeach
 
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
+                    
           </div>
           <div class="col-sm-4">
             <h3>Popular Events in London, UK</h3>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
+          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="{{ URL::to('newsitem/'.$newsitem->slug) }}"><strong> Lorem ipsum dolor </strong>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
           </a></p>
           <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>

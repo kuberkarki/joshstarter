@@ -11,9 +11,114 @@ use Sentinel;
 use URL;
 use Validator;
 use View;
+use App\User;
+
+use Laravel\Socialite\Contracts\Factory as Socialite;
 
 class AuthController extends JoshController
 {
+public function __construct(Socialite $socialite){
+           $this->socialite = $socialite;
+       }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('github')->user();
+
+        // $user->token;
+    }
+
+
+       public function getSocialAuth($provider=null)
+       {
+           if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
+
+           return $this->socialite->with($provider)->redirect();
+       }
+
+
+       public function getSocialAuthCallback($provider=null)
+       {
+          if($user = $this->socialite->with($provider)->user()){
+             //dd($user);
+             //echo $user->email;
+             $guser=User::where('email',$user->email)->first();
+             if($guser){
+                Sentinel::login($guser, false);
+                return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+             }
+
+             try {
+
+                //dd($user);
+                //dd($user->user['name']['familyName']);exit;
+            // Register the user
+                $guser['first_name']=$user->user['name']['givenName'];
+                $guser['last_name']=$user->user['name']['familyName'];
+                $guser['email']=$user->email;
+                $guser['password']=md5($user->email);
+                $guser['type']='social';
+
+            $user = Sentinel::register($guser, true);
+
+            //add user to 'User' group
+            /*if($request->get('type')=='Business'){
+                $role = Sentinel::findRoleByName('Business');
+            }
+            elseif($request->get('type')=='Freelancer'){
+                $role = Sentinel::findRoleByName('Freelancer');
+            }else*/
+                $role = Sentinel::findRoleByName('User');
+
+            //print_r($role);exit;
+            $role->users()->attach($user);
+
+            //if you set $activate=false above then user will receive an activation mail
+            
+            // login user automatically
+            Sentinel::login($user, false);
+
+            // Redirect to the home page with success menu
+            return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+            //return View::make('user_account')->with('success', Lang::get('auth/message.signup.success'));
+
+        } catch (UserExistsException $e) {
+            $this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+        }
+
+            /* $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
+
+            //add user to 'User' group
+            if($request->get('type')=='Business'){
+                $role = Sentinel::findRoleByName('Business');
+            }
+            elseif($request->get('type')=='Freelancer'){
+                $role = Sentinel::findRoleByName('Freelancer');
+            }else
+                $role = Sentinel::findRoleByName('User');
+
+            //print_r($role);exit;
+            $role->users()->attach($user);*/
+
+          }else{
+             return 'something went wrong';
+          }
+       }
     /**
      * Account sign in.
      *

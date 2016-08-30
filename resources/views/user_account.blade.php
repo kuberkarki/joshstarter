@@ -37,6 +37,9 @@
                     <div class="position-center">
                         <!-- Notifications -->
                         @include('notifications')
+                        <div>
+                        @include('usermenu')
+                        </div>
 
                         <div>
                             <h3 class="text-primary">Personal Information</h3>
@@ -279,6 +282,6 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/select2/js/select2.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/frontend/user_account.js') }}"></script>
 @stop

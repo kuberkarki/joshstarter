@@ -29,7 +29,7 @@ Register
 <div class="container textsmall">
     <!--Content Section Start -->
     <div class="row">
-        <div class="box animation flipInX">
+        <div class="box col-sm-4 col-xs-12 animation flipInX">
             
             <!-- Notifications -->
             @include('notifications')
@@ -41,6 +41,8 @@ Register
             <form action="{{ route('register') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
+                
 
                 <div class="form-group {{ $errors->first('first_name', 'has-error') }}">
                     <label class="sr-only"> First Name</label>
@@ -71,7 +73,7 @@ Register
                            placeholder="Confirm Password">
                     {!! $errors->first('password_confirm', '<span class="help-block">:message</span>') !!}
                 </div>
-                <div class="form-group {{ $errors->first('gender', 'has-error') }}">
+                <!-- <div class="form-group {{ $errors->first('gender', 'has-error') }}">
                     <label class="sr-only">Gender</label>
                     <label class="radio-inline">
                         <input type="radio" name="gender" id="inlineRadio1" value="male"> Male
@@ -80,7 +82,7 @@ Register
                         <input type="radio" name="gender" id="inlineRadio2" value="female"> Female
                     </label>
                     {!! $errors->first('gender', '<span class="help-block">:message</span>') !!}
-                </div>
+                </div> -->
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" checked name="subscribed" >  I accept <a href="#"> Terms and Conditions</a>
@@ -89,6 +91,14 @@ Register
                 <input type="submit" class="btn btn-block btn-default" value="Sign up" name="submit">
                 Already have an account? Please <a href="{{ route('login') }}"> Sign In</a>
             </form>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+         <div class="box">
+         <h2><a href="{!! url('register-business')!!}">Sign up as Business</a></h2>
+         </div>
+         <div class="box">
+         <h2><a href="{!! url('register-freelancer')!!}">Sign up as Freelancer</a></h2>
+         </div>
         </div>
     </div>
     <!-- //Content Section End -->

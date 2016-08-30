@@ -45,7 +45,7 @@
     "datatables.net-scroller-bs": "~1.4.0",
     "bootstrap-datepicker": "*",
     "bootstrap-daterangepicker": "2.1.17",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "devicon": "https://github.com/konpa/devicon.git",
     "dropzone": "^4.2.0",
     "fancybox": "~2.1.5",

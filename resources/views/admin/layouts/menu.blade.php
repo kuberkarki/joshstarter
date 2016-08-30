@@ -69,4 +69,84 @@
                 </a>
             </li>
         </ul>
-    </li> -->
+    </li> --><li {!! (Request::is('admin/ads') || Request::is('admin/ads/create') || Request::is('admin/ads/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Ads</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/ads') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/ads') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Ads
+            </a>
+        </li>
+        <li {!! (Request::is('admin/ads/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/ads/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Ad
+            </a>
+        </li>
+    </ul>
+</li><li {!! (Request::is('admin/resources') || Request::is('admin/resources/create') || Request::is('admin/resources/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Resources</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/resources') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/resources') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Resources
+            </a>
+        </li>
+        <li {!! (Request::is('admin/resources/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/resources/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Resource
+            </a>
+        </li>
+    </ul>
+</li><li {!! (Request::is('admin/pages') || Request::is('admin/pages/create') || Request::is('admin/pages/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Pages</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/pages') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/pages') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Pages
+            </a>
+        </li>
+        <li {!! (Request::is('admin/pages/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/pages/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Page
+            </a>
+        </li>
+    </ul>
+</li><li {!! (Request::is('admin/bookings') || Request::is('admin/bookings/create') || Request::is('admin/bookings/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Bookings</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/bookings') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/bookings') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Bookings
+            </a>
+        </li>
+        <li {!! (Request::is('admin/bookings/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/bookings/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Booking
+            </a>
+        </li>
+    </ul>
+</li>

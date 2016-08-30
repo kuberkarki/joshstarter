@@ -1,4 +1,5 @@
 <?php
+
 Route::group(['middleware' => 'web'], function () {
     /*
     |--------------------------------------------------------------------------
@@ -10,19 +11,53 @@ Route::group(['middleware' => 'web'], function () {
     | and give it the Closure to execute when that URI is requested.
     |
     */
+  
+/*Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');*/
+
+//Social Login
+Route::get('/auth/{provider?}',[
+    'uses' => 'AuthController@getSocialAuth',
+    'as'   => 'auth.getSocialAuth'
+]);
+
+
+Route::get('/auth/callback/{provider?}',[
+    'uses' => 'AuthController@getSocialAuthCallback',
+    'as'   => 'auth.getSocialAuthCallback'
+]);
+   
 
     /**
      * Model binding into route
      */
-    Route::model('blogcategory', 'App\BlogCategory');
-    Route::model('blog', 'App\Blog');
+    //Route::model('blogcategory', 'App\BlogCategory');
+    //Route::model('blog', 'App\Blog');
     Route::model('newscategory', 'App\NewsCategory');
     Route::model('news', 'App\News');
-    Route::model('file', 'App\File');
-    Route::model('task', 'App\Task');
+    Route::get('page/{page_id}', array('as' => 'page', 'uses' => 'PagesController@showFrontend'));
+    //Route::model('events', 'App\Event');
+    //Route::model('file', 'App\File');
+    //Route::model('task', 'App\Task');
     Route::model('users', 'App\User');
 
     Route::pattern('slug', '[a-z0-9- _]+');
+
+    Route::group(array('middleware' => 'SentinelUser'), function () {
+        Route::get('create-event-menu', array('as' => 'create-event-menu', 'uses' => 'EventsController@createEventMenuFrontend'));
+        Route::get('create-event', array('as' => 'create-event', 'uses' => 'EventsController@createEventFrontend'));
+        Route::post('events', 'EventsController@storeFrontend');
+        Route::put('event', 'EventsController@update');
+    });
+
+    Route::group(array('middleware' => 'SentinelUser'), function () {
+        Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
+        Route::get('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@showeditevent'));
+        Route::post('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@editevent'));
+       Route::get('delete-event/{event_id}', array('as' => 'delete-event', 'uses' => 'EventsController@deleteevent'));
+       Route::get('messages', array('as' => 'messages', 'uses' => 'EventsController@showmessages'));
+       
+    });
 
     Route::group(array('prefix' => 'admin'), function () {
 
@@ -97,7 +132,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('{groupId}/restore', array('as' => 'restore/group', 'uses' => 'GroupsController@getRestore'));
         });
         /*routes for blog*/
-        Route::group(array('prefix' => 'blog'), function () {
+       /* Route::group(array('prefix' => 'blog'), function () {
             Route::get('/', array('as' => 'blogs', 'uses' => 'BlogController@index'));
             Route::get('create', array('as' => 'create/blog', 'uses' => 'BlogController@create'));
             Route::post('create', 'BlogController@store');
@@ -108,10 +143,10 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('{blog}/restore', array('as' => 'restore/blog', 'uses' => 'BlogController@getRestore'));
             Route::get('{blog}/show', array('as' => 'blog/show', 'uses' => 'BlogController@show'));
             Route::post('{blog}/storecomment', array('as' => 'restore/blog', 'uses' => 'BlogController@storecomment'));
-        });
+        });*/
 
         /*routes for blog category*/
-        Route::group(array('prefix' => 'blogcategory'), function () {
+        /*Route::group(array('prefix' => 'blogcategory'), function () {
             Route::get('/', array('as' => 'blogcategories', 'uses' => 'BlogCategoryController@index'));
             Route::get('create', array('as' => 'create/blogcategory', 'uses' => 'BlogCategoryController@create'));
             Route::post('create', 'BlogCategoryController@store');
@@ -120,7 +155,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('{blogcategory}/delete', array('as' => 'delete/blogcategory', 'uses' => 'BlogCategoryController@destroy'));
             Route::get('{blogcategory}/confirm-delete', array('as' => 'confirm-delete/blogcategory', 'uses' => 'BlogCategoryController@getModalDelete'));
             Route::get('{blogcategory}/restore', array('as' => 'restore/blogcategory', 'uses' => 'BlogCategoryController@getRestore'));
-        });
+        });*/
 
         /*routes for news*/
         Route::group(array('prefix' => 'news'), function () {
@@ -149,27 +184,27 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         /*routes for file*/
-        Route::group(array('prefix' => 'file'), function () {
+        /*Route::group(array('prefix' => 'file'), function () {
             Route::post('create', 'FileController@store');
             Route::post('createmulti', 'FileController@postFilesCreate');
             Route::delete('delete', 'FileController@delete');
         });
-
-        Route::get('crop_demo', function () {
+*/
+       /* Route::get('crop_demo', function () {
             return redirect('admin/imagecropping');
         });
-        Route::post('crop_demo', 'JoshController@crop_demo');
+        Route::post('crop_demo', 'JoshController@crop_demo');*/
 
         /* laravel example routes */
         # datatables
-        Route::get('datatables', 'DataTablesController@index');
-        Route::get('datatables/data', array('as' => 'admin.datatables.data', 'uses' => 'DataTablesController@data'));
+        /*Route::get('datatables', 'DataTablesController@index');
+        Route::get('datatables/data', array('as' => 'admin.datatables.data', 'uses' => 'DataTablesController@data'));*/
 
         //tasks section
-        Route::post('task/create', 'TaskController@store');
+        /*Route::post('task/create', 'TaskController@store');
         Route::get('task/data', 'TaskController@data');
         Route::post('task/{task}/edit', 'TaskController@update');
-        Route::post('task/{task}/delete', 'TaskController@delete');
+        Route::post('task/{task}/delete', 'TaskController@delete');*/
 
 
         # Remaining pages will be called from below controller method
@@ -184,6 +219,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('login', 'FrontEndController@postLogin');
     Route::get('register', array('as' => 'register', 'uses' => 'FrontEndController@getRegister'));
     Route::post('register', 'FrontEndController@postRegister');
+
+    Route::get('register-business', array('as' => 'register-business', 'uses' => 'FrontEndController@getRegisterBusiness'));
+    Route::post('register-business', 'FrontEndController@postRegisterBusiness');
+
+    Route::get('register-freelancer', array('as' => 'register-freelancer', 'uses' => 'FrontEndController@getRegisterFreelancer'));
+    Route::post('register-freelancer', 'FrontEndController@postRegisterFreelancer');
     Route::get('activate/{userId}/{activationCode}', array('as' => 'activate', 'uses' => 'FrontEndController@getActivate'));
     Route::get('forgot-password', array('as' => 'forgot-password', 'uses' => 'FrontEndController@getForgotPassword'));
     Route::post('forgot-password', 'FrontEndController@postForgotPassword');
@@ -197,10 +238,10 @@ Route::group(['middleware' => 'web'], function () {
     });
     Route::get('logout', array('as' => 'logout', 'uses' => 'FrontEndController@getLogout'));
 # contact form
-    Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@postContact'));
+   /* Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@postContact'));
     Route::post('partner', array('as' => 'partner', 'uses' => 'FrontEndController@postPartner'));
     Route::post('investor', array('as' => 'investor', 'uses' => 'FrontEndController@postInvestor'));
-    Route::post('career', array('as' => 'career', 'uses' => 'FrontEndController@postcareer'));
+    Route::post('career', array('as' => 'career', 'uses' => 'FrontEndController@postcareer'));*/
 
 #frontend views
    /* Route::get('/', array('as' => 'home', function () {
@@ -210,15 +251,20 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/',array('as'=>'home','uses'=>'FrontEndController@home'));
 
-    Route::get('blog', array('as' => 'blog', 'uses' => 'BlogController@getIndexFrontend'));
+    /*Route::get('blog', array('as' => 'blog', 'uses' => 'BlogController@getIndexFrontend'));
     Route::get('blog/{slug}/tag', 'BlogController@getBlogTagFrontend');
     Route::get('blogitem/{slug?}', 'BlogController@getBlogFrontend');
-    Route::post('blogitem/{blog}/comment', 'BlogController@storeCommentFrontend');
+    Route::post('blogitem/{blog}/comment', 'BlogController@storeCommentFrontend');*/
 
     Route::get('news', array('as' => 'news', 'uses' => 'NewsController@getIndexFrontend'));
     Route::get('news/{slug}/tag', 'NewsController@getNewsTagFrontend');
     Route::get('newsitem/{slug?}', 'NewsController@getNewsFrontend');
     Route::post('newsitem/{news}/comment', 'NewsController@storeCommentFrontend');
+
+    Route::get('events', array('as' => 'events', 'uses' => 'EventsController@getIndexFrontend'));
+    Route::get('events/{slug}/tag', 'EventsController@getEventTagFrontend');
+    Route::get('event/{slug?}', 'EventsController@getEventFrontend');
+    Route::post('event/{events}/comment', 'EventsController@storeCommentFrontend');
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
 # End of frontend views

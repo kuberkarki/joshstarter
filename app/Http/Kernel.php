@@ -50,5 +50,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'SentinelUser' => \App\Http\Middleware\SentinelUser::class,
         'SentinelAdmin' => \App\Http\Middleware\SentinelAdmin::class,
+        'SentinelBusiness' => \App\Http\Middleware\SentinelBusiness::class,
+        'SentinelFreelancer' => \App\Http\Middleware\SentinelFreelancer::class,
     ];
 }

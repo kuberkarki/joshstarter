@@ -34,8 +34,8 @@
       <div class="headerTop">
         <div class="container">
           <div class="row">
-            <div class="col-sm-7"><div class="newsHighlight"><span>News!</span> Read review and book a resources for your upcomming event.</div></div>
-            <div class="col-sm-5"><div class="topLogin"><a href="#"> Create an Event</a> | <a href="#">Least Your Business</a></div></div>
+            <div class="col-sm-7"><div class="newsHighlight"><span>News!</span> {{$frontarray['onenews']->title}}</div></div>
+            <div class="col-sm-5"><div class="topLogin"><a href="{!! url('create-event-menu')!!}"> Create an Event</a> | <a href="#">List Your Business</a></div></div>
           </div>
         </div>
       </div>
@@ -67,8 +67,12 @@
                             <li><a href="{{ URL::to('logout') }}">Logout</a>
                             </li>
                         @endif
-                          <li><a href="#">Country</a></li>
-                          <li><a href="#">Currency</a></li>
+                       
+                        @foreach($frontarray['mainmenu'] as $menu)
+                        <li><a href="{{ route('page',$menu->slug)}}">{{$menu->name}}</a></li>
+                        @endforeach
+                          
+                         
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
@@ -92,12 +96,15 @@
       <div class="col-sm-3">
       <h3>Our Expert Services</h3>
       <ul>
-        <li><a href="#">Birthdays Party</a></li>
+          @foreach($frontarray['OurExpertServices'] as $menu)
+            <li><a href="{{ route('page',$menu->slug)}}">{{$menu->name}}</a></li>
+          @endforeach
+        <!-- <li><a href="#">Birthdays Party</a></li>
         <li><a href="#">Wedding Arrangement</a></li>
         <li><a href="#">Corporate Events</a></li>
         <li><a href="#">Bachelor Parties</a></li>
         <li><a href="#">Proposal Arrange</a></li>
-        <li><a href="#">Social Meetings</a></li>
+        <li><a href="#">Social Meetings</a></li> -->
       </ul>
       </div>
       <div class="col-sm-3">

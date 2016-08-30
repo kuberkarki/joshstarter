@@ -21,11 +21,21 @@ use View;
 use Newsletter;
 use App\Event;
 use Carbon\Carbon ;
+use App\News;
+use DateTime;
+use App\Page;
 
 
 
 class FrontEndController extends JoshController
 {
+     protected $frontarray;
+
+    public function __construct(){
+        $this->frontarray['onenews'] = News::latest()->first();
+        $this->frontarray['mainmenu']=Page::where('type','Main Menu')->get();
+        $this->frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
+    }
 
     /*
      * $user_activation set to false makes the user activation via user registered email
@@ -38,8 +48,19 @@ class FrontEndController extends JoshController
     }
 
     public function home(){
-        $events=Event::All();
-        return View::make('index')->with('events',$events);
+        $date = new DateTime;
+        $date->modify('-50 minutes');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+
+        $events=Event::where('type','Public')->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
+        $newss = News::latest()->simplePaginate(6);
+        $newss->setPath('news');
+
+        //print_r($this->frontarray);exit;
+
+
+        //$tags = $this->tags;
+        return View::make('index')->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -55,7 +76,7 @@ class FrontEndController extends JoshController
         }
 
         // Show the login page
-        return View::make('login');
+        return View::make('login')->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -99,7 +120,7 @@ class FrontEndController extends JoshController
     {
         $user = Sentinel::getUser();
         $countries = $this->countries;
-        return View::make('user_account', compact('user', 'countries'));
+        return View::make('user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -176,7 +197,7 @@ class FrontEndController extends JoshController
     public function getRegister()
     {
         // Show the page
-        return View::make('register');
+        return View::make('register')->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -184,16 +205,159 @@ class FrontEndController extends JoshController
      *
      * @return Redirect
      */
-    public function postRegister(UserRequest $request)
+    public function postRegisterBusiness(UserRequest $request)
     {
+
+        
+
+       // print_r($request->get('type'));exit;
         $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
 
         try {
             // Register the user
-            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password', 'gender']), $activate);
+            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
 
             //add user to 'User' group
-            $role = Sentinel::findRoleByName('User');
+            
+                $role = Sentinel::findRoleByName('Business');
+            
+
+            //print_r($role);exit;
+            $role->users()->attach($user);
+
+            //if you set $activate=false above then user will receive an activation mail
+            if (!$activate) {
+                // Data to be used on the email view
+                $data = array(
+                    'user' => $user,
+                    'activationUrl' => URL::route('activate', [$user->id, Activation::create($user)->code]),
+                );
+
+                // Send the activation code through email
+                Mail::send('emails.register-activate', $data, function ($m) use ($user) {
+                    $m->to($user->email, $user->first_name . ' ' . $user->last_name);
+                    $m->subject('Welcome ' . $user->first_name);
+                });
+
+                //Redirect to login page
+                return Redirect::to("login")->with('success', Lang::get('auth/message.signup.success'));
+            }
+            // login user automatically
+            Sentinel::login($user, false);
+
+            // Redirect to the home page with success menu
+            return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+            //return View::make('user_account')->with('success', Lang::get('auth/message.signup.success'));
+
+        } catch (UserExistsException $e) {
+            $this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+        }
+
+        // Ooops.. something went wrong
+        return Redirect::back()->withInput()->withErrors($this->messageBag);
+    }
+
+    /**
+     * Account Register.
+     *
+     * @return View
+     */
+    public function getRegisterBusiness()
+    {
+        // Show the page
+        return View::make('register-business')->with('frontarray',$this->frontarray);
+    }
+
+    public function postRegisterFreelancer(UserRequest $request)
+    {
+
+        
+
+       // print_r($request->get('type'));exit;
+        $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
+
+        try {
+            // Register the user
+            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
+
+            //add user to 'User' group
+            
+                $role = Sentinel::findRoleByName('Freelancer');
+            
+
+            //print_r($role);exit;
+            $role->users()->attach($user);
+
+            //if you set $activate=false above then user will receive an activation mail
+            if (!$activate) {
+                // Data to be used on the email view
+                $data = array(
+                    'user' => $user,
+                    'activationUrl' => URL::route('activate', [$user->id, Activation::create($user)->code]),
+                );
+
+                // Send the activation code through email
+                Mail::send('emails.register-activate', $data, function ($m) use ($user) {
+                    $m->to($user->email, $user->first_name . ' ' . $user->last_name);
+                    $m->subject('Welcome ' . $user->first_name);
+                });
+
+                //Redirect to login page
+                return Redirect::to("login")->with('success', Lang::get('auth/message.signup.success'));
+            }
+            // login user automatically
+            Sentinel::login($user, false);
+
+            // Redirect to the home page with success menu
+            return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+            //return View::make('user_account')->with('success', Lang::get('auth/message.signup.success'));
+
+        } catch (UserExistsException $e) {
+            $this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+        }
+
+        // Ooops.. something went wrong
+        return Redirect::back()->withInput()->withErrors($this->messageBag);
+    }
+
+    /**
+     * Account Register.
+     *
+     * @return View
+     */
+    public function getRegisterFreelancer()
+    {
+        // Show the page
+        return View::make('register-freelancer')->with('frontarray',$this->frontarray);
+    }
+
+    /**
+     * Account sign up form processing.
+     *
+     * @return Redirect
+     */
+    public function postFreelancer(UserRequest $request)
+    {
+
+        
+
+       // print_r($request->get('type'));exit;
+        $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
+
+        try {
+            // Register the user
+            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
+
+            //add user to 'User' group
+            if($request->get('type')=='Business'){
+                $role = Sentinel::findRoleByName('Business');
+            }
+            elseif($request->get('type')=='Freelancer'){
+                $role = Sentinel::findRoleByName('Freelancer');
+            }else
+                $role = Sentinel::findRoleByName('User');
+
+            //print_r($role);exit;
             $role->users()->attach($user);
 
             //if you set $activate=false above then user will receive an activation mail
@@ -250,7 +414,7 @@ class FrontEndController extends JoshController
         } else {
             // Activation not found or not completed.
             $error = Lang::get('auth/message.activate.error');
-            return Redirect::route('login')->with('error', $error);
+            return Redirect::route('login')->with('error', $error)->with('frontarray',$this->frontarray);
         }
     }
 
@@ -262,7 +426,7 @@ class FrontEndController extends JoshController
     public function getForgotPassword()
     {
         // Show the page
-        return View::make('forgotpwd');
+        return View::make('forgotpwd')->with('frontarray',$this->frontarray);
 
     }
 
@@ -326,7 +490,7 @@ class FrontEndController extends JoshController
         {
             if($passwordResetCode == $reminder->code)
             {
-                return View::make('forgotpwd-confirm', compact(['userId', 'passwordResetCode']));
+                return View::make('forgotpwd-confirm', compact(['userId', 'passwordResetCode']))->with('frontarray',$this->frontarray);
             }
             else{
                 return 'code does not match';

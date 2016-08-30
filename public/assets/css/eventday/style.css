@@ -366,3 +366,9 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .updateBG li a,.publish a{color: #737373;}
 .updateBG li a:hover,.publish a:hover{ text-decoration: none; color: #9c9c9c;}
 .publish { display: block; text-align: right;}
+
+
+/*added by kuber */
+.panel-image img {
+    max-height: 254px;
+}

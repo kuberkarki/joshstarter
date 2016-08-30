@@ -167,6 +167,11 @@ return [
         App\Providers\JoshCrudGeneratorServiceProvider::class,
         App\Providers\LocalServiceProvider::class,
 
+        Mews\Captcha\CaptchaServiceProvider::class,
+
+         Laravel\Socialite\SocialiteServiceProvider::class,
+
+
     ],
 
     /*
@@ -220,6 +225,8 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Datatables' => yajra\Datatables\Datatables::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

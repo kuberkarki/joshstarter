@@ -2,14 +2,16 @@
 
 namespace App;
 
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
-use Cviebrock\EloquentTaggable\Contracts\Taggable;
-use Cviebrock\EloquentTaggable\Traits\Taggable as TaggableImpl;
+//use Cviebrock\EloquentSluggable\SluggableInterface;
+//use Cviebrock\EloquentSluggable\SluggableTrait;
+//use Cviebrock\EloquentTaggable\Contracts\Taggable;
+use Cviebrock\EloquentTaggable\Taggable;
+use Cviebrock\EloquentSluggable\Sluggable;
+//use Cviebrock\EloquentTaggable\Traits\Taggable as TaggableImpl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Blog extends Model implements SluggableInterface, Taggable {
+class Blog extends Model  {
 
     use SoftDeletes;
     use SluggableTrait;
