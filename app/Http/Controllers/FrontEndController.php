@@ -24,6 +24,8 @@ use Carbon\Carbon ;
 use App\News;
 use DateTime;
 use App\Page;
+use Captcha;
+use Validator;
 
 
 
@@ -235,6 +237,12 @@ class FrontEndController extends JoshController
         $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
 
         try {
+            $rules = ['captcha' => 'required|captcha'];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails())
+            {
+                return redirect('register-business')->with('error', 'captcha error')->withInput();
+            }
             // Register the user
             $user = Sentinel::register($request->except(['captcha','password_confirm','subscribed','submit']), $activate);
 
