@@ -255,7 +255,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-fw fa-calendar text-primary"></i>
                                             </span>
-                                        {!!  Form::text('dob', old('dob',$user->dob), array('id' => 'datepicker','class' => 'form-control', 'data-date-format'=> 'YYYY-MM-DD','readonly'=>'readonly'))  !!}
+                                        {!!  Form::text('dob', old('dob',$user->dob), array('id' => 'datepicker','class' => 'form-control', 'data-date-format'=> 'YYYY-MM-DD'))  !!}
                                     </div>
                                     <span class="help-block">{{ $errors->first('dob', ':message') }}</span>
                                 </div>
@@ -274,7 +274,6 @@
         </div>
     </div>
 @stop
-
 {{-- page level scripts --}}
 @section('footer_scripts')
 

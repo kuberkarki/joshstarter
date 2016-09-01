@@ -220,9 +220,9 @@
       });
 
       $('#datetimepicker1').datetimepicker({
-   // dateFormat: 'dd-mm-yy',
-   format:'YYYY-MM-DD HH:mm:ss'
-   // minDate: getFormattedDate(new Date())
-});
+           // dateFormat: 'dd-mm-yy',
+           format:'YYYY-MM-DD HH:mm:ss'
+           // minDate: getFormattedDate(new Date())
+        });
     </script>
 @stop
