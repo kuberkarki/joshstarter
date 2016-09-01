@@ -21,7 +21,7 @@ Register
 <section class="bannerWrapper innerBanner">
   <div class="searchWrap">
     <div class="container">
-        <h1>Register Now !!</h1>
+        <h1>Register Your Business Now !!</h1>
            
     </div>
   </div>
@@ -38,12 +38,17 @@ Register
                     <div class="text-danger">{{ $error }}</div>
                 @endforeach
             @endif
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('register-business') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
                 
-
+                <div class="form-group {{ $errors->first('first_name', 'has-error') }}">
+                    <label class="sr-only"> Company Name</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name"
+                           value="{!! old('company_name') !!}" required>
+                    {!! $errors->first('company_name', '<span class="help-block">:message</span>') !!}
+                </div>
                 <div class="form-group {{ $errors->first('first_name', 'has-error') }}">
                     <label class="sr-only"> First Name</label>
                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name"
@@ -72,6 +77,74 @@ Register
                     <input type="password" class="form-control" id="Password2" name="password_confirm"
                            placeholder="Confirm Password">
                     {!! $errors->first('password_confirm', '<span class="help-block">:message</span>') !!}
+                </div>
+                <div class="form-group {{ $errors->first('address', 'has-error') }}">
+                    <label class="sr-only">Office Location</label>
+                    <input placeholder="Office Location" type="text" class="form-control" id="add1" name="address" value="{!! old('address') !!}"/> 
+                    {!! $errors->first('address', '<span class="help-block">:message</span>') !!}                           
+                </div>
+                 <div class="form-group {{ $errors->first('country', 'has-error') }}">
+                    <label class="sr-only">Select Country: </label>
+                   
+                        {!! Form::select('country', $countries, old('country'),['class' => 'form-control select2', 'id' => 'countries']) !!}
+                       {{ $errors->first('country', ':message') }}
+                </div>
+
+                <div class="form-group {{ $errors->first('state', 'has-error') }}">
+                    <label class="sr-only" for="state">State:</label>
+                    
+                            <input type="text" placeholder="State" id="state" class="form-control" name="state"
+                                   value="{!! old('state') !!}"/>
+                       
+                    <span class="help-block">{{ $errors->first('state', ':message') }}</span>
+                </div>
+
+                <div class="form-group {{ $errors->first('city', 'has-error') }}">
+                    <label class="sr-only" for="city">City:</label>
+                    
+                            <input type="text" placeholder="City" id="city" class="form-control" name="city"
+                                   value="{!! old('city') !!}"/>
+                       
+                    <span class="help-block">{{ $errors->first('city', ':message') }}</span>
+                </div>
+
+                <div class="form-group {{ $errors->first('postal', 'has-error') }}">
+                    <label class="sr-only" for="postal">Postal/Zip:</label>
+                    
+                            <input type="text" placeholder="Postal/Zip" id="postal" class="form-control"
+                                   name="postal" value="{!! old('postal') !!}"/>
+                        
+                        <span class="help-block">{{ $errors->first('postal', ':message') }}</span>
+                   
+                </div>
+
+                <div class="form-group {{ $errors->first('office_number', 'has-error') }}">
+                    <label class="sr-only" for="postal">Office Number:</label>
+                    <input type="text" placeholder="Office Number" id="office_number" class="form-control"
+                                   name="office_number" value="{!! old('office_number') !!}"/>
+                        
+                        <span class="help-block">{{ $errors->first('office_number', ':message') }}</span>
+                    
+                </div>
+
+                <div class="form-group {{ $errors->first('mobile_number', 'has-error') }}">
+                    <label class="sr-only" for="postal">Mobile Number:</label>
+                    
+                    <input type="text" placeholder="Mobile Number" id="mobile_number" class="form-control"
+                                   name="mobile_number" value="{!! old('mobile_number') !!}"/>
+                        
+                        <span class="help-block">{{ $errors->first('mobile_number', ':message') }}</span>
+                    
+                </div>
+
+                <div class="form-group {{ $errors->first('bio', 'has-error') }}">
+                    <label class="sr-only" for="bio">Short Description:</label>
+                    
+                            <textarea rows="5" cols="30"  placeholder="Short Description" id="bio" class="form-control"
+                                   name="bio" >{!! old('bio') !!}</textarea>
+                       
+                        <span class="help-block">{{ $errors->first('bio', ':message') }}</span>
+                   
                 </div>
 
                 <div class="form-group">

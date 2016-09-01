@@ -11,7 +11,8 @@ Route::group(['middleware' => 'web'], function () {
     | and give it the Closure to execute when that URI is requested.
     |
     */
-  
+
+   
 /*Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');*/
 
@@ -42,6 +43,7 @@ Route::get('/auth/callback/{provider?}',[
     Route::model('users', 'App\User');
 
     Route::pattern('slug', '[a-z0-9- _]+');
+
 
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('create-event-menu', array('as' => 'create-event-menu', 'uses' => 'EventsController@createEventMenuFrontend'));
@@ -225,6 +227,11 @@ Route::get('/auth/callback/{provider?}',[
 
     Route::get('register-freelancer', array('as' => 'register-freelancer', 'uses' => 'FrontEndController@getRegisterFreelancer'));
     Route::post('register-freelancer', 'FrontEndController@postRegisterFreelancer');
+
+    Route::get('register-event-organizer', array('as' => 'register-event-organizer', 'uses' => 'FrontEndController@getRegisterFreelancer'));
+    Route::post('register-event-organizer', 'FrontEndController@postRegisterFreelancer');
+
+
     Route::get('activate/{userId}/{activationCode}', array('as' => 'activate', 'uses' => 'FrontEndController@getActivate'));
     Route::get('forgot-password', array('as' => 'forgot-password', 'uses' => 'FrontEndController@getForgotPassword'));
     Route::post('forgot-password', 'FrontEndController@postForgotPassword');
@@ -266,7 +273,13 @@ Route::get('/auth/callback/{provider?}',[
     Route::get('event/{slug?}', 'EventsController@getEventFrontend');
     Route::post('event/{events}/comment', 'EventsController@storeCommentFrontend');
 
+     Route::group(array('middleware' => 'SentinelBusiness'), function () {
+         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountBusiness'));
+    }  );
+
     Route::get('{name?}', 'JoshController@showFrontEndView');
+
+
 # End of frontend views
 
 });

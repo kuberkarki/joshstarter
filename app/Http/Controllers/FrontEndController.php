@@ -113,6 +113,19 @@ class FrontEndController extends JoshController
         return Redirect::back()->withInput()->withErrors($this->messageBag);
     }
 
+
+    //Business Acciunt
+    //
+     /**
+     * get user details and display
+     */
+    public function myAccountBusiness(User $user)
+    { 
+        $user = Sentinel::getUser();
+        $countries = $this->countries;
+        return View::make('business.user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
+    }
+
     /**
      * get user details and display
      */
@@ -146,6 +159,13 @@ class FrontEndController extends JoshController
         $user->city = $request->get('city');
         $user->address = $request->get('address');
         $user->postal = $request->get('postal');
+
+        $user->company_name = $request->get('company_name');
+        $user->office_number = $request->get('office_number');
+        $user->mobile_number = $request->get('mobile_number');
+
+        echo $user->office_number;exit;
+        
 
 
         if ($password = $request->get('password')) {
@@ -197,7 +217,8 @@ class FrontEndController extends JoshController
     public function getRegister()
     {
         // Show the page
-        return View::make('register')->with('frontarray',$this->frontarray);
+        $countries = $this->countries;
+        return View::make('register',compact('countries'))->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -215,7 +236,7 @@ class FrontEndController extends JoshController
 
         try {
             // Register the user
-            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
+            $user = Sentinel::register($request->except(['captcha','password_confirm','subscribed','submit']), $activate);
 
             //add user to 'User' group
             
@@ -265,7 +286,8 @@ class FrontEndController extends JoshController
     public function getRegisterBusiness()
     {
         // Show the page
-        return View::make('register-business')->with('frontarray',$this->frontarray);
+        $countries = $this->countries;
+        return View::make('business.register-business',compact('countries'))->with('frontarray',$this->frontarray);
     }
 
     public function postRegisterFreelancer(UserRequest $request)

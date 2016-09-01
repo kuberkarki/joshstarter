@@ -6,7 +6,7 @@ use Closure;
 use Sentinel;
 use Redirect;
 
-class SentinelUser
+class SentinelBusiness
 {
     /**
      * Handle an incoming request.
@@ -18,11 +18,8 @@ class SentinelUser
     public function handle($request, Closure $next)
     {
         if (!Sentinel::check()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return Redirect::route('login');
-            }
+            if(!Sentinel::inRole('business'))
+                 return Redirect::route('login');
         }
         return $next($request);
     }
