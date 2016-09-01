@@ -45,12 +45,7 @@ Route::get('/auth/callback/{provider?}',[
     Route::pattern('slug', '[a-z0-9- _]+');
 
 
-    Route::group(array('middleware' => 'SentinelUser'), function () {
-        Route::get('create-event-menu', array('as' => 'create-event-menu', 'uses' => 'EventsController@createEventMenuFrontend'));
-        Route::get('create-event', array('as' => 'create-event', 'uses' => 'EventsController@createEventFrontend'));
-        Route::post('events', 'EventsController@storeFrontend');
-        Route::put('event', 'EventsController@update');
-    });
+   
 
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
@@ -228,8 +223,8 @@ Route::get('/auth/callback/{provider?}',[
     Route::get('register-freelancer', array('as' => 'register-freelancer', 'uses' => 'FrontEndController@getRegisterFreelancer'));
     Route::post('register-freelancer', 'FrontEndController@postRegisterFreelancer');
 
-    Route::get('register-event-organizer', array('as' => 'register-event-organizer', 'uses' => 'FrontEndController@getRegisterFreelancer'));
-    Route::post('register-event-organizer', 'FrontEndController@postRegisterFreelancer');
+    Route::get('register-event-organizer', array('as' => 'register-event-organizer', 'uses' => 'FrontEndController@getRegisterEventOrganizer'));
+    Route::post('register-event-organizer', 'FrontEndController@postRegisterEventOrganizer');
 
 
     Route::get('activate/{userId}/{activationCode}', array('as' => 'activate', 'uses' => 'FrontEndController@getActivate'));
@@ -275,7 +270,19 @@ Route::get('/auth/callback/{provider?}',[
 
      Route::group(array('middleware' => 'SentinelBusiness'), function () {
          Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountBusiness'));
-    }  );
+    });
+
+     Route::group(array('middleware' => 'SentinelFreelancer'), function () {
+         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountFreelancer'));
+    });
+
+     route::group(array('middleware' => 'SentinelEventOrganizer'), function () {
+         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountEventOrganizer'));
+         Route::get('create-event-menu', array('as' => 'create-event-menu', 'uses' => 'EventsController@createEventMenuFrontend'));
+        Route::get('create-event', array('as' => 'create-event', 'uses' => 'EventsController@createEventFrontend'));
+        Route::post('events', 'EventsController@storeFrontend');
+        Route::put('event', 'EventsController@update');
+    });
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
 

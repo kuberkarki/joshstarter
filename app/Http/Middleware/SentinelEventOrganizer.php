@@ -6,7 +6,7 @@ use Closure;
 use Sentinel;
 use Redirect;
 
-class SentinelFreelancer
+class SentinelEventOrganizer
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class SentinelFreelancer
     public function handle($request, Closure $next)
     {
         if (!Sentinel::check()) {
-            if(!Sentinel::inRole('business'))
+            if(!Sentinel::inRole('event-organizer'))
                  return Redirect::route('login');
         }
         return $next($request);

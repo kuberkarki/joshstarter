@@ -52,5 +52,6 @@ class Kernel extends HttpKernel
         'SentinelAdmin' => \App\Http\Middleware\SentinelAdmin::class,
         'SentinelBusiness' => \App\Http\Middleware\SentinelBusiness::class,
         'SentinelFreelancer' => \App\Http\Middleware\SentinelFreelancer::class,
+        'SentinelEventOrganizer' => \App\Http\Middleware\SentinelEventOrganizer::class,
     ];
 }

@@ -128,6 +128,30 @@ class FrontEndController extends JoshController
         return View::make('business.user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
     }
 
+    //Freelancer Acciunt
+    //
+     /**
+     * get user details and display
+     */
+    public function myAccountFreelancer(User $user)
+    { 
+        $user = Sentinel::getUser();
+        $countries = $this->countries;
+        return View::make('freelancer.user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
+    }
+
+    //Freelancer Acciunt
+    //
+     /**
+     * get user details and display
+     */
+    public function myAccountEventOrganizer(User $user)
+    { 
+        $user = Sentinel::getUser();
+        $countries = $this->countries;
+        return View::make('event_organizer.user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
+    }
+
     /**
      * get user details and display
      */
@@ -165,8 +189,9 @@ class FrontEndController extends JoshController
         $user->company_name = $request->get('company_name');
         $user->office_number = $request->get('office_number');
         $user->mobile_number = $request->get('mobile_number');
+        $user->duration = $request->get('duration');
 
-        echo $user->office_number;exit;
+       // echo $user->office_number;exit;
         
 
 
@@ -298,6 +323,82 @@ class FrontEndController extends JoshController
         return View::make('business.register-business',compact('countries'))->with('frontarray',$this->frontarray);
     }
 
+
+    /**
+     * Account sign up form processing.
+     *
+     * @return Redirect
+     */
+    public function postRegisterEventOrganizer(UserRequest $request)
+    {
+
+        
+
+       // print_r($request->get('type'));exit;
+        $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
+
+        try {
+            $rules = ['captcha' => 'required|captcha'];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails())
+            {
+                return redirect('register-event-organizer')->with('error', 'captcha error')->withInput();
+            }
+            // Register the user
+            $user = Sentinel::register($request->except(['captcha','password_confirm','subscribed','submit']), $activate);
+
+            //add user to 'User' group
+            
+                $role = Sentinel::findRoleByName('Event Organizer');
+            
+
+            //print_r($role);exit;
+            $role->users()->attach($user);
+
+            //if you set $activate=false above then user will receive an activation mail
+            if (!$activate) {
+                // Data to be used on the email view
+                $data = array(
+                    'user' => $user,
+                    'activationUrl' => URL::route('activate', [$user->id, Activation::create($user)->code]),
+                );
+
+                // Send the activation code through email
+                Mail::send('emails.register-activate', $data, function ($m) use ($user) {
+                    $m->to($user->email, $user->first_name . ' ' . $user->last_name);
+                    $m->subject('Welcome ' . $user->first_name);
+                });
+
+                //Redirect to login page
+                return Redirect::to("login")->with('success', Lang::get('auth/message.signup.success'));
+            }
+            // login user automatically
+            Sentinel::login($user, false);
+
+            // Redirect to the home page with success menu
+            return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+            //return View::make('user_account')->with('success', Lang::get('auth/message.signup.success'));
+
+        } catch (UserExistsException $e) {
+            $this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+        }
+
+        // Ooops.. something went wrong
+        return Redirect::back()->withInput()->withErrors($this->messageBag);
+    }
+
+    /**
+     * Account Register.
+     *
+     * @return View
+     */
+    public function getRegisterEventOrganizer()
+    {
+        // Show the page
+        $countries = $this->countries;
+        return View::make('event_organizer.register',compact('countries'))->with('frontarray',$this->frontarray);
+    }
+
     public function postRegisterFreelancer(UserRequest $request)
     {
 
@@ -307,8 +408,14 @@ class FrontEndController extends JoshController
         $activate = $this->user_activation; //make it false if you don't want to activate user automatically it is declared above as global variable
 
         try {
+            $rules = ['captcha' => 'required|captcha'];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails())
+            {
+                return redirect('register-freelancer')->with('error', 'captcha error')->withInput();
+            }
             // Register the user
-            $user = Sentinel::register($request->only(['first_name', 'last_name', 'email', 'password']), $activate);
+            $user = Sentinel::register($request->except(['captcha','password_confirm','subscribed','submit']), $activate);
 
             //add user to 'User' group
             
@@ -358,7 +465,8 @@ class FrontEndController extends JoshController
     public function getRegisterFreelancer()
     {
         // Show the page
-        return View::make('register-freelancer')->with('frontarray',$this->frontarray);
+         $countries = $this->countries;
+        return View::make('freelancer.register-freelancer',compact('countries'))->with('frontarray',$this->frontarray);
     }
 
     /**
