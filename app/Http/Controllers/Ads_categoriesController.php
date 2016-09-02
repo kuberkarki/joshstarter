@@ -20,7 +20,7 @@ class Ads_categoriesController extends Controller {
 	{
 		//$user=Sentinel::getUser();
 		$ads_categories = Ads_category::latest()->get();
-		return view('admin.ads_categories.index');
+		return view('admin.ads_categories.index',compact('ads_categories'));
 	}
 
 	/**
