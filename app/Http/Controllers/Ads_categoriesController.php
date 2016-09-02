@@ -7,6 +7,7 @@ use App\Ads_category;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Lang;
+use Sentinel;
 
 class Ads_categoriesController extends Controller {
 

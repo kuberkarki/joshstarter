@@ -151,7 +151,7 @@ public function __construct(Socialite $socialite){
                 return Redirect::route("dashboard")->with('success', Lang::get('auth/message.signin.success'));
             }
 
-            $this->messageBag->add('email', Lang::get('auth/message.account_not_found'));
+            //$this->messageBag->add('email', Lang::get('auth/message.account_not_found'));
 
         } catch (NotActivatedException $e) {
             $this->messageBag->add('email', Lang::get('auth/message.account_not_activated'));
