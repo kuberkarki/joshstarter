@@ -19,7 +19,7 @@ class Ads_categoriesController extends Controller {
 	public function index()
 	{
 		//$user=Sentinel::getUser();
-		//$ads_categories = Ads_category::where('user_id',$user->id)->get();
+		$ads_categories = Ads_category::latest()->get();
 		return view('admin.ads_categories.index');
 	}
 
