@@ -372,3 +372,7 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .panel-image img {
     max-height: 254px;
 }
+
+footer {
+    border-top: 2px solid #5d011a;
+}

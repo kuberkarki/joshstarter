@@ -149,4 +149,24 @@
             </a>
         </li>
     </ul>
+</li><li {!! (Request::is('admin/ads_categories') || Request::is('admin/ads_categories/create') || Request::is('admin/ads_categories/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Ads_categories</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/ads_categories') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/ads_categories') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Ads_categories
+            </a>
+        </li>
+        <li {!! (Request::is('admin/ads_categories/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/ads_categories/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Ads_category
+            </a>
+        </li>
+    </ul>
 </li>

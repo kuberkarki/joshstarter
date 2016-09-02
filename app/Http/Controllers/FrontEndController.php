@@ -92,7 +92,14 @@ class FrontEndController extends JoshController
         try {
             // Try to log the user in
             if (Sentinel::authenticate($request->only('email', 'password'), $request->get('remember-me', 0))) {
-                return Redirect::route("my-account")->with('success', Lang::get('auth/message.login.success'));
+                if(Sentinel::inRole('event-organizer'))
+                    return Redirect::route("my-account-event-organizer")->with('success', Lang::get('auth/message.login.success'));
+                elseif(Sentinel::inRole('freelancer'))
+                    return Redirect::route("my-account-freelancer")->with('success', Lang::get('auth/message.login.success'));
+                elseif(Sentinel::inRole('business'))
+                    return Redirect::route("my-account-business")->with('success', Lang::get('auth/message.login.success'));
+                else
+                    return Redirect::route("my-account")->with('success', Lang::get('auth/message.login.success'));
             } else {
                 return Redirect::to('login')->with('error', 'Username or password is incorrect.');
                 //return Redirect::back()->withInput()->withErrors($validator);
@@ -123,6 +130,7 @@ class FrontEndController extends JoshController
      */
     public function myAccountBusiness(User $user)
     { 
+
         $user = Sentinel::getUser();
         $countries = $this->countries;
         return View::make('business.user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
@@ -158,6 +166,14 @@ class FrontEndController extends JoshController
     public function myAccount(User $user)
     {
         $user = Sentinel::getUser();
+
+         if(Sentinel::inRole('event-organizer'))
+            return Redirect::route("my-account-event-organizer");
+        elseif(Sentinel::inRole('freelancer'))
+            return Redirect::route("my-account-freelancer");
+        elseif(Sentinel::inRole('business'))
+            return Redirect::route("my-account-business");
+                
         $countries = $this->countries;
         return View::make('user_account', compact('user', 'countries'))->with('frontarray',$this->frontarray);
     }

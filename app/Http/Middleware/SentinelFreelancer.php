@@ -18,9 +18,10 @@ class SentinelFreelancer
     public function handle($request, Closure $next)
     {
         if (!Sentinel::check()) {
-            if(!Sentinel::inRole('business'))
-                 return Redirect::route('login');
+            return Redirect::route('login');
         }
+        if(!Sentinel::inRole('freelancer'))
+                 return Redirect::route('login');
         return $next($request);
     }
 }

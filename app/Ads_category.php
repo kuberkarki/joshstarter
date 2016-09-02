@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ad extends Model  {
+class Ads_category extends Model  {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'ads';
+    protected $table = 'ads_categories';
 
     /**
      * Attributes that should be mass-assignable.
@@ -18,9 +18,9 @@ class Ad extends Model  {
      */
     protected $guarded = ['id'];
 
-    public function category()
+    public function blog()
     {
-        return $this->belongsTo('App\Ads_Category');
+        return $this->hasMany('App\Ad');
     }
 
 }

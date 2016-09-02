@@ -17,4 +17,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin'])
 });Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('bookings', 'BookingsController');
 	Route::get('bookings/{id}/delete', array('as' => 'admin.bookings.delete', 'uses' => 'BookingsController@getDelete'));
 	Route::get('bookings/{id}/confirm-delete', array('as' => 'admin.bookings.confirm-delete', 'uses' => 'BookingsController@getModalDelete'));
+});Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('ads_categories', 'Ads_categoriesController');
+	Route::get('ads_categories/{id}/delete', array('as' => 'admin.ads_categories.delete', 'uses' => 'Ads_categoriesController@getDelete'));
+	Route::get('ads_categories/{id}/confirm-delete', array('as' => 'admin.ads_categories.confirm-delete', 'uses' => 'Ads_categoriesController@getModalDelete'));
 });

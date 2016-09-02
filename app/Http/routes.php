@@ -268,16 +268,28 @@ Route::get('/auth/callback/{provider?}',[
     Route::get('event/{slug?}', 'EventsController@getEventFrontend');
     Route::post('event/{events}/comment', 'EventsController@storeCommentFrontend');
 
-     Route::group(array('middleware' => 'SentinelBusiness'), function () {
-         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountBusiness'));
+    Route::group(array('middleware' => 'SentinelUser'), function () {
+        Route::get('my-account-business', array('as' => 'my-account-business', 'uses' => 'FrontEndController@myAccountBusiness'));
+        Route::get('my-account-freelancer', array('as' => 'my-account-freelancer', 'uses' => 'FrontEndController@myAccountFreelancer'));
+        Route::get('my-account-event-organizer', array('as' => 'my-account-event-organizer', 'uses' => 'FrontEndController@myAccountEventOrganizer'));
+
+
     });
 
-     Route::group(array('middleware' => 'SentinelFreelancer'), function () {
-         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountFreelancer'));
+     Route::group(array('middleware' => 'SentinelBusiness'), function () {
+        Route::get('ads', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
+        Route::get('create-ads', array('as' => 'create-ads', 'uses' => 'AdsController@createFrontend'));
+        Route::post('ads', 'AdsController@storeFrontend');
+       // Route::put('ads', 'AdsController@editads');
+        Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
+        Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
+       Route::get('delete-ads/{ad_id}', array('as' => 'delete-ads', 'uses' => 'AdsController@deleteads'));
+    });
+
+    Route::group(array('middleware' => 'SentinelFreelancer'), function () {
     });
 
      route::group(array('middleware' => 'SentinelEventOrganizer'), function () {
-         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccountEventOrganizer'));
          Route::get('create-event-menu', array('as' => 'create-event-menu', 'uses' => 'EventsController@createEventMenuFrontend'));
         Route::get('create-event', array('as' => 'create-event', 'uses' => 'EventsController@createEventFrontend'));
         Route::post('events', 'EventsController@storeFrontend');
