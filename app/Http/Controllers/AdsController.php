@@ -7,7 +7,7 @@ use App\Ad;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Lang;
-use App\Ads_Category;
+use App\Ads_category;
 use Sentinel;
 
 class AdsController extends Controller {
@@ -23,7 +23,7 @@ class AdsController extends Controller {
 			$user=Sentinel::getUser();
 		}
 		$ads = Ad::where('user_id',$user->id)->get();
-		$ads_category = Ads_Category::lists('name', 'id');
+		$ads_category = Ads_category::lists('name', 'id');
 		//dd($ads_category[1]);
 		return view('ads.index', compact('ads','ads_category'));
 	}
