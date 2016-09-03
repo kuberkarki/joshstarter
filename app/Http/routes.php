@@ -284,6 +284,8 @@ Route::get('/auth/callback/{provider?}',[
         Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
         Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
        Route::get('delete-ads/{ad_id}', array('as' => 'delete-ads', 'uses' => 'AdsController@deleteads'));
+       Route::post('delete-ads-image', array('as' => 'delete-ads-image', 'uses' => 'AdsController@deleteadsimage'));
+       Route::post('delete-ads-price', array('as' => 'delete-ads-price', 'uses' => 'AdsController@deleteadsprice'));
     });
 
     Route::group(array('middleware' => 'SentinelFreelancer'), function () {

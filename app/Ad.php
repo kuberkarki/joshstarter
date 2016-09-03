@@ -20,7 +20,17 @@ class Ad extends Model  {
 
     public function category()
     {
-        return $this->belongsTo('App\Ads_Category');
+        return $this->belongsTo('App\Ads_category');
+    }
+
+    public function prices()
+    {
+        return $this->hasMany('App\Ads_prices','ads_id','id');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany('App\Ads_photos','ads_id','id');
     }
 
 }

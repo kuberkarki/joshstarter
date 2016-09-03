@@ -92,6 +92,13 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="input_fields_wrap">
+                                    <a href="javascript:void(0);" class="add_field_button">Add More Photos</a>
+                                    <div><input type="file" name="mytext[]"></div>
+                                </div>
+
+
                             </div>
 
         					<div class="form-group">
@@ -100,10 +107,17 @@
                                  <span><i>Vimeo or Youtube</i></span>
                             </div>
 
-        					<div class="form-group">
-                                {!! Form::label('available_date', 'Available Date: ') !!}
-                                {!! Form::text('available_date', old('available_date'), ['class' => 'form-control']) !!}
-                            </div>
+        					
+
+                            <div class="form-group">
+                        {!! Form::label('available_date', 'Available Date: ') !!}
+                        <div class='input-group date' >
+                            <input type='text' value="{!! old('available_date') !!}" name="available_date" class="form-control" id='datetimepicker1' />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
 
         					<div class="form-group">
                                 {!! Form::label('price', 'Price: ') !!}
@@ -182,16 +196,43 @@
         /*$("#find").click(function(){
           $("#geocomplete").trigger("geocode");
         });*/
+
+        
         
         
         
         
       });
 
+      var now = new Date();
+    current = new Date(now.getFullYear(), now.getMonth()+1, now.getDay());
+
       $('#datetimepicker1').datetimepicker({
            // dateFormat: 'dd-mm-yy',
-           format:'YYYY-MM-DD HH:mm:ss'
-           // minDate: getFormattedDate(new Date())
+           format:'YYYY-MM-DD HH:mm:ss',
+           maxDate: current,
+           minDate: now
         });
+
+      $(document).ready(function() {
+    var max_fields      = 10; //maximum input boxes allowed
+    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+    var add_button      = $(".add_field_button"); //Add button ID
+    
+    var x = 1; //initlal text box count
+    $(add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper).append('<div class="additional_field"><input type="file" name="mytext[]"/><span class="remove"><a href="#" class="remove_field">Remove</a></span></div>'); //add input box
+        }
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+});
+
+
     </script>
 @stop

@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Lang;
 use App\Ads_category;
 use Sentinel;
+use App\Ads_photos;
+use App\Ads_prices;
 
 class AdsController extends Controller {
 
@@ -46,13 +48,19 @@ class AdsController extends Controller {
 	 */
 	public function storeFrontend(Request $request)
 	{
+
+		$photos=($request['mytext']);
+		$galimage=array();
+
+		 
+		
 		//echo $request->get('captcha');exit;
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();
 			$request->request->add(['user_id'=>$user->id]);
 		}
 
-		$ad= new Ad($request->except('photo_image'));
+		$ad= new Ad($request->except('photo_image','mytext'));
 		if ($request->hasFile('photo_image')) {
         			$file            = $request->file('photo_image');
         			$destinationPath =  public_path().'/uploads/crudfiles/';
@@ -64,23 +72,46 @@ class AdsController extends Controller {
         		}
                 		
         $ad->save();
+
+        if(count($photos)){
+        	for($i=0; $i<count($photos); $i++){
+        			$file=( $request['mytext'][$i]);
+        			$destinationPath =  public_path().'/uploads/crudfiles/';
+        			$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        			if ($file) {
+						$file->move($destinationPath, $filename);
+					}
+					$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        			//echo $photo["temp_name"];
+        			//echo $file            = $_FILES["fileToUpload"]["tmp_name"];
+        			//$destinationPath =  public_path().'/uploads/crudfiles/';
+        			//$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        	}
+        }
+        Ads_photos::insert($galimage);
+
+        //$ad->id;
+
 		return redirect('ads')->with('success', Lang::get('message.success.create'));
 	}
 
 	/**
-    	 * Delete the given Ad.
-    	 *
-    	 * @param  int      $id
-    	 * @return Redirect
-    	 */
-    	public function deleteads($id = null)
-    	{
-    		$ad = Ad::destroy($id);
+	 * Delete the given Ad.
+	 *
+	 * @param  int      $id
+	 * @return Redirect
+	 */
+	public function deleteads($id = null)
+	{
+		$ad = Ad::destroy($id);
 
-            // Redirect to the group management page
-            return redirect('ads')->with('success', Lang::get('message.success.delete'));
+	    // Redirect to the group management page
+	    return redirect('ads')->with('success', Lang::get('message.success.delete'));
 
-    	}
+	}
 
 
 
@@ -101,7 +132,12 @@ class AdsController extends Controller {
 			return redirect('ads')->with('error','Error');
 		$ads_category = Ads_Category::lists('name', 'id');
 
-		return view('ads.edit', compact('ad','ads_category'));
+		$events = [];
+
+
+		//print_r($ad->photos()->get());
+
+		return view('ads.edit', compact('ad','ads_category','calendar'));
 	}
 
 	/**
@@ -112,6 +148,13 @@ class AdsController extends Controller {
 	 */
 	public function editads($id, Request $request)
 	{
+		$photos=($request['mytext']);
+		$prices=$request['myprice'];
+		$guests=$request['myguest'];
+		$galimage=array();
+		$galprice=array();
+
+		
 
 		//$this->validate($request, ['name' => 'required']); // Uncomment and modify if needed.
 		$ad = Ad::findOrFail($id);
@@ -131,9 +174,89 @@ class AdsController extends Controller {
 					}
         		}
 
-                $ad->update($request->except('photo_image'));
+                $ad->update($request->except('photo_image','mytext','myprice','myguest'));
+
+
+             if(count($photos) && $request['mytext'][0]['tmp_name']!=''){
+        	for($i=0; $i<count($photos); $i++){
+        			$file=( $request['mytext'][$i]);
+        			$destinationPath =  public_path().'/uploads/crudfiles/';
+        			$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        			if ($file) {
+						$file->move($destinationPath, $filename);
+					}
+					$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        			//echo $photo["temp_name"];
+        			//echo $file            = $_FILES["fileToUpload"]["tmp_name"];
+        			//$destinationPath =  public_path().'/uploads/crudfiles/';
+        			//$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        	}
+        	 Ads_photos::insert($galimage);
+        }
+
+        if(count($prices) && $request['myprice'][0]!=''){
+        	for($i=0; $i<count($prices); $i++){
+        			$price=(int)( $request['myprice'][$i]);
+        			$guest=( $request['myguest'][$i]);
+
+        			if($i==0)
+        				$minguest=0;
+        			else
+        				$minguest=(int)( $request['myguest'][$i-1]);
+
+        			$maxguest=(int)$request['myguest'][$i];
+        			
+					$galprice[]=array('ads_id'=>$ad->id,'minguest'=>$minguest,'maxguest'=>$maxguest,'price'=>$price);
+        			//echo $photo["temp_name"];
+        			//echo $file            = $_FILES["fileToUpload"]["tmp_name"];
+        			//$destinationPath =  public_path().'/uploads/crudfiles/';
+        			//$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        	}
+        	 Ads_prices::insert($galprice);
+        }
 		return redirect('ads')->with('success', Lang::get('message.success.update'));
 	}
+
+	/**
+    	 * Delete the given Ad image.
+    	 *
+    	 * @param  int      $id
+    	 * @return Redirect
+    	 */
+    	public function deleteadsimage(request $request)
+    	{
+    		$id=$request->get('id');
+    		$ad = Ads_photos::destroy($id);
+    		$return["response"] = json_encode("Deleted");
+  			echo json_encode($return);
+
+            // Redirect to the group management page
+            //return rdeleteadsedirect('ads')->with('success', Lang::get('message.success.delete'));
+
+    	}
+
+    	/**
+    	 * Delete the given Ad image.
+    	 *
+    	 * @param  int      $id
+    	 * @return Redirect
+    	 */
+    	public function deleteadsprice(request $request)
+    	{
+    		$id=$request->get('id');
+    		$ad = Ads_prices::destroy($id);
+    		$return["response"] = json_encode("Deleted");
+  			echo json_encode($return);
+
+            // Redirect to the group management page
+            //return rdeleteadsedirect('ads')->with('success', Lang::get('message.success.delete'));
+
+    	}
 
 	/**
 	 * Display a listing of the resource.
