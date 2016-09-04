@@ -208,7 +208,7 @@
                             </li>
                           @endforeach
                           </ul>
-                          
+                          </div>
 
                         @endif
                         
