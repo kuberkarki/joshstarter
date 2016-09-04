@@ -49,8 +49,13 @@ class AdsController extends Controller {
 	public function storeFrontend(Request $request)
 	{
 
+		
+
 		$photos=($request['mytext']);
+		$prices=$request['myprice'];
+		$guests=$request['myguest'];
 		$galimage=array();
+		$galprice=array();
 
 		 
 		
@@ -60,7 +65,7 @@ class AdsController extends Controller {
 			$request->request->add(['user_id'=>$user->id]);
 		}
 
-		$ad= new Ad($request->except('photo_image','mytext'));
+		$ad= new Ad($request->except('photo_image','mytext','myprice','myguest'));
 		if ($request->hasFile('photo_image')) {
         			$file            = $request->file('photo_image');
         			$destinationPath =  public_path().'/uploads/crudfiles/';
@@ -90,8 +95,33 @@ class AdsController extends Controller {
         			//$ad->photo = $filename;
         		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
         	}
+
+        	  Ads_photos::insert($galimage);
         }
-        Ads_photos::insert($galimage);
+      
+
+        if(count($prices) && $request['myprice'][0]!=''){
+        	for($i=0; $i<count($prices); $i++){
+        			$price=(int)( $request['myprice'][$i]);
+        			$guest=( $request['myguest'][$i]);
+
+        			if($i==0)
+        				$minguest=0;
+        			else
+        				$minguest=(int)( $request['myguest'][$i-1]);
+
+        			$maxguest=(int)$request['myguest'][$i];
+        			
+					$galprice[]=array('ads_id'=>$ad->id,'minguest'=>$minguest,'maxguest'=>$maxguest,'price'=>$price);
+        			//echo $photo["temp_name"];
+        			//echo $file            = $_FILES["fileToUpload"]["tmp_name"];
+        			//$destinationPath =  public_path().'/uploads/crudfiles/';
+        			//$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        	}
+        	 Ads_prices::insert($galprice);
+        }
 
         //$ad->id;
 
@@ -302,6 +332,14 @@ class AdsController extends Controller {
 	{
 		$ad = Ad::findOrFail($id);
 		return view('admin.ads.show', compact('ad'));
+	}
+
+	public function ajaxadsdetail($id,$date){
+		$ad = Ad::findOrFail($id);
+		$ads_category = Ads_category::lists('name', 'id');
+		$date=$date;
+		return view('ads.ajaxdetail', compact('ad','ads_category','date'));
+
 	}
 
 	/**

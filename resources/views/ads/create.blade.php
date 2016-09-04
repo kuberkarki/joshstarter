@@ -109,7 +109,7 @@
 
         					
 
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                         {!! Form::label('available_date', 'Available Date: ') !!}
                         <div class='input-group date' >
                             <input type='text' value="{!! old('available_date') !!}" name="available_date" class="form-control" id='datetimepicker1' />
@@ -117,12 +117,27 @@
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                    </div>
+                    </div> -->
 
         					<div class="form-group">
-                                {!! Form::label('price', 'Price: ') !!}
-                                {!! Form::text('price', old('price'), ['class' => 'form-control']) !!}
-                            </div>
+                        {!! Form::label('price_type', 'Price Type: ') !!}
+                        {!! Form::select('price_type', ['Fixed'=>'Fixed','Variable'=>'Variable'],null ,['class' => 'form-control select2']) !!}
+                    </div>
+
+                        <div class="form-group" id="fixedprice">
+                        {!! Form::label('price', 'Price: ') !!}
+                        {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group" id="variableprice" style="display:none;">
+                    {!! Form::label('price', 'Price Ranges: ') !!}
+                      
+                        
+                        <div class="price_fields_wrap">
+                                    <a href="javascript:void(0);" class="price_add_field_button">Add More Price Range</a>
+                                    <div>Guest No. Upto:<input type="input" name="myguest[]">Price:<input type="input" name="myprice[]"></div>
+                          </div>
+                    </div>
 
         					<div class="form-group">
                                 {!! Form::label('additional_package_offer', 'Additional Package Offer: ') !!}
@@ -134,10 +149,7 @@
                                 {!! Form::text('additional_ads_title', old('additional_ads_title'), ['class' => 'form-control']) !!}
                             </div>
 
-        					<div class="form-group">
-                                {!! Form::label('price_type', 'Price Type: ') !!}
-                                {!! Form::text('price_type', null, ['class' => 'form-control']) !!}
-                            </div>
+        					
 
         					
 
@@ -225,6 +237,44 @@
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
             $(wrapper).append('<div class="additional_field"><input type="file" name="mytext[]"/><span class="remove"><a href="#" class="remove_field">Remove</a></span></div>'); //add input box
+        }
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+
+
+    if($("#price_type").val()=='Variable'){
+      $('#fixedprice').hide();
+      $('#variableprice').show();
+    }else{
+        $('#fixedprice').show();
+        $('#variableprice').hide();
+      }
+
+      $('#price_type').on('change', function() {
+      //alert( this.value ); // or $(this).val()
+      if(this.value=='Variable'){
+        $('#fixedprice').hide();
+        $('#variableprice').show();
+      }else{
+        $('#fixedprice').show();
+        $('#variableprice').hide();
+      }
+    });
+
+      var price_max_fields      = 10; //maximum input boxes allowed
+    var price_wrapper         = $(".price_fields_wrap"); //Fields wrapper
+    var price_add_button      = $(".price_add_field_button"); //Add button ID
+    
+    var x = 1; //initlal text box count
+    $(price_add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        if(x < price_max_fields){ //max input box allowed
+            x++; //text box increment
+             $(price_wrapper).append('<div class="additional_field">Guest No. Upto:<input type="input" name="myguest[]"/>Price:<input type="input" name="myprice[]"><span class="remove"><a href="#" class="remove_field">Remove</a></span></div>'); //add input box
+
         }
     });
     

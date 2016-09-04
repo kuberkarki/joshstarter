@@ -112,6 +112,8 @@ Route::get('/auth/callback/{provider?}',[
             Route::get('{userId}/restore', array('as' => 'restore/user', 'uses' => 'UsersController@getRestore'));
             Route::get('{userId}', array('as' => 'users.show', 'uses' => 'UsersController@show'));
             Route::post('{userId}/passwordreset', array('as' => 'passwordreset', 'uses' => 'UsersController@passwordreset'));
+
+
         });
         Route::resource('users', 'UsersController');
 
@@ -286,6 +288,8 @@ Route::get('/auth/callback/{provider?}',[
        Route::get('delete-ads/{ad_id}', array('as' => 'delete-ads', 'uses' => 'AdsController@deleteads'));
        Route::post('delete-ads-image', array('as' => 'delete-ads-image', 'uses' => 'AdsController@deleteadsimage'));
        Route::post('delete-ads-price', array('as' => 'delete-ads-price', 'uses' => 'AdsController@deleteadsprice'));
+       Route::get('ajax-ads-detail/{id}/{date}', array('as' => 'ajax-ads-detail', 'uses' => 'AdsController@ajaxadsdetail'));
+    
     });
 
     Route::group(array('middleware' => 'SentinelFreelancer'), function () {
