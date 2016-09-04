@@ -35,7 +35,28 @@ My Ads
                     @forelse ($ads as $ad)
                     <!-- BEGIN FEATURED POST -->
 
-                    
+                     <div class=" thumbnail featured-post-wide img">
+                    @if($ad->photo)
+                        <img src="{{ URL::to('/uploads/crudfiles/'.$ad->photo)  }}" class="img-responsive" alt="Image">
+                    @endif
+                     @if(count($ad->photos()))
+                        <div class="row">
+                        <ul class="thumbnails">
+                          @foreach($ad->photos()->get() as $photo)
+                            <li class="img-{{$photo->id}}"> 
+                           
+    
+                            <img src="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}" alt="..."
+                                                     class="img-responsive" width="100px" />
+                            
+                           
+                            </li>
+                          @endforeach
+                          </ul>
+                          
+
+                        @endif
+                        </div>
                     <!-- /.event-detail-image -->
                     <div class="the-box no-border event-detail-content">
                     <h2>{{$ad->title}}</h2>
@@ -60,6 +81,7 @@ My Ads
                         <a href="{!! route('delete-ads',$ad)!!}"><i class="fa fa-close" aria-hidden="true"></i> Delete</a>
                         </p>
                        
+                    </div>
                     </div>
                
                     

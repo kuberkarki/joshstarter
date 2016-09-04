@@ -376,3 +376,24 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 footer {
     border-top: 2px solid #5d011a;
 }
+ul.thumbnails{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #5d011a;
+}
+
+.thumbnails li {
+    float: left;
+}
+
+.thumbnails li img {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
