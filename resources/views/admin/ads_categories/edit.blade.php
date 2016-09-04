@@ -47,7 +47,10 @@ Edit a ads_category
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
                     </div>
 
-					{!!Form::label('homepage:')!!}
+					{!!Form::label('show in homepage:')!!}
+
+                    <label>Yes {{ Form::radio('homepage', true) }}</label>
+                    <label>No {{ Form::radio('homepage', false) }}</label>
 
 					
 

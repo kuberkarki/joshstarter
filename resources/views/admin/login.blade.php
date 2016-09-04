@@ -30,18 +30,18 @@
                     <div id="wrapper">
                         <div id="login" class="animate form">
                             <form action="{{ route('signin') }}" autocomplete="on" method="post" role="form">
-                                <h3 class="black_bg">
-                                    <!-- <img src="{{ asset('assets/img/logo.png') }}" alt="josh logo"> -->
-                                    Event Day Planner
-                                    <br>Log in</h3>
+                               <!--  <h3 class="black_bg">
+                                    <img src="{{ asset('assets/img/logo.png') }}" alt="josh logo">
+                                    Event Day Planner 
+                                    <br>--><h3>Log in</h3>
                                     <!-- CSRF Token -->
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
                                 <div class="form-group {{ $errors->first('email', 'has-error') }}">
                                     <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                        E-mail
+                                        Username
                                     </label>
-                                    <input id="email" name="email" required type="email" placeholder="E-mail"
+                                    <input id="email" name="email" required type="email" placeholder="Username"
                                            value="{!! old('email') !!}"/>
                                     <div class="col-sm-12">
                                         {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
@@ -66,14 +66,14 @@
                                 <p class="login button">
                                     <input type="submit" value="Login" class="btn btn-success" />
                                 </p>
-                                <p class="change_link">
+                                <!-- <p class="change_link">
                                     <a href="#toforgot">
                                         <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
                                     </a>
                                     <a href="#toregister">
                                         <button type="button" id="signup" class="btn btn-responsive botton-alignment btn-success btn-sm" style="float:right;">Sign up</button>
                                     </a>
-                                </p>
+                                </p> -->
                             </form>
                         </div>
                         <div id="register" class="animate form">
