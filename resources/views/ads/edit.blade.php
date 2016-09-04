@@ -33,17 +33,23 @@
 </section>
 
 <div class="container textsmall">
+@include('business.usermenu')
   <div class="row">
+   <!-- Notifications -->
+                @include('notifications')<div class="panel-body">
+             @if ($errors->any())
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
    <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="panel panel-border">
-                    <div class="panel-heading border-light">
-                    <span class="pull-right">
-                        <i class="glyphicon glyphicon-chevron-up showhide clickable"></i>
-                        <i class="glyphicon glyphicon-remove removepanel clickable"></i>
-                    </span>
-                    </div>
+                    
                     <div class="panel-body">
                         <div id='external-events'></div>
+                        <h3>Manage Bookings</h3>
                         <div id="calendar"></div>
                         <!-- Modal -->
                         <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -83,15 +89,9 @@
       <div class="col-md-6">
             <!--main content-->
             <div class="position-center">
-                <!-- Notifications -->
-                @include('notifications')<div class="panel-body">
-             @if ($errors->any())
-                <ul class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            @endif
+               
+
+            <h3>Edit Ads Details</h3>
 
             {!! Form::model($ad, ['method' => 'PATCH', 'action' => ['AdsController@editads', $ad->id],'files'=>true]) !!}
 

@@ -30,6 +30,7 @@
   </div>
 </section>
 <div class="container textsmall">
+@include('business.usermenu')
     <div class="row">
             <div class="row">
                 <div class="col-md-6">

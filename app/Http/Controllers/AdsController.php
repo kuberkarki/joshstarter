@@ -95,6 +95,46 @@ class AdsController extends Controller {
 			$request->request->add(['user_id'=>$user->id]);
 		}
 
+		$messsages = array(
+        'ads_category_id.required'=>'You cant leave Category empty',
+		 'mytext.0.max'=>'You cant have images 1 file larger than 2mb',
+		 'mytext.1.max'=>'You cant have images 2 file larger than 2mb',
+		 'mytext.2.max'=>'You cant have images 3 file larger than 2mb',
+		 'mytext.3.max'=>'You cant have images 4 file larger than 2mb',
+		 'mytext.4.max'=>'You cant have images 5 file larger than 2mb',
+		 'mytext.5.max'=>'You cant have images 6 file larger than 2mb',
+		 'mytext.6.max'=>'You cant have images 7 file larger than 2mb',
+		 'mytext.7.max'=>'You cant have images 8 file larger than 2mb',
+		 'mytext.8.max'=>'You cant have images 9 file larger than 2mb',
+		 'mytext.9.max'=>'You cant have images 10 file larger than 2mb',
+		 'mytext.10.max'=>'You cant have images 11 file larger than 2mb',
+		 );
+
+
+		$rules=[
+            'title' => 'min:3',
+            'content' => 'min:3',
+            'photo_image' => 'max:2000',
+            //'mytext' => 'array|each|max:2000',
+            'ads_category_id'=>'required',
+		];
+			 // $this->validate($request, [
+			 //        'title' => 'required',
+	
+			 //    ]);
+
+			 // Create a new validator instance from our validation rules
+        $validator = Validator::make($request->all(), $rules,$messsages);
+
+        $validator->each('mytext', ['max:2000']);
+
+
+        // If validation fails, we'll exit the operation now.
+        if ($validator->fails()) {
+            // Ooops.. something went wrong
+            return Redirect::to(URL::previous() )->withInput()->withErrors($validator);
+        }
+
 		$ad= new Ad($request->except('photo_image','mytext','myprice','myguest'));
 		if ($request->hasFile('photo_image')) {
         			$file            = $request->file('photo_image');
@@ -224,8 +264,20 @@ class AdsController extends Controller {
 
 		 $messsages = array(
         'ads_category_id.required'=>'You cant leave Category empty',
-        'mytext.max'=>'You cant have images file larger than 2mb',
-    );
+		 'mytext.0.max'=>'You cant have images 1 file larger than 2mb',
+		 'mytext.1.max'=>'You cant have images 2 file larger than 2mb',
+		 'mytext.2.max'=>'You cant have images 3 file larger than 2mb',
+		 'mytext.3.max'=>'You cant have images 4 file larger than 2mb',
+		 'mytext.4.max'=>'You cant have images 5 file larger than 2mb',
+		 'mytext.5.max'=>'You cant have images 6 file larger than 2mb',
+		 'mytext.6.max'=>'You cant have images 7 file larger than 2mb',
+		 'mytext.7.max'=>'You cant have images 8 file larger than 2mb',
+		 'mytext.8.max'=>'You cant have images 9 file larger than 2mb',
+		 'mytext.9.max'=>'You cant have images 10 file larger than 2mb',
+		 'mytext.10.max'=>'You cant have images 11 file larger than 2mb',
+		 );
+
+
 		$rules=[
             'title' => 'min:3',
             'content' => 'min:3',
@@ -239,7 +291,7 @@ class AdsController extends Controller {
 			 //    ]);
 
 			 // Create a new validator instance from our validation rules
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules,$messsages);
 
         $validator->each('mytext', ['max:2000']);
 
