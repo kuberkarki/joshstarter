@@ -170,6 +170,8 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
 
          Laravel\Socialite\SocialiteServiceProvider::class,
+         willvincent\Rateable\RateableServiceProvider::class,
+
 
 
     ],

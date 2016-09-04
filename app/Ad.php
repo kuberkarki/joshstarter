@@ -2,9 +2,11 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use willvincent\Rateable\Rateable;
 
 class Ad extends Model  {
     use Sluggable;
+    use Rateable;
     /**
      * The database table used by the model.
      *

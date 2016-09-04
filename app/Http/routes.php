@@ -53,6 +53,9 @@ Route::get('/auth/callback/{provider?}',[
         Route::post('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@editevent'));
        Route::get('delete-event/{event_id}', array('as' => 'delete-event', 'uses' => 'EventsController@deleteevent'));
        Route::get('messages', array('as' => 'messages', 'uses' => 'EventsController@showmessages'));
+
+    Route::post('rate-ads', array('as' => 'rate-ads', 'uses' => 'AdsController@rateads'));
+
        
     });
 

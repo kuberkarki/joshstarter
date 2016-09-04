@@ -14,6 +14,7 @@ use App\Ads_photos;
 use App\Ads_prices;
 use Redirect;
 use URL;
+use willvincent\Rateable\Rateable;
 
 class AdsController extends Controller {
 
@@ -26,6 +27,7 @@ class AdsController extends Controller {
 	 */
 	public function ads($slug=null)
 	{
+		
 		if($slug){
 			$adscategory=Ads_category::where('slug',$slug)->first();
 			if(!$adscategory)
@@ -326,6 +328,36 @@ class AdsController extends Controller {
             // Redirect to the group management page
             //return rdeleteadsedirect('ads')->with('success', Lang::get('message.success.delete'));
 
+    	}
+
+    	public function rateads(request $request){
+    		$id=$request->get('id');
+    		$rate=(int)$request->get('rating');
+
+    		if(Sentinel::check()){
+				$user=Sentinel::getUser();
+			}else
+			return false;
+
+    		$ads = Ad::find($id);
+
+			$rating = new \willvincent\Rateable\Rating;
+			$rating->rating = $rate;
+			$rating->user_id = $user->id;
+
+			$ads->ratings()->save($rating);
+
+			//dd(Post::first()->ratings);
+			//
+			$return['total']=count($ads->ratings);
+			$return['average']=$ads->averageRating;
+    		
+
+
+
+    		//$ad = Ads_photos::destroy($id);
+    		$return["response"] = json_encode($return);
+  			echo json_encode($return);
     	}
 
     	/**

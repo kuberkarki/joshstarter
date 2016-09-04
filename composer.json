@@ -13,7 +13,8 @@
         "cviebrock/eloquent-taggable": "2.0.0",
         "yajra/laravel-datatables-oracle": "~5.0",
         "mews/captcha": "^2.1",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "willvincent/laravel-rateable": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

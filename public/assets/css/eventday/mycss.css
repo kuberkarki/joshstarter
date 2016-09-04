@@ -25,3 +25,7 @@ ul.thumbnails{
     padding: 14px 16px;
     text-decoration: none;
 }
+
+.ratingAds .rating .glyphicon {
+    color: #f29f00;
+}
