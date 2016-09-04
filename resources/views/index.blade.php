@@ -27,12 +27,9 @@ Home
     </div>
       <div class="navHighlight">
         <ul>
-          <li><a href="#">Venue</a></li>
-          <li><a href="#">Sound System</a></li>
-          <li><a href="#">Decoration</a></li>
-          <li><a href="#">Catering</a></li>
-          <li><a href="#">Photographer</a></li>
-          <li><a href="#">Videographer</a></li>
+          @foreach($ads_category as $cat)
+              <li><a href="{!! url('list-ads',$cat->slug) !!}">{!! $cat->name !!}</a></li>
+            @endforeach
           <li><a href="#">More <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
         </ul>
       </div>

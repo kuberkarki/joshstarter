@@ -288,7 +288,7 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .leftContent li a:hover{ text-decoration: none;};
 .txtCntr{ text-align: center;}
 .leftContent li .rating{ display: inline-block;}
-.leftContent li .rating .fa{ color: #f29f00;}
+.leftContent li .rating .fa,.ratingAds .rating .fa{ color: #f29f00;}
 .leftContent li span.review{ display: inline-block; text-align: right;     float: right;}
 .innerEventList{ margin-top: 40px;}
 .innerEventList .panel.panel-default{ margin-bottom: 40px; margin-top: 0px; font-size: 14px; line-height: 26px;}
@@ -366,34 +366,16 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .updateBG li a,.publish a{color: #737373;}
 .updateBG li a:hover,.publish a:hover{ text-decoration: none; color: #9c9c9c;}
 .publish { display: block; text-align: right;}
-
-
-/*added by kuber */
-.panel-image img {
-    max-height: 254px;
-}
-
-footer {
-    border-top: 2px solid #5d011a;
-}
-ul.thumbnails{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #5d011a;
-}
-
-.thumbnails li {
-    float: left;
-}
-
-.thumbnails li img {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-
+ul.ratingAds{ list-style: none; padding-left: 0; display: inline-block;}
+ul.ratingAds li span.review{ display: inline-block; text-align: right;  float: right;}
+.ratingAds .rating{ display: inline-block;}
+/*
+.leftContent li .rating{ display: inline-block;}
+.leftContent li .rating .fa{ color: #f29f00;}
+.leftContent li span.review{ display: inline-block; text-align: right; float: right;}*/
+.adsPage .panel-body h3{ display: inline-block;}
+.adsPage .navPhotoVideo{ float: left; margin-left: 10px;}
+.adsPage .navPhotoVideo a{  border-right: 1px solid #ccc;}
+.adsPage .navPhotoVideo a:last-child{ border-right: 0;}
+.adsThumnelButton { margin-left: 15px; margin-bottom: 20px; }
+.adsThumnelButton a.btn-primary { color: white !important; border:0; font-style: 12px; font-weight: 200; padding-left: 10px; padding-right: 10px;}

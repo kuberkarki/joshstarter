@@ -212,6 +212,7 @@ Route::get('/auth/callback/{provider?}',[
         Route::get('{name?}', 'JoshController@showView');
 
     });
+    Route::get('list-ads/{slug?}', array('as' => 'list-ads', 'uses' => 'AdsController@ads'));
 
 #FrontEndController
     Route::get('login', array('as' => 'login', 'uses' => 'FrontEndController@getLogin'));

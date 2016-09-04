@@ -1,9 +1,10 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Ad extends Model  {
-
+    use Sluggable;
     /**
      * The database table used by the model.
      *
@@ -11,12 +12,33 @@ class Ad extends Model  {
      */
     protected $table = 'ads';
 
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to'    => 'slug',
+    ];
+
+
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
     protected $guarded = ['id'];
+
+    /**
+     * Sluggable configuration.
+     *
+     * @var array
+     */
+    public function sluggable() {
+        return [
+            'slug' => [
+                'source'         => 'title',
+                'separator'      => '-',
+                'includeTrashed' => true,
+            ]
+        ];
+    }
 
     public function category()
     {

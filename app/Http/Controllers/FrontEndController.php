@@ -26,6 +26,7 @@ use DateTime;
 use App\Page;
 use Captcha;
 use Validator;
+use App\Ads_category;
 
 
 
@@ -58,11 +59,13 @@ class FrontEndController extends JoshController
         $newss = News::latest()->simplePaginate(6);
         $newss->setPath('news');
 
+        $ads_category = Ads_category::where('homepage',true)->get();
+
         //print_r($this->frontarray);exit;
 
 
         //$tags = $this->tags;
-        return View::make('index')->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
+        return View::make('index',compact('ads_category'))->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
     }
 
     /**

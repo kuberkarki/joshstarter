@@ -9,10 +9,38 @@ use Carbon\Carbon;
 use Lang;
 use App\Ads_category;
 use Sentinel;
+use Validator;
 use App\Ads_photos;
 use App\Ads_prices;
+use Redirect;
+use URL;
 
 class AdsController extends Controller {
+
+	
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function ads($slug=null)
+	{
+		if($slug){
+			$adscategory=Ads_category::where('slug',$slug)->first();
+			if(!$adscategory)
+				$ads=Ad::all();
+			else
+			$ads=Ad::where('ads_category_id',$adscategory->id)->get();
+		}
+		else
+			$ads = Ad::all();
+		$ads_category = Ads_category::all();
+
+		//dd($ads_category);
+		//dd($ads_category[1]);
+		return view('ads.ads', compact('ads','ads_category'));
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -184,13 +212,43 @@ class AdsController extends Controller {
 		$galimage=array();
 		$galprice=array();
 
-		
+		//dd($request['mytext'][0]);
 
 		//$this->validate($request, ['name' => 'required']); // Uncomment and modify if needed.
 		$ad = Ad::findOrFail($id);
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();
 		}
+
+		 $messsages = array(
+        'ads_category_id.required'=>'You cant leave Category empty',
+        'mytext.max'=>'You cant have images file larger than 2mb',
+    );
+		$rules=[
+            'title' => 'min:3',
+            'content' => 'min:3',
+            'photo_image' => 'max:2000',
+            //'mytext' => 'array|each|max:2000',
+            'ads_category_id'=>'required',
+		];
+			 // $this->validate($request, [
+			 //        'title' => 'required',
+	
+			 //    ]);
+
+			 // Create a new validator instance from our validation rules
+        $validator = Validator::make($request->all(), $rules);
+
+        $validator->each('mytext', ['max:2000']);
+
+
+        // If validation fails, we'll exit the operation now.
+        if ($validator->fails()) {
+            // Ooops.. something went wrong
+            return Redirect::to(URL::previous() )->withInput()->withErrors($validator);
+        }
+
+
 		if($ad->user_id!=$user->id)
 			return redirect('ads')->with('error','Error');
 
@@ -207,7 +265,7 @@ class AdsController extends Controller {
                 $ad->update($request->except('photo_image','mytext','myprice','myguest'));
 
 
-             if(count($photos) && $request['mytext'][0]['tmp_name']!=''){
+             if(count($photos) && $request['mytext'][0]){
         	for($i=0; $i<count($photos); $i++){
         			$file=( $request['mytext'][$i]);
         			$destinationPath =  public_path().'/uploads/crudfiles/';
