@@ -148,7 +148,7 @@ class AdsController extends Controller {
                 		
         $ad->save();
 
-        if(count($photos)){
+        if(count($photos) && $request['mytext'][0]){
         	for($i=0; $i<count($photos); $i++){
         			$file=( $request['mytext'][$i]);
         			$destinationPath =  public_path().'/uploads/crudfiles/';
