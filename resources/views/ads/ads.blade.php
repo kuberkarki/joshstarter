@@ -119,7 +119,7 @@ My Ads
                   <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
                   <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>
                   <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
-                      <p>{!! str_limit($ad->description,150, '...') !!}</p>
+                     <!--  <p>{!! str_limit($ad->description,150, '...') !!}</p> -->
                 </div>
                 </a>
 
