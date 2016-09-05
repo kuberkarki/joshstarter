@@ -54,7 +54,10 @@ Route::get('/auth/callback/{provider?}',[
        Route::get('delete-event/{event_id}', array('as' => 'delete-event', 'uses' => 'EventsController@deleteevent'));
        Route::get('messages', array('as' => 'messages', 'uses' => 'EventsController@showmessages'));
 
-    Route::post('rate-ads', array('as' => 'rate-ads', 'uses' => 'AdsController@rateads'));
+        Route::post('rate-ads', array('as' => 'rate-ads', 'uses' => 'AdsController@rateads'));
+        Route::post('submit-review', array('as' => 'submit-review', 'uses' => 'AdsController@submitreview'));
+
+        Route::post('submit-review-again', array('as' => 'submit-review-again', 'uses' => 'AdsController@submitreviewagain'));
 
        
     });
@@ -116,7 +119,6 @@ Route::get('/auth/callback/{provider?}',[
             Route::get('{userId}', array('as' => 'users.show', 'uses' => 'UsersController@show'));
             Route::post('{userId}/passwordreset', array('as' => 'passwordreset', 'uses' => 'UsersController@passwordreset'));
 
-
         });
         Route::resource('users', 'UsersController');
 
@@ -133,31 +135,6 @@ Route::get('/auth/callback/{provider?}',[
             Route::get('{groupId}/confirm-delete', array('as' => 'confirm-delete/group', 'uses' => 'GroupsController@getModalDelete'));
             Route::get('{groupId}/restore', array('as' => 'restore/group', 'uses' => 'GroupsController@getRestore'));
         });
-        /*routes for blog*/
-       /* Route::group(array('prefix' => 'blog'), function () {
-            Route::get('/', array('as' => 'blogs', 'uses' => 'BlogController@index'));
-            Route::get('create', array('as' => 'create/blog', 'uses' => 'BlogController@create'));
-            Route::post('create', 'BlogController@store');
-            Route::get('{blog}/edit', array('as' => 'update/blog', 'uses' => 'BlogController@edit'));
-            Route::post('{blog}/edit', 'BlogController@update');
-            Route::get('{blog}/delete', array('as' => 'delete/blog', 'uses' => 'BlogController@destroy'));
-            Route::get('{blog}/confirm-delete', array('as' => 'confirm-delete/blog', 'uses' => 'BlogController@getModalDelete'));
-            Route::get('{blog}/restore', array('as' => 'restore/blog', 'uses' => 'BlogController@getRestore'));
-            Route::get('{blog}/show', array('as' => 'blog/show', 'uses' => 'BlogController@show'));
-            Route::post('{blog}/storecomment', array('as' => 'restore/blog', 'uses' => 'BlogController@storecomment'));
-        });*/
-
-        /*routes for blog category*/
-        /*Route::group(array('prefix' => 'blogcategory'), function () {
-            Route::get('/', array('as' => 'blogcategories', 'uses' => 'BlogCategoryController@index'));
-            Route::get('create', array('as' => 'create/blogcategory', 'uses' => 'BlogCategoryController@create'));
-            Route::post('create', 'BlogCategoryController@store');
-            Route::get('{blogcategory}/edit', array('as' => 'update/blogcategory', 'uses' => 'BlogCategoryController@edit'));
-            Route::post('{blogcategory}/edit', 'BlogCategoryController@update');
-            Route::get('{blogcategory}/delete', array('as' => 'delete/blogcategory', 'uses' => 'BlogCategoryController@destroy'));
-            Route::get('{blogcategory}/confirm-delete', array('as' => 'confirm-delete/blogcategory', 'uses' => 'BlogCategoryController@getModalDelete'));
-            Route::get('{blogcategory}/restore', array('as' => 'restore/blogcategory', 'uses' => 'BlogCategoryController@getRestore'));
-        });*/
 
         /*routes for news*/
         Route::group(array('prefix' => 'news'), function () {
@@ -185,22 +162,6 @@ Route::get('/auth/callback/{provider?}',[
             Route::get('{newscategory}/restore', array('as' => 'restore/newscategory', 'uses' => 'NewsCategoryController@getRestore'));
         });
 
-        /*routes for file*/
-        /*Route::group(array('prefix' => 'file'), function () {
-            Route::post('create', 'FileController@store');
-            Route::post('createmulti', 'FileController@postFilesCreate');
-            Route::delete('delete', 'FileController@delete');
-        });
-*/
-       /* Route::get('crop_demo', function () {
-            return redirect('admin/imagecropping');
-        });
-        Route::post('crop_demo', 'JoshController@crop_demo');*/
-
-        /* laravel example routes */
-        # datatables
-        /*Route::get('datatables', 'DataTablesController@index');
-        Route::get('datatables/data', array('as' => 'admin.datatables.data', 'uses' => 'DataTablesController@data'));*/
 
         //tasks section
         /*Route::post('task/create', 'TaskController@store');
@@ -215,7 +176,6 @@ Route::get('/auth/callback/{provider?}',[
         Route::get('{name?}', 'JoshController@showView');
 
     });
-    Route::get('list-ads/{slug?}', array('as' => 'list-ads', 'uses' => 'AdsController@ads'));
 
 #FrontEndController
     Route::get('login', array('as' => 'login', 'uses' => 'FrontEndController@getLogin'));
@@ -267,19 +227,21 @@ Route::get('/auth/callback/{provider?}',[
     Route::get('news', array('as' => 'news', 'uses' => 'NewsController@getIndexFrontend'));
     Route::get('news/{slug}/tag', 'NewsController@getNewsTagFrontend');
     Route::get('newsitem/{slug?}', 'NewsController@getNewsFrontend');
-    Route::post('newsitem/{news}/comment', 'NewsController@storeCommentFrontend');
 
+    Route::post('newsitem/{news}/comment', 'NewsController@storeCommentFrontend');
     Route::get('events', array('as' => 'events', 'uses' => 'EventsController@getIndexFrontend'));
     Route::get('events/{slug}/tag', 'EventsController@getEventTagFrontend');
     Route::get('event/{slug?}', 'EventsController@getEventFrontend');
     Route::post('event/{events}/comment', 'EventsController@storeCommentFrontend');
 
+    Route::get('list-ads/{slug?}', array('as' => 'list-ads', 'uses' => 'AdsController@ads'));
+    Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
+
+
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('my-account-business', array('as' => 'my-account-business', 'uses' => 'FrontEndController@myAccountBusiness'));
         Route::get('my-account-freelancer', array('as' => 'my-account-freelancer', 'uses' => 'FrontEndController@myAccountFreelancer'));
         Route::get('my-account-event-organizer', array('as' => 'my-account-event-organizer', 'uses' => 'FrontEndController@myAccountEventOrganizer'));
-
-
     });
 
      Route::group(array('middleware' => 'SentinelBusiness'), function () {
@@ -289,11 +251,11 @@ Route::get('/auth/callback/{provider?}',[
        // Route::put('ads', 'AdsController@editads');
         Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
         Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
-       Route::get('delete-ads/{ad_id}', array('as' => 'delete-ads', 'uses' => 'AdsController@deleteads'));
-       Route::post('delete-ads-image', array('as' => 'delete-ads-image', 'uses' => 'AdsController@deleteadsimage'));
-       Route::post('delete-ads-price', array('as' => 'delete-ads-price', 'uses' => 'AdsController@deleteadsprice'));
-       Route::get('ajax-ads-detail/{id}/{date}', array('as' => 'ajax-ads-detail', 'uses' => 'AdsController@ajaxadsdetail'));
-    
+        Route::get('delete-ads/{ad_id}', array('as' => 'delete-ads', 'uses' => 'AdsController@deleteads'));
+        Route::post('delete-ads-image', array('as' => 'delete-ads-image', 'uses' => 'AdsController@deleteadsimage'));
+        Route::post('delete-ads-price', array('as' => 'delete-ads-price', 'uses' => 'AdsController@deleteadsprice')) ;
+        Route::get('ajax-ads-detail/{id}/{date}', array('as' => 'ajax-ads-detail', 'uses' => 'AdsController@ajaxadsdetail'));
+
     });
 
     Route::group(array('middleware' => 'SentinelFreelancer'), function () {

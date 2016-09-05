@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "45765d4c684510b13fef907a43cbb7bd",
-    "content-hash": "6d149bc07b207c9902bd07127bf84d85",
+    "hash": "9662f0bffe9fe2cb892e8c0fdf9b67fd",
+    "content-hash": "07cdc990f3cad98273c75db3b54d838d",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -3195,6 +3195,69 @@
                 "dump"
             ],
             "time": "2016-07-26 08:03:56"
+        },
+        {
+            "name": "tshafer/laravel-reviewable",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tshafer/laravel-reviewable.git",
+                "reference": "fb9896e1a69dbbc9d03043d77cd96dc1428e23b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tshafer/laravel-reviewable/zipball/fb9896e1a69dbbc9d03043d77cd96dc1428e23b3",
+                "reference": "fb9896e1a69dbbc9d03043d77cd96dc1428e23b3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.0|~5.1|~5.2",
+                "php": ">=5.5.9",
+                "tshafer/laravel-service-provider": "1.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tshafer\\Reviewable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Reviewable Polymorphic Eloquent Models for for Laravel 5",
+            "time": "2015-12-29 14:54:31"
+        },
+        {
+            "name": "tshafer/laravel-service-provider",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tshafer/laravel-service-provider.git",
+                "reference": "06d0fc20990684dad3464d9f850c5e7c84d208a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tshafer/laravel-service-provider/zipball/06d0fc20990684dad3464d9f850c5e7c84d208a9",
+                "reference": "06d0fc20990684dad3464d9f850c5e7c84d208a9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*|5.2.*|5.3.*",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tshafer\\ServiceProvider\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "DRY Service Provider for Laravel 5 Packages",
+            "time": "2016-08-05 04:44:04"
         },
         {
             "name": "vlucas/phpdotenv",

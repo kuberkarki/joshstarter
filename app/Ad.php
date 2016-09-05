@@ -3,10 +3,13 @@
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use willvincent\Rateable\Rateable;
+use Tshafer\Reviewable\Contracts\Reviewable;
+use Tshafer\Reviewable\Traits\Reviewable as ReviewableTrait;
 
 class Ad extends Model  {
     use Sluggable;
     use Rateable;
+    use ReviewableTrait;
     /**
      * The database table used by the model.
      *

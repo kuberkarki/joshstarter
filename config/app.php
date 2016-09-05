@@ -171,6 +171,7 @@ return [
 
          Laravel\Socialite\SocialiteServiceProvider::class,
          willvincent\Rateable\RateableServiceProvider::class,
+         Tshafer\Reviewable\ServiceProvider::class
 
 
 

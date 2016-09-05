@@ -364,7 +364,24 @@ class AdsController extends Controller {
 		return redirect('ads')->with('success', Lang::get('message.success.update'));
 	}
 
-	/**
+	public function adsdetail($slug)
+	{
+
+		$ad = Ad::where('slug',$slug)->first();
+		$ads_category=Ads_category::lists('name','id');
+		if(Sentinel::check()){
+				$user=Sentinel::getUser();
+				$reviewed=$ad->reviews()->where('author_id',$user->id)->where('reviewable_id',$ad->id)->first();
+			}
+
+			if(!isset($reviewed))
+				$reviewed=0;
+
+		
+		return view('ads.adsdetail', compact('ad','ads_category','reviewed'));
+	}
+
+		/**
     	 * Delete the given Ad image.
     	 *
     	 * @param  int      $id
@@ -380,6 +397,36 @@ class AdsController extends Controller {
             // Redirect to the group management page
             //return rdeleteadsedirect('ads')->with('success', Lang::get('message.success.delete'));
 
+    	}
+
+    	public function submitreview(request $request){
+    		if(Sentinel::check()){
+				$user=Sentinel::getUser();
+			}
+				$ads = Ad::find($request->get('id'));
+				$review = $ads->review([
+				    'title' => $request->get('title'),
+				    'body' => $request->get('body'),
+				    'rating' => $request->get('rate'),
+				], $user);
+
+
+			return redirect('ads-detail/'.$ads->slug)->with('success','Reviewed !!');
+    	}
+
+    	public function submitreviewagain(request $request){
+			$ads = Ad::find($request->get('id'));
+
+
+			$review = $ads->updateReview($request->get('review_id'), [
+			    'title' => $request->get('title'),
+				 'body' => $request->get('body'),
+				 'rating' => $request->get('rate'),
+			]);
+
+
+
+			return redirect('ads-detail/'.$ads->slug)->with('success','Reviewed !!');
     	}
 
     	public function rateads(request $request){

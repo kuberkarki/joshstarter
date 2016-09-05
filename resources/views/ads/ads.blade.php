@@ -125,7 +125,7 @@ My Ads
 
 
             <div class="navPhotoVideo">
-              <a href="#">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
+              <a href="{!! url('ads-detail',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
             </div>
             <div class="adsThumnelButton"><a href="#" class="btn btn-primary">Book Now</a></div>
             </div>
