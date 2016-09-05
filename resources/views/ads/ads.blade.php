@@ -89,7 +89,7 @@ My Ads
         @foreach($ads as $ad)
           <div class="col-sm-4">
             <div class="panel panel-default">
-              <a href="#">
+              <a href="{!! url('ads-detail',$ad->slug) !!}">
                 <div class="panel-image">
                   <div class="sal_price"> 
                     @if($ad->price_type=='Fixed')
@@ -106,7 +106,7 @@ My Ads
                   </div>
                   </a>
                   <div class="panel-body">
-                  <a href="#"><h3>{!! $ad->title !!} </h3></a>
+                  <a href="{!! url('ads-detail',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a>
                 <ul class="ratingAds">
                   <li>
                  
@@ -115,7 +115,7 @@ My Ads
                   <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
                   <span class="review">(<span id="total-{!! $ad->id!!}">{!! count($ad->ratings) !!}</span>)</span></li>
                 </ul>
-                <a href="#">
+                <a href="{!! url('ads-detail',$ad->slug) !!}">
                   <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
                   <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>
                   <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
