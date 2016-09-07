@@ -171,10 +171,8 @@ return [
 
          Laravel\Socialite\SocialiteServiceProvider::class,
          willvincent\Rateable\RateableServiceProvider::class,
-         Tshafer\Reviewable\ServiceProvider::class
-
-
-
+         Tshafer\Reviewable\ServiceProvider::class,
+         Cmgmyr\Messenger\MessengerServiceProvider::class,
     ],
 
     /*

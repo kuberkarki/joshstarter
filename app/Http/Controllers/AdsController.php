@@ -15,6 +15,7 @@ use App\Ads_prices;
 use Redirect;
 use URL;
 use willvincent\Rateable\Rateable;
+use App\User;
 
 class AdsController extends Controller {
 
@@ -38,6 +39,7 @@ class AdsController extends Controller {
 		else
 			$ads = Ad::all();
 		$ads_category = Ads_category::all();
+
 
 		//dd($ads_category);
 		//dd($ads_category[1]);
@@ -377,8 +379,19 @@ class AdsController extends Controller {
 			if(!isset($reviewed))
 				$reviewed=0;
 
+		//$users=array($ad->user_id);
+			$subject="Message on Ad-".$ad->title;
+			$users = User::where('id', '=', $ad->user_id)->get();
+			$adlink= "<a href=".url('ads-detail/'.$ad->slug).">".$ad->title."</a>";
+
+
+			//print_r($ad->owner()->first()->company_name);exit;;
+
+
+		//echo count($users);exit;
+
 		
-		return view('ads.adsdetail', compact('ad','ads_category','reviewed'));
+		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject'));
 	}
 
 		/**

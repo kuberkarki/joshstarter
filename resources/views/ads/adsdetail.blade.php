@@ -16,60 +16,93 @@
 
 {{-- Page content --}}
 @section('content')
-    <!-- Container Section Start -->
-    <div class="container">
-        <h2 class="primary marl12">{{$ad->title}}</h2>
-        <div class="row content">
-            <!-- Business Deal Section Start -->
-            <div class="col-sm-8 col-md-8">
-                <div class=" thumbnail featured-post-wide img">
-                   @if($ad->photo)
-                        <img src="{{ URL::to('/uploads/crudfiles/'.$ad->photo)  }}" class="img-responsive" alt="Image">
-                    @endif
-                    @if(count($ad->photos()))
-                        <div class="row">
-                        <ul class="thumbnails">
-                          @foreach($ad->photos()->get() as $photo)
-                            <li class="img-{{$photo->id}}"> 
-                           
-    
-                            <img src="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}" alt="..."
-                                                     class="img-responsive" width="100px" />
-                            
-                           
-                            </li>
-                          @endforeach
-                          </ul>
-                          
+<!-- Container Section Start -->
+<section class="mainContainer">
+<div class="contantWrapper innercontantWrapper customerEvent">
+  <div class="container globalWrap">
+    <div class="row">
+      <div class="col-sm-9">
+      <h2>{{$ad->title}} 
+      <span><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</span></h2>
+      Category: <a href="{{ url('list-ads/'.$ad->slug)}}"> {!! $ads_category[$ad->ads_category_id] !!}</a>
 
-                        @endif
-                        </div>
-                    <!-- /.news-detail-image -->
-                    <div class="the-box no-border news-detail-content">
-                        <p class="additional-post-wrap">
-                            <span>
-                            <i class="fa fa-level-up" aria-hidden="true"></i> {!! $ads_category[$ad->ads_category_id] !!}
-                            </span>
-                            <span class="additional-post">
-                              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>     
-                            </span>
+      </div>
+      <div class="col-sm-3">
+        <div class="buyButton pullright"><a type="button" class="btn btn-secondary searchBtn">Book Now</a></div>
+                                    <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send Message</button> 
 
-                            
-                        </p>
-                        <p class="text-justify">
-                            {!! $ad->description !!}
-                        </p>
+      </div>
+    </div>
 
-                       
-                    </div>
-                     <div class="adsThumnelButton"><a href="#" class="btn btn-primary">Book Now</a></div>
-                </div>
-                {{-- dd($ad->reviews()->get()) --}}
-                
-                <!-- /the.box .no-border -->
-                <!-- Media left section start -->
-                <h3 class="comments">{{count($ad->reviews()->get())}} Reviews</h3><br />
-                <ul class="media-list">
+    <div class="row">
+    @include('notifications')
+      <div class="col-sm-8">
+        <div class="customerEventL">
+        <div class="eventImg">
+           @if($ad->photo)
+              <img src="{{ URL::to('/uploads/crudfiles/'.$ad->photo)  }}" class="img-responsive" alt="Image">
+          @endif
+        </div>
+        <div class="navPhotoVideo">
+          <a href="#">Photo</a><a href="#">Video Promo</a>
+        </div>
+        <p>{!! $ad->description !!}</p>
+
+        <div class="customerGallery" style="display:none">
+          <div id="gallery" >
+           @if(count($ad->photos()))
+           
+            @foreach($ad->photos()->get() as $photo)            
+            <img alt="Preview Image 1"
+               src="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}"
+               data-image="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}"
+               data-description="Preview Image 1 Description" />
+              @endforeach
+            @endif
+            
+               
+          </div>
+        </div>
+
+        <div class="socialTicket">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="customerSocial">
+              <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-envelope-square" aria-hidden="true"></i></a>
+            </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="favBox pull-right"><a type="button" class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> (51) Ticket Available</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="latestUpdate">
+          <div class="headingCustomerPara">Latest Update</div>
+          <div class="row updateBG">
+          <div class="col-sm-12">
+          <div class="headingCustomerPara">Latest Update</div>
+            
+          <p>
+If you are looking for live wedding music at your ceremony, or to find a performer who will amaze the guests at your drinks reception, you are in the right place! Warble Entertainment provides musicians, such as string quartets and harpists who are perfect to create a romantic ambience, and unique and fun wedding entertainment ideas with magicians, caricaturists and more!</p>
+          </div>
+            <div class="col-sm-6">
+              <ul>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Photo</a></li>
+                <li><a href="#">Video</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-6"><span class="publish"><a href="#"> Publish</a></span></div>
+          </div>
+        </div>
+
+
+         <div class="reviewSection">
+            <div class="headingCustomerPara">Reviews({{count($ad->reviews()->get())}})</div>
+              <ul class="media-list">
                     @foreach($ad->reviews()->get() as $review)
                         <div class="row">
                             <div class="col-md-12">
@@ -87,111 +120,177 @@
                                     {{ $review->updated_at->diffForHumans() }}
                                     </span> 
                     
-                        <p>{{ $review->body }}</p>
-                      </div>
-                </div>
+                            <p>{{ $review->body }}</p>
+                          </div>
+                       </div>
                     
                     @endforeach
-                </ul>
-                <!-- //Media left section End -->
-                <!-- Comment Section Start -->
-                @if(!$reviewed)
+              </ul>
+
+              @if(!$reviewed)
                 <h3>Leave a Review</h3>
                 {!! Form::open(array('url' => URL::to('submit-review'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
-                @else
-                 <h3>Review again</h3>
-                  {!! Form::open(array('url' => URL::to('submit-review-again'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
-                    <input type="hidden" name="review_id" value="{!! $reviewed->id !!}">
-                @endif
-                <input type="hidden" name="id" value="{!! $ad->id !!}">
+              @else
+                <h3>Review again</h3>
+                {!! Form::open(array('url' => URL::to('submit-review-again'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
+                <input type="hidden" name="review_id" value="{!! $reviewed->id !!}">
+              @endif
+              <input type="hidden" name="id" value="{!! $ad->id !!}">
 
-                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                    {!! Form::text('title', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>'Title')) !!}
-                    <span class="help-block">{{ $errors->first('title', ':message') }}</span>
-                </div>
-                
-                <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
-                    {!! Form::textarea('body', null, array('class' => 'form-control input-lg no-resize','required' => 'required', 'style'=>'height: 200px', 'placeholder'=>'Your review')) !!}
-                    <span class="help-block">{{ $errors->first('body', ':message') }}</span>
-                </div>
-                <div class="form-group ratingAds">
-                    <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-logged="{{Sentinel::check()?true:false}}"></div>
-                    <input type="hidden" name="rate" id="rate" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-md"><i class="fa fa-comment"></i>
-                        Submit
-                    </button>
-                </div>
-                {!! Form::close() !!}
-                <!-- //Comment Section End -->
+              <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                  {!! Form::text('title', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>'Title')) !!}
+                  <span class="help-block">{{ $errors->first('title', ':message') }}</span>
+              </div>
+              
+              <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
+                  {!! Form::textarea('body', null, array('class' => 'form-control input-lg no-resize','required' => 'required', 'style'=>'height: 200px', 'placeholder'=>'Your review')) !!}
+                  <span class="help-block">{{ $errors->first('body', ':message') }}</span>
+              </div>
+              <div class="form-group ratingAds">
+                  <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-logged="{{Sentinel::check()?true:false}}"></div>
+                  <input type="hidden" name="rate" id="rate" />
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-success btn-md"><i class="fa fa-comment"></i>
+                      Submit
+                  </button>
+              </div>
+              {!! Form::close() !!}
             </div>
-            <!-- //Business Deal Section End -->
-            <!-- /.col-sm-9 -->
-            <!-- Recent Posts Section Start -->
-            <div class="col-sm-4 col-md-4 col-full-width-left">
-                <div class="the-box">
-                        <h3 class="small-heading text-center">RECENT POSTS</h3>
-                        <ul class="media-list media-xs media-dotted">
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar1.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading primary">
-                                                        <a href="#">Elizabeth Owens at Duis autem vel eum iriure dolor in hendrerit in</a>
-                                                    </h4>
-                                    <p class="date">
-                                        <small class="text-danger">2hours ago</small>
-                                    </p>
-                                    <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
-                                    </p>
-                                </div>
-                            </li>
-                            <hr>
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar4.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading primary">
-                                                        <a href="#">Harold Chavez at Duis autem vel eum iriure dolor in hendrerit in</a>
-                                                    </h4>
-                                    <p class="date">
-                                        <small class="text-danger">5hours ago</small>
-                                    </p>
-                                    <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
-                                    </p>
-                                </div>
-                            </li>
-                            <hr>
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar5.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading primary">
-                                                        <a href="#">Mihaela Cihac at Duis autem vel eum iriure dolor in hendrerit in</a>
-                                                    </h4>
-                                    <p class="date">
-                                        <small class="text-danger">10hours ago</small>
-                                    </p>
-                                    <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                </div>
-                <!-- /.the-box .bg-primary .no-border .text-center .no-margin -->
-            </div>
-            <!-- //Recent Posts Section End -->
-            <!-- /.col-sm-3 -->
+          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="leftContent">
+          <div class="leftList">
+            <h3>Business Owner</h3>
+            {{$ad->owner()->first()->company_name}}
+            <img src="{{asset('assets/images/eventday/organizer1.jpg')}}" class="img-responsive">
+            <p>{!! $ad->owner()->first()->bio !!}<br>
+            <i class="fa fa-phone" aria-hidden="true"></i> {!! $ad->owner()->first()->office_phone !!}<br>
+            <!-- <i class="fa fa-globe" aria-hidden="true"></i> www.event.com<br> -->
+            <i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->owner()->first()->address !!}<br>
+            
+            <h3>Rating</h3>
+            <ul>
+              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
+            </ul>
+          </div>
         </div>
+
+        <div class="leftContent">
+          <div class="leftList">
+
+            <h3>Location</h3>
+            <img src="{{asset('assets/images/eventday/maps.jpg')}}" class="img-responsive">
+          </div>
+        </div>
+
+        <div class="leftContent">
+          <div class="leftList">
+
+            <h3>Sponsors</h3>
+            <img src="{{asset('assets/images/eventday/sponsor1.jpg')}}" class="img-responsive">
+          </div>
+        </div>
+
+        <div class="leftContent">
+          <div class="leftList otherEvent">
+            <h3>Other Events</h3>
+            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+          </div>
+        </div>
+
+        <div class="leftContent">
+          <div class="leftList">
+            <img src="{{asset('assets/images/eventday/customerads1.jpg')}}" class="img-responsive">
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+    
+</div>
+</section>
+<section class="contantWrapper testimonial">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-3"><span class="borderBtm"></span></div>
+      <div class="col-xs-6">
+        <h2 class="noBorder"><span>What People Think</span></h2>
+      </div>
+      <div class="col-xs-3"><span class="borderBtm"></span></div>
     </div>
-    <!-- //Conatainer Section End -->
+    <div class="row"> 
+      
+      <!-- <h2 class="padT6px"><span class="testiBG">What People Think</span></h2> -->
+      
+      <div class="col-sm-2">
+        <p><i class="fa fa-quote-left" aria-hidden="true"></i></p>
+      </div>
+      <div class="col-sm-8">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<span><strong>Magda Guzman</strong><br>
+          Business owner<br>
+          Hacienda Las Americas</span></p>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+</section>
+        
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Message</h4>
+      </div>
+      <div class="modal-body">
+       {!! Form::open(['route' => 'messages.storefrontend','class'=>'form-horizontal','role'=>'form']) !!}
+                  
+                    
+                        <input type="hidden" name="subject" class="form-control" 
+                        id="subject" placeholder="subject" value="{!! $ad->id !!}" />
+                    
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >message</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="message" 
+                            id="message" placeholder="message"></textarea>
+                    </div>
+                  </div>
+                   @if($users->count() > 0)
+                   
+                        @foreach($users as $user)
+                            <input type="hidden" name="recipients[]" value="{{ $user->id }}">{!!$user->name!!}
+                        @endforeach
+                   
+                    @endif
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Send</button>
+                    </div>
+                  </div>
+                </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+       
+ 
+
 @stop
 {{-- page level scripts --}}
 @section('footer_scripts')

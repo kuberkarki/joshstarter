@@ -300,7 +300,7 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .globalWrap h2{ color: #bc0034; font-size: 34px; border-bottom: none;}
 .globalWrap h2 span{ text-align: left; font-size: 16px; color: #737373; margin: inherit; top: inherit; display: block; background: transparent; padding: 10px 0 0; font-weight: 600;}
 .btn{ background: #bc0034; border-radius: 0px; color: white; text-transform: uppercase; width: 100%;}
-.globalWrap .btn{text-transform: uppercase; font-weight: 600; width: auto; padding-left: 40px; padding-right: 40px;}
+.globalWrap .btn{text-transform: uppercase; font-weight: 600; width: auto; padding-left: 40px; padding-right: 40px; border:none;}
 .buyButton{ margin-bottom: 80px;}
 .leftList p{ font-size: 14px; padding-top: 10px;}
 .customerEvent .leftContent{ margin-bottom: 30px;}
@@ -366,6 +366,7 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .updateBG li a,.publish a{color: #737373;}
 .updateBG li a:hover,.publish a:hover{ text-decoration: none; color: #9c9c9c;}
 .publish { display: block; text-align: right;}
+/******************ADS Page**************/
 ul.ratingAds{ list-style: none; padding-left: 0; display: inline-block;}
 ul.ratingAds li span.review{ display: inline-block; text-align: right;  float: right;}
 .ratingAds .rating{ display: inline-block;}
@@ -379,3 +380,21 @@ ul.ratingAds li span.review{ display: inline-block; text-align: right;  float: r
 .adsPage .navPhotoVideo a:last-child{ border-right: 0;}
 .adsThumnelButton { margin-left: 15px; margin-bottom: 20px; }
 .adsThumnelButton a.btn-primary { color: white !important; border:0; font-style: 12px; font-weight: 200; padding-left: 10px; padding-right: 10px;}
+ul.adsNav-list{ padding-left: 0;  list-style: none;}
+ul.adsNav-list li{ display: inline-block; border-right: 1px solid #ccc; padding: 0 10px;}
+ul.adsNav-list li:last-child{ border-right: none; }
+ul.adsNav-list li:first-child{ padding-left: 0;}
+ul.adsNav-list li a{ color: #737373; font-size: 14px; font-weight: 600; text-decoration: none;}
+ul.adsNav-list li a:hover{ color: #ababab;}
+.adsListing h3{ border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;}
+.table-responsive{ margin-top: 20px;}
+.adsListing .btn{ padding-left: 10px; padding-right: 10px; width: auto; border:none;}
+.adsListing .glyphicon-pencil,.adsListing .glyphicon-trash{ line-height: 20px;}
+.adsListing a.manage{ 
+    color: #737373;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+display: block;}
+.pagination>li:first-child>a, .pagination>li:first-child>span,.pagination>li:last-child>a, .pagination>li:last-child>span{ padding: 9.5px;}
+.modal-dialog .form-group{  padding-bottom: 10px;}

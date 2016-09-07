@@ -45,6 +45,11 @@ class Ad extends Model  {
         ];
     }
 
+    public function owner()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Ads_category');

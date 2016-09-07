@@ -1,11 +1,13 @@
 <?php namespace App;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Cmgmyr\Messenger\Traits\Messagable;
+
 
 
 class User extends EloquentUser {
 
-
+	use Messagable;
 	/**
 	 * The database table used by the model.
 	 *

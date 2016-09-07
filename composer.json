@@ -15,8 +15,9 @@
         "mews/captcha": "^2.1",
         "laravel/socialite": "^2.0",
         "willvincent/laravel-rateable": "~1.0",
-        "tshafer/laravel-reviewable": "^1.0"
-    },
+        "tshafer/laravel-reviewable": "^1.0",
+        "cmgmyr/messenger": "~2.0"    
+},
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
