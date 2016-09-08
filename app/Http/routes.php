@@ -72,6 +72,10 @@ Route::get('thumbnail/{image}', function($image)
     Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
             Route::get('book/{ads}', array('as' => 'book', 'uses' => 'AdsController@book'));
             Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
+
+     });
+
+     Route::group(array('prefix' => 'ads'), function () {
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
 
      });
