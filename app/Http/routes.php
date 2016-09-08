@@ -87,6 +87,8 @@ Route::get('thumbnail2/{image}', function($image)
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
 
      });
+             Route::post('search', array('as' => 'search', 'uses' => 'AdsController@search'));
+
         //Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
 
 

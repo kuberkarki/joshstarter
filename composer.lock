@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a34babe121a36901fb413f801b585617",
-    "content-hash": "c14a7d3948844f055b5903542df0b28b",
+    "hash": "d82e52ab8fb6d06d1839de1abbd7715f",
+    "content-hash": "159aae5830e7e40daa20f300286cab20",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -222,16 +222,16 @@
         },
         {
             "name": "cmgmyr/messenger",
-            "version": "2.12",
+            "version": "2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cmgmyr/laravel-messenger.git",
-                "reference": "0a6f785330b74a553d7da3259762e6ca57f87d81"
+                "reference": "695eff58661646a35fff3733f1bf2fef41d985c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cmgmyr/laravel-messenger/zipball/0a6f785330b74a553d7da3259762e6ca57f87d81",
-                "reference": "0a6f785330b74a553d7da3259762e6ca57f87d81",
+                "url": "https://api.github.com/repos/cmgmyr/laravel-messenger/zipball/695eff58661646a35fff3733f1bf2fef41d985c0",
+                "reference": "695eff58661646a35fff3733f1bf2fef41d985c0",
                 "shasum": ""
             },
             "require": {
@@ -245,7 +245,8 @@
                 "adamwathan/faktory": "0.3.*",
                 "friendsofphp/php-cs-fixer": "^1.11",
                 "orchestra/testbench": "~3.0",
-                "phpunit/phpunit": "4.*"
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
             },
             "type": "library",
             "autoload": {
@@ -272,7 +273,7 @@
                 "messaging",
                 "user messaging"
             ],
-            "time": "2016-08-11 14:56:44"
+            "time": "2016-09-07 20:15:02"
         },
         {
             "name": "cocur/slugify",
@@ -2025,6 +2026,52 @@
             "time": "2015-11-04 20:07:17"
         },
         {
+            "name": "nicolaslopezj/searchable",
+            "version": "1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolaslopezj/searchable.git",
+                "reference": "eee7c3ae94d8d0e98b397f0cf2dcb127bfddc555"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/eee7c3ae94d8d0e98b397f0cf2dcb127bfddc555",
+                "reference": "eee7c3ae94d8d0e98b397f0cf2dcb127bfddc555",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "illuminate/database": "4.2.x|~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nicolaslopezj\\Searchable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Lopez",
+                    "email": "nicolaslopezj@me.com"
+                }
+            ],
+            "description": "Eloquent model search trait.",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "search",
+                "searchable"
+            ],
+            "time": "2016-06-28 21:40:28"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v2.1.0",
             "source": {
@@ -3532,12 +3579,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "2de6ab6038ed137dcd4d50299e0536e03951f96c"
+                "reference": "dc476f97367eadefa82bbffaaf2b15e052a77147"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/2de6ab6038ed137dcd4d50299e0536e03951f96c",
-                "reference": "2de6ab6038ed137dcd4d50299e0536e03951f96c",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/dc476f97367eadefa82bbffaaf2b15e052a77147",
+                "reference": "dc476f97367eadefa82bbffaaf2b15e052a77147",
                 "shasum": ""
             },
             "require": {
@@ -3590,7 +3637,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2016-09-02 22:21:49"
+            "time": "2016-09-07 13:05:31"
         },
         {
             "name": "barryvdh/reflection-docblock",

@@ -5,11 +5,14 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use willvincent\Rateable\Rateable;
 use Tshafer\Reviewable\Contracts\Reviewable;
 use Tshafer\Reviewable\Traits\Reviewable as ReviewableTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Ad extends Model  {
     use Sluggable;
     use Rateable;
     use ReviewableTrait;
+    use SearchableTrait;
+
     /**
      * The database table used by the model.
      *
@@ -20,6 +23,33 @@ class Ad extends Model  {
     protected $sluggable = [
         'build_from' => 'title',
         'save_to'    => 'slug',
+    ];
+
+     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'ads.title' => 10,
+            'ads.additional_ads_title' => 9,
+            'ads.description' => 8,
+            'ads.location' => 2,
+             'ads_categories.name' => 8,
+             'users.company_name' => 9,
+             'users.address' => 2,
+        ],
+         'joins' => [
+            'users' => ['ads.user_id','users.id'],
+            'ads_categories' => ['ads.ads_category_id','ads_categories.id'],
+        ], 
+        // 'joins' => [
+        //     'ads_categories' => ['ads.ads_category_id','ads_categories.id'],
+        // ],
+        //  'joins' => [
+        //     'users' => ['ad.user_id','users.id'],
+        // ],
     ];
 
 

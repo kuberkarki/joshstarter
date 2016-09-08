@@ -19,7 +19,16 @@ use App\User;
 
 class AdsController extends Controller {
 
-	
+	public function search(request $request){
+		$query=$request->get('keyword');
+
+		$ads = Ad::search($query)->get();
+		$ads_category=Ads_category::all();
+
+		return view('ads.search',compact('ads','ads_category','query'));
+
+		dd($ads);
+	}
 
 	/**
 	 * Display a listing of the resource.

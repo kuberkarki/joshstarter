@@ -43,7 +43,9 @@ Home
 
            <div class="col-sm-12">
             <div class="form-group">
+             {!! Form::open(['url' => 'search']) !!}
               <div class="row">
+
                 <div class="col-md-8 col-sm-8 col-xs-12 five-three">
                   <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-12">
@@ -54,14 +56,14 @@ Home
                     <div class="col-md-4 col-sm-4 col-xs-12">
                     
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter Your keyword" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" placeholder="Enter Your keyword" aria-describedby="basic-addon1" name="keyword">
                     </div>
 
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                     
                   <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                      <input type="text" name="location" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
                     </div>
                     </div><!-- end inner row -->
                   </div>
@@ -70,17 +72,18 @@ Home
                   <div class="row">
                     <div class="col-md-7 col-sm-7 col-xs-12">
                       <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" name="date" placeholder="Date" aria-describedby="basic-addon1">
                       <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     </div>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12">
-                      <button type="button" class="btn btn-secondary searchBtn">Search</button>
+                      <button type="submit" class="btn btn-secondary searchBtn">Search</button>
                       <a href="#" class="advSearch"> Advance Search </a>
                     </div>
                   </div><!-- end inner row -->
                 </div>
               </div><!-- end outer row -->
+              {!! Form::close() !!}
               </div>
                </div>
     </div>
