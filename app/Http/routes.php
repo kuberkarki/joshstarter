@@ -35,6 +35,14 @@ Route::get('thumbnail/{image}', function($image)
 
     return $img->response('jpg');
 });
+
+// usage inside a laravel route
+Route::get('thumbnail2/{image}', function($image)
+{
+    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(358, 217);
+
+    return $img->response('jpg');
+});
    
 
     /**

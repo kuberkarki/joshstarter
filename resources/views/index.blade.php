@@ -121,9 +121,9 @@ Home
             <div class="panel-image">
             
                 @if($event->photo)
-                <img class="img-responsive img-hover" src="uploads/crudfiles/{!! $event->photo !!}" alt="">
+                <img class="img-responsive img-hover" src="thumbnail2/{!! $event->photo !!}" alt="">
                 @else
-                <img class="img-responsive img-hover" src="uploads/crudfiles/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
+                <img class="img-responsive img-hover" src="thumbnail2/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
                 @endif
 
             
