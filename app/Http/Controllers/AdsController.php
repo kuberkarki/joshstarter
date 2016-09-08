@@ -46,6 +46,17 @@ class AdsController extends Controller {
 		return view('ads.ads', compact('ads','ads_category'));
 	}
 
+	public function book($slug){
+
+		$ad=Ad::where('slug',$slug)->first();
+		return view('ads.book',compact('ad'));
+
+	}
+
+	public function submitbook(){
+		
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *

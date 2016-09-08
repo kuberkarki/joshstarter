@@ -173,6 +173,7 @@ return [
          willvincent\Rateable\RateableServiceProvider::class,
          Tshafer\Reviewable\ServiceProvider::class,
          Cmgmyr\Messenger\MessengerServiceProvider::class,
+         Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'Datatables' => yajra\Datatables\Datatables::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

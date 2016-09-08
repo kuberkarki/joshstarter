@@ -89,7 +89,7 @@ My Ads
         @foreach($ads as $ad)
           <div class="col-sm-4">
             <div class="panel panel-default">
-              <a href="{!! url('ads-detail',$ad->slug) !!}">
+              <a href="{!! url('ads/details',$ad->slug) !!}">
                 <div class="panel-image">
                   <div class="sal_price"> 
                     @if($ad->price_type=='Fixed')
@@ -99,14 +99,14 @@ My Ads
                     @endif
                   </div>
                   @if($ad->photo)
-                        <img src="{{ URL::to('/uploads/crudfiles/'.$ad->photo)  }}" class="img-responsive img-hove" alt="{!! $ad->title !!}">
+                        <img src="{{ URL::to('/thumbnail/'.$ad->photo)  }}" class="img-responsive img-hove" alt="{!! $ad->title !!}">
                   @else
                     <img class="img-responsive img-hover" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $ad->title !!}">
                   @endif
                   </div>
                   </a>
                   <div class="panel-body">
-                  <a href="{!! url('ads-detail',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a>
+                  <a href="{!! url('ads/details',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a><br/>
                 <ul class="ratingAds">
                   <li>
                  
@@ -115,7 +115,7 @@ My Ads
                   <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
                   <span class="review">(<span id="total-{!! $ad->id!!}">{!! count($ad->ratings) !!}</span>)</span></li>
                 </ul>
-                <a href="{!! url('ads-detail',$ad->slug) !!}">
+                <a href="{!! url('ads/details',$ad->slug) !!}">
                   <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
                   <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>
                   <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
@@ -125,9 +125,9 @@ My Ads
 
 
             <div class="navPhotoVideo">
-              <a href="{!! url('ads-detail',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
+              <a href="{!! url('ads/details',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
             </div>
-            <div class="adsThumnelButton"><a href="#" class="btn btn-primary">Book Now</a></div>
+            <div class="adsThumnelButton"><a href="{{ url('ads/book',$ad->slug)}}" class="btn btn-primary">Book Now</a></div>
             </div>
           </div>
         @endforeach

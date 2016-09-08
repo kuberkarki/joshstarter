@@ -52,7 +52,7 @@ class Ad extends Model  {
 
     public function category()
     {
-        return $this->belongsTo('App\Ads_category');
+        return $this->belongsTo('App\Ads_category','ads_category_id','id');
     }
 
     public function prices()

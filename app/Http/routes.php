@@ -27,6 +27,14 @@ Route::get('/auth/callback/{provider?}',[
     'uses' => 'AuthController@getSocialAuthCallback',
     'as'   => 'auth.getSocialAuthCallback'
 ]);
+
+// usage inside a laravel route
+Route::get('thumbnail/{image}', function($image)
+{
+    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
+
+    return $img->response('jpg');
+});
    
 
     /**
@@ -59,8 +67,18 @@ Route::get('/auth/callback/{provider?}',[
 
         Route::post('submit-review-again', array('as' => 'submit-review-again', 'uses' => 'AdsController@submitreviewagain'));
 
-       
     });
+
+    Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
+            Route::get('book/{ads}', array('as' => 'book', 'uses' => 'AdsController@book'));
+            Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
+            Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
+
+     });
+        //Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
+
+
+     
 
     Route::group(array('prefix' => 'admin'), function () {
 

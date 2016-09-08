@@ -42,7 +42,7 @@ class Ads_category extends Model  {
         ];
     }
 
-    public function blog()
+    public function ad()
     {
         return $this->hasMany('App\Ad');
     }
