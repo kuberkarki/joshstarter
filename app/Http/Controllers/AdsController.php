@@ -16,18 +16,22 @@ use Redirect;
 use URL;
 use willvincent\Rateable\Rateable;
 use App\User;
+use Share;
 
 class AdsController extends Controller {
 
 	public function search(request $request){
 		$query=$request->get('keyword');
+		$location=$request->get('location');
 
-		$ads = Ad::search($query)->get();
+		$ads = Ad::search($query)
+            ->paginate(15);
+
 		$ads_category=Ads_category::all();
 
 		return view('ads.search',compact('ads','ads_category','query'));
 
-		dd($ads);
+		//dd($ads);
 	}
 
 	/**
@@ -43,10 +47,10 @@ class AdsController extends Controller {
 			if(!$adscategory)
 				$ads=Ad::all();
 			else
-			$ads=Ad::where('ads_category_id',$adscategory->id)->get();
+			$ads=Ad::where('ads_category_id',$adscategory->id)->paginate(12);
 		}
 		else
-			$ads = Ad::all();
+			$ads = Ad::paginate(12);
 		$ads_category = Ads_category::all();
 
 
@@ -76,7 +80,7 @@ class AdsController extends Controller {
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();
 		}
-		$ads = Ad::where('user_id',$user->id)->get();
+		$ads = Ad::where('user_id',$user->id)->paginate(15);
 		$ads_category = Ads_category::lists('name', 'id');
 		//dd($ads_category[1]);
 		return view('ads.index', compact('ads','ads_category'));
@@ -395,7 +399,7 @@ class AdsController extends Controller {
 				$user=Sentinel::getUser();
 				$reviewed=$ad->reviews()->where('author_id',$user->id)->where('reviewable_id',$ad->id)->first();
 			}
-
+		$ad->view();
 			if(!isset($reviewed))
 				$reviewed=0;
 
@@ -404,6 +408,8 @@ class AdsController extends Controller {
 			$users = User::where('id', '=', $ad->user_id)->get();
 			$adlink= "<a href=".url('ads-detail/'.$ad->slug).">".$ad->title."</a>";
 
+			$share=Share::load(url('ads-detail/'.$ad->slug), $ad->title)->services('facebook', 'gplus', 'twitter','email','pinterest');
+
 
 			//print_r($ad->owner()->first()->company_name);exit;;
 
@@ -411,7 +417,7 @@ class AdsController extends Controller {
 		//echo count($users);exit;
 
 		
-		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject'));
+		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject','share'));
 	}
 
 		/**
