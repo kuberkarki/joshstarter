@@ -173,7 +173,9 @@ return [
          willvincent\Rateable\RateableServiceProvider::class,
          Tshafer\Reviewable\ServiceProvider::class,
          Cmgmyr\Messenger\MessengerServiceProvider::class,
-         Intervention\Image\ImageServiceProvider::class
+         Intervention\Image\ImageServiceProvider::class,
+         Kuber\ViewCounter\ViewCounterServiceProvider::class,
+         Chencha\Share\ShareServiceProvider::class
     ],
 
     /*
@@ -229,7 +231,8 @@ return [
         'Datatables' => yajra\Datatables\Datatables::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Share' => Chencha\Share\ShareFacade::class,
 
     ],
 

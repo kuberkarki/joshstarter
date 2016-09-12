@@ -9,8 +9,6 @@ My Ads
 {{-- page level styles --}}
 @section('header_styles')
     <!--page level css starts-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/tabbular.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/blog.css') }}">
     <!--end of page level css-->
 @stop
 
@@ -19,19 +17,159 @@ My Ads
 
 {{-- Page content --}}
 @section('content')
-    <!-- Container Section Strat -->
-    <div class="container textsmall">
-        <h2>My Ads</h2>
-         @include('notifications')
-        <div class="row">
+<section class="mainContainer">
+<div class="contantWrapper innercontantWrapper adsListing">
+  <div class="container">
 
-        @include('business.usermenu')
-         <ul class="nav navbar-nav navbar-left">
-                            
-                            <li><a href="{{route('create-ads')}}">Create Ads</a></li>
-                        </ul>
-            <div class="content">
-                <div class="col-md-8">
+  <div class="row">
+      <div class="col-sm-12"><h3>My Ads Listing</h3></div>
+      @include('business.usermenu')
+     
+      <div class="col-sm-9">
+        @include('notifications')
+        <ul class="adsNav-list">
+          <li><a href="#">Active</a></li> 
+          <li><a href="#">Pending Approval</a></li> 
+          <li><a href="#">Require Modification</a></li> 
+          <li><a href="#">Draft</a></li> 
+          <li><a href="#">Denied</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <a href="{{route('create-ads')}}" class="btn btn-primary pull-right">create New Ads</a>
+      </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+                <th><input type="checkbox" id="checkall" /></th>
+                <th>Active Ads</th>
+                <th>Impression</th>
+                <th>Click</th>
+                <th>Views</th>
+                <th>Book/Hire</th>
+                <th>Cancellation</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                 @forelse ($ads as $ad)
+                <tr>
+                    <td><input type="checkbox" class="checkthis" /></td>
+                    <td>
+                        <div class="row">
+                          @if($ad->photo)
+                             <div class="col-sm-6"><img src="{{ URL::to('thumbnail/'.$ad->photo)  }}" class="img-responsive" alt="Image"></div>
+                        @else
+                        <div class="col-sm-6"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
+                            @endif
+                          <div class="col-sm-6">
+                            <ul class="ratingAds">
+                            <li>{{$ad->title}}</li>
+                              <li>
+                               <div class="rating">
+                               
+                               @for($i=0; $i < ((int)$ad->averagerating);$i++)
+                               
+                               <i class="fa fa-star" aria-hidden="true"></i>
+                              
+                               @endfor
+                                @if(count($ad->ratings)==0)
+                                    No ratings Yet
+                                @endif
+                              
+                               </div>
+                              <!-- <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div> -->
+                              <span class="review">({!! count($ad->ratings) !!})</span></li>
+                            </ul>
+                           <a href="#" class="manage">Manage Booking</a>
+                          </div>
+                        </div>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                    <a class="btn btn-primary btn-xs" data-title="Edit" href="{!! route('edit-ads',$ad)!!}" ><span class="glyphicon glyphicon-pencil"></span></a>
+                    <!-- <button class="btn btn-primary btn-xs" data-title="Edit" href="{!! route('edit-ads',$ad)!!}"  data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button> --></p>
+                    </td>
+                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-href="{!! route('delete-ads',$ad)!!}" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                </tr>
+                @empty
+                    <h3>No Ads Exists!</h3>
+                @endforelse
+
+            </tbody>
+        </table>
+        <div class="clearfix"></div>
+        @include('pagination.limit_links', ['paginator' => $ads])
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+      </div>
+          <div class="modal-body">
+          <div class="form-group">
+        <input class="form-control " type="text" placeholder="test">
+        </div>
+        <div class="form-group">
+        
+        <input class="form-control " type="text" placeholder="test">
+        </div>
+        <div class="form-group">
+        <textarea rows="2" class="form-control" placeholder="test"></textarea>
+    
+        
+        </div>
+      </div>
+          <div class="modal-footer ">
+        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+    
+    
+    
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Ads?</div>
+       
+      </div>
+        <div class="modal-footer ">
+        <a class="btn btn-danger btn-ok"><span class="glyphicon glyphicon-ok-sign"></span>Yes</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+@stop
+
+@section('content_old')
+
                     @forelse ($ads as $ad)
                     <!-- BEGIN FEATURED POST -->
 
@@ -244,5 +382,13 @@ My Ads
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-
+<script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
+<script>
+$(function() {
+  return $(".starrr").starrr();
+});
+$('#delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+});
+</script>
 @stop

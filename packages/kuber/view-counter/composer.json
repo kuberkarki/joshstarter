@@ -1,0 +1,17 @@
+{
+    "name": "kuber/view-counter",
+    "description": "view counter and likes",
+    "type": "library",
+    "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "5.1.*"
+  },
+  "autoload": {
+    "classmap": [
+      "src"
+    ],
+    "psr-4": {
+      "kuber\\ViewCounter\\": "src/"
+    }
+  }
+}

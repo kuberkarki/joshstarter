@@ -48,13 +48,13 @@
         </div>
         <p>{!! $ad->description !!}</p>
 
-        <div class="customerGallery" style="display:none">
+        <div class="customerGallery" >
           <div id="gallery" >
            @if(count($ad->photos()))
            
             @foreach($ad->photos()->get() as $photo)            
             <img alt="Preview Image 1"
-               src="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}"
+               src="{{ URL::to('/thumbnail/'.$photo->photo)  }}"
                data-image="{{ URL::to('/uploads/crudfiles/'.$photo->photo)  }}"
                data-description="Preview Image 1 Description" />
               @endforeach
@@ -68,18 +68,24 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="customerSocial">
-              <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-              <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-              <a href="#"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
-              <a href="#"><i class="fa fa-envelope-square" aria-hidden="true"></i></a>
+            
+              <a href="{{ $share['facebook'] }}"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+
+              <a href="{{ $share['twitter'] }}"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+              <a href="{{ $share['pinterest'] }}"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
+              <a href="{{ $share['email'] }}"><i class="fa fa-envelope-square" aria-hidden="true"></i></a>
             </div>
             </div>
             <div class="col-sm-6">
-              <div class="favBox pull-right"><a type="button" class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> (51) Ticket Available</a></div>
+              <div class="favBox pull-right"><a href="{{ route('view_counter.like', array('class_name' => 'Ad', 'object_id' => $ad->id)) }}"  class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> ({{ $ad->likes_count() }}) Likes</a>
+
+              
+             <!--  {{-- route('view_counter.like', array('class_name' => 'Ad', 'object_id' => $ad->id)) }}
+{{ route('view_counter.unlike', array('class_name' => 'Ad', 'object_id' => $ad->id)) --}} --></div>
             </div>
           </div>
         </div>
-        <div class="latestUpdate">
+        <!-- <div class="latestUpdate">
           <div class="headingCustomerPara">Latest Update</div>
           <div class="row updateBG">
           <div class="col-sm-12">
@@ -97,11 +103,11 @@ If you are looking for live wedding music at your ceremony, or to find a perform
             </div>
             <div class="col-sm-6"><span class="publish"><a href="#"> Publish</a></span></div>
           </div>
-        </div>
+        </div> -->
 
 
          <div class="reviewSection">
-            <div class="headingCustomerPara">Reviews({{count($ad->reviews()->get())}})</div>
+            <div class="headingCustomerPara">Reviews( {!! count($ad->reviews()->get()) !!} )</div>
               <ul class="media-list">
                     @foreach($ad->reviews()->get() as $review)
                         <div class="row">
@@ -115,12 +121,12 @@ If you are looking for live wedding music at your ceremony, or to find a perform
                             @endfor
 
                             {{-- */$user=App\user::find($review->author_id);/* --}}
-                                    {{ $user->first_name  ." ".$user->last_name}} 
+                                    {!! $user->first_name  ." ".$user->last_name !!} 
                                     <span class="pull-right">
-                                    {{ $review->updated_at->diffForHumans() }}
+                                    {!! $review->updated_at->diffForHumans() !!}
                                     </span> 
                     
-                            <p>{{ $review->body }}</p>
+                            <p>{!! $review->body !!}</p>
                           </div>
                        </div>
                     

@@ -31,3 +31,5 @@ ul.thumbnails{
 }
 
 .address{min-height: 83px;}
+
+.pagination>li:first-child>a, .pagination>li:first-child>span,.pagination>li:last-child>a, .pagination>li:last-child>span{ /*padding: 9.5px;*/}
