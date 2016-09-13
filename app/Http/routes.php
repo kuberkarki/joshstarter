@@ -85,6 +85,8 @@ Route::get('thumbnail2/{image}', function($image)
 
      Route::group(array('prefix' => 'ads'), function () {
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
+            Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
+
 
      });
              Route::post('search', array('as' => 'search', 'uses' => 'AdsController@search'));

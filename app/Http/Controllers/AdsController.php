@@ -570,6 +570,14 @@ class AdsController extends Controller {
 
 	}
 
+	public function ajaxadsbookingdetail($id){
+		$ad = Ad::findOrFail($id);
+		$ads_category = Ads_category::lists('name', 'id');
+		//$date=$date;
+		return view('ads.ajaxbookingdetail', compact('ad','ads_category'));
+
+	}
+
 	/**
 	 * Show the form for editing the specified resource.
 	 *
