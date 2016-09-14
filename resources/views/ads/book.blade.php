@@ -37,7 +37,7 @@ Create New booking
 
                     <h2>Options</h2>
 
-                    @if($ad->price_type=='fixed')
+                    @if($ad->price_type!='variable')
             
 					<div class="form-group">
                         {!! Form::label('price', 'Price: ') !!}
