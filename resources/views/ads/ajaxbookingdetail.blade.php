@@ -1,133 +1,115 @@
-    <link href="{{ asset('assets/vendors/fullcalendar/css/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/css/pages/calendar_custom.css') }}" rel="stylesheet" type="text/css"/>
- <div id="calendar"></div>
- {{Form::open(['submit-booking'])}}
+<div id="url" style="display:none">{{ url('/')}}</div>
+<div id="calendar"></div>
+{{Form::open(array('url' => url('ads/book'),'id'=>'frmbook'))}}
+
  <input type="hidden" name="dates" id="dates" />
- <input type="text" name="id" value="{{$ad->id}}" />
+ <input type="hidden" name="id" value="{{$ad->id}}" />
  {{Form::close()}}
-
-<script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
-
-<script src="{{ asset('assets/vendors/fullcalendar/js/fullcalendar.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/eventday/moment.js') }}"></script>
 <script>
- /* Calendar */
+var url = document.getElementById("url").textContent;
+var jdays = [];
+// Maintain array of dates
+var dates = new Array();
+cDate = moment();
+$('#currentDate').text("Current Date is " + cDate.format("MMMM Do, YYYY") );
+
+$(document).ready(function($){
+  createCalendar();
+});
+
+/**
+ * Instantiates the calendar AFTER ajax call
+ */
+function createCalendar() 
+{
+  $.get(url+"/api/get-available-days/{{$ad->id}}", function(data) {
+    $.each(data, function(index, value) {
+      jdays.push(value);
+    });
+
+    //My function to intialize the datepicker
+    $('#calendar').datepicker({
+      inline: true,
+      minDate: 0,
+      dateFormat: 'yy-mm-dd',
+      beforeShowDay: highlightDays,
+      onSelect: getTimes,
+    });
+  });
+}
+
+/**
+ * Highlights the days available for booking
+ * @param  {datepicker date} date
+ * @return {boolean, css}  
+ */
+function highlightDays(date)
+{
+
+console.log(dates)
+$('#dates').val(dates);
+  date = moment(date).format('YYYY-MM-DD');
+  var gotDate = jQuery.inArray(date, dates);
+  for(var i = 0; i < jdays.length; i++) {
+    jDate = moment(jdays[i]).format('YYYY-MM-DD');
+    if (gotDate >= 0) {
+          // Enable date so it can be deselected. Set style to be highlighted
+          return [true, "ui-state-selected"];
+    }
+    else if(jDate == date) {
+      return[true, "ui-state-highlight"];
+    }
+
+  }
+  return false;
+}
+
+/**
+ * Gets times available for the day selected
+ * Populates the daytimes id with dates available
+ */
+function getTimes(d)
+{
+   addOrRemoveDate(d);
+  /*var dateSelected = moment(d);
+  document.getElementById('daySelect').innerHTML = dateSelected.format("MMMM Do, YYYY");
+  $.get(url+"/booking/times?selectedDay="+d, function(data) {
+    $('#dayTimes').empty();
+    $('#dayTimes').append('<h6>Times Available</h6>');
+    for(var i in data) {
+      var rdate = data[i].booking_datetime;
+      rdate = rdate.split(" ");
+      $("#dayTimes").append('<a href="'+url+'/booking/details/'+data[i].id+'">' + rdate[1] + '</a><br>');
+    }
+  });*/
+}
 
 
-            /* initialize the calendar
-                     -----------------------------------------------------------------*/
-            //Date for the calendar events (dummy data)
-            var date = new Date();
-            var d = date.getDate(),
-                m = date.getMonth(),
-                y = date.getFullYear();
-             $('#calendar').fullCalendar({
-              dayClick: function(date, jsEvent, view) {
 
-                selected_date=date.format();
+function addDate(date) {
+    if (jQuery.inArray(date, dates) < 0) 
+        dates.push(date);
+}
 
+function removeDate(index) {
+    dates.splice(index, 1);
+}
 
-                  //alert('Clicked on: ' + date.format());
+// Adds a date if we don't have it yet, else remove it
+function addOrRemoveDate(date) {
+    var index = jQuery.inArray(date, dates);
+    if (index >= 0) 
+        removeDate(index);
+    else 
+        addDate(date);
+}
 
-                  
-                  $('#dates').val($('#dates').val() + ';'+date.format());
-                  //href="remoteContent.html" data-remote="false"
-
-                  /*$('#my-modal').modal({
-                      show: 'false'
-                  });*/
-
-                 // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-                  //alert('Current view: ' + view.name);
-
-                  // change the day's background color just for fun
-                  //$(this).css('background-color', 'red');
-
-              },
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month'
-                },
-                //Random events
-                events: [{
-                        title: 'Team Out',
-                        start: new Date(y, m, 1),
-                        backgroundColor: ('#418BCA')
-                    },{
-                    title: 'Long Event',
-                    start: new Date(y, m, d - 8),
-                    end: new Date(y, m, d - 8),
-                    backgroundColor: "#F89A14",
-                    borderColor: "#F89A14"
-                    },
-
-                     {
-                       title: 'Holiday',
-                       start: new Date(y, m,  10),
-                       backgroundColor: ('#01BC8C')
-                    }, {
-                       title: 'Seminar',
-                       start: new Date(y, m, 12),
-                       backgroundColor: ('#67C5DF')
-                    },{
-                       title: 'Anniversary Celebrations',
-                       start: new Date(y, m, 22),
-                       backgroundColor: ('#EF6F6C')
-                    },{
-                       title: 'Event Day',
-                       start: new Date(y, m, 31),
-                       backgroundColor: ('#EF6F6C')
-                    },{
-                    title: 'Client Meeting',
-                    start: new Date(y, m,  28),
-                    end: new Date(y, m,28),
-                    backgroundColor: "#A9B6BC",
-                    borderColor: "#A9B6BC"
-                    }],
-                editable: false,
-                droppable: false,
-                 height:450
-            });
-
-            /* ADDING EVENTS */
-            var currColor = "#418BCA"; //default
-            //Color chooser button
-            var colorChooser = $("#color-chooser-btn");
-            $("#color-chooser > li > a").click(function(e) {
-                e.preventDefault();
-                //Save color
-                currColor = $(this).css("background-color");
-                //Add color effect to button
-                colorChooser
-                    .css({
-                        "background-color": currColor,
-                        "border-color": currColor
-                    })
-                    .html($(this).text() + ' <span class="caret"></span>');
-            });
-            $("#add-new-event").click(function(e) {
-                e.preventDefault();
-                //Get value and make sure it is not null
-                var val = $("#new-event").val();
-                if (val.length == 0) {
-                    return;
-                }
-
-                //Create event
-                var event = $("<div />");
-                event.css({
-                    "background-color": currColor,
-                    "border-color": currColor,
-                    "color": "#fff"
-                }).addClass("external-event");
-                event.html(val);
-                $('#external-events').prepend(event);
-
-                //Add draggable funtionality
-                ini_events(event);
-
-                //Remove event from text input
-                $("#new-event").val("");
-            });  
+// Takes a 1-digit number and inserts a zero before it
+function padNumber(number) {
+    var ret = new String(number);
+    if (ret.length == 1) 
+        ret = "0" + ret;
+    return ret;
+}
 </script>

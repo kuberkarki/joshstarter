@@ -10,12 +10,15 @@
 @section('header_styles')
     <!--page level css starts-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/blog.css') }}">
+
     <!--end of page level css-->
 @stop
 
 
 {{-- Page content --}}
 @section('content')
+    <link href="{{ asset('assets/css/eventday/calendar.css') }}" rel="stylesheet">
+
 <!-- Container Section Start -->
 <section class="mainContainer">
 <div class="contantWrapper innercontantWrapper customerEvent">
@@ -306,6 +309,9 @@ sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
           <h1>Loading...</h1>
           </div>
           <div class="modal-footer ">
+          <div class="alert alert-warning hide seldateerr">
+            <strong>Warning!</strong> Date not selected.
+          </div>
         <button id="booknow" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Book Now</button>
       </div>
         </div>
@@ -317,6 +323,8 @@ sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
 @stop
 {{-- page level scripts --}}
 @section('footer_scripts')
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
 <script>
 
@@ -328,6 +336,8 @@ $(function() {
 });
 
 $( document ).ready(function() {
+
+  
   
 
   $( "#frm" ).submit(function( event ) {
@@ -342,12 +352,23 @@ $( document ).ready(function() {
   $("#bookModal").on("show.bs.modal", function(e) {
           //alert(selected_date)
             var link = $(e.relatedTarget);
+             $(".seldateerr").addClass('hide');
             $(this).find(".modal-body").load('{{ url('ads/ajax-booking-detail')}}/{{$ad->id}}');
         });
 
   $('#booknow').click(function(e){
-      e.preventDefault();
-      alert($('#dates').val());
+      //e.preventDefault();
+      //alert($('#dates').val());
+
+      if($('#dates').val()==''){
+        //alert('Date Not Selected')
+        //
+        $(".seldateerr").removeClass('hide');
+        
+         return false;
+      }
+
+      $('#frmbook').submit();
       /*
       $.post('http://path/to/post', 
          $('#myForm').serialize(), 

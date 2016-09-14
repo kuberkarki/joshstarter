@@ -11,7 +11,14 @@ Route::group(['middleware' => 'web'], function () {
     | and give it the Closure to execute when that URI is requested.
     |
     */
+Route::group(['prefix' => 'api'], function()
+{
+    // Customer API Routes
+    Route::get('get-available-days/{ads_id}', 'APIController@GetAvailableDays');
 
+    // Admin API Routes
+    Route::get('get-all-appointments', 'AdminAPIController@GetAllAppointments');
+});
    
 /*Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');*/
@@ -78,7 +85,7 @@ Route::get('thumbnail2/{image}', function($image)
     });
 
     Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
-            Route::get('book/{ads}', array('as' => 'book', 'uses' => 'AdsController@book'));
+            Route::post('book', array('as' => 'book', 'uses' => 'AdsController@book'));
             Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
 
      });

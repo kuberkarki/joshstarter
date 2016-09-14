@@ -17,6 +17,7 @@ use URL;
 use willvincent\Rateable\Rateable;
 use App\User;
 use Share;
+use App\Booking;
 
 class AdsController extends Controller {
 
@@ -59,14 +60,30 @@ class AdsController extends Controller {
 		return view('ads.ads', compact('ads','ads_category'));
 	}
 
-	public function book($slug){
-
-		$ad=Ad::where('slug',$slug)->first();
-		return view('ads.book',compact('ad'));
+	public function book(request $request){
+		$id=$request->get('id');
+		$dates=$request->get('dates');
+		$ad=Ad::find($id);
+		return view('ads.book',compact('ad','dates'));
 
 	}
 
-	public function submitbook(){
+	public function submitbook(request $request){
+
+		$dates=explode(',',$request->get('dates'));
+
+		foreach($dates as $date){
+			$booking=new booking();
+			$booking->ads_id=$request->get('ads_id');
+			$booking->book_date=$date;
+			$booking->price=$request->get('price');
+			$booking->user_id=Sentinel::getUser()->id;
+			$booking->save();
+		}
+
+		return redirect('/')->with('success', 'Successfully Booked');
+
+
 		
 	}
 

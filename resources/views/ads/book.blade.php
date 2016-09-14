@@ -28,14 +28,14 @@ Create New booking
                     <span>{{ $ad->title }}</span><br/>
                     <span>{{ $ad->category()->first()->name }}</span><br/>
                     <span>{{ $ad->location }}</span>
+                    <span>Booking Dates: {{$dates}}</span>
                     
 
                     {!! Form::open(['url' => 'ads/bookings','files'=>true]) !!}
+                        {!! Form::hidden('dates', $dates) !!}
+                        {!! Form::hidden('ads_id', $ad->id) !!}
 
-                    <div class="form-group">
-                        {!! Form::label('name', 'Name: ') !!}
-                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
-                    </div>
+                    <h2>Options</h2>
 
                     @if($ad->price_type=='fixed')
             
@@ -46,30 +46,25 @@ Create New booking
                     
 
                     @else
-
+                    <ul>
+                
                     @foreach($ad->prices()->get() as $price)
             
-                    <div class="form-group"> min guest {{$price->minguest}} to max guest {{ $price->maxguest}}
+                    <li> min guest {{$price->minguest}} to max guest {{ $price->maxguest}}
                         <label>{!! Form::radio('price', $price->price, ['class' => 'form-control']) !!}
                       ${!! $price->price!!}</label>
-                    </div>
+                    </li>
                     @endforeach
+                    </ul>
                     @endif
 
-					<div class="form-group">
-                        {!! Form::label('customer_name', 'Customer Name: ') !!}
-                        {!! Form::text('customer_name', Sentinel::getUser()->first_name, ['class' => 'form-control']) !!}
-                    </div>
 
-					<div class="form-group">
-                        {!! Form::label('book_date', 'Book Date: ') !!}
-                        {!! Form::text('book_date', null, ['class' => 'form-control']) !!}
-                    </div>
+					
+                       
+                        {!! Form::hidden('book_dates', $dates, ['class' => 'form-control']) !!}
+                    
 
-					<div class="form-group">
-                        {!! Form::label('status', 'Status: ') !!}
-                        {!! Form::text('status', null, ['class' => 'form-control']) !!}
-                    </div>
+					
 
 					
 
