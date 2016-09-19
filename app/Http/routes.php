@@ -19,6 +19,16 @@ Route::group(['prefix' => 'api'], function()
     // Admin API Routes
     Route::get('get-all-appointments', 'AdminAPIController@GetAllAppointments');
 });
+
+Route::get('payment', [
+    'as'   => 'payment',
+    'uses' => 'PaymentController@prepare',
+]);
+
+Route::any('payment/done/{payumToken}', [
+    'as'   => 'payment.done',
+    'uses' => 'PaymentController@done',
+]);
    
 /*Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');*/

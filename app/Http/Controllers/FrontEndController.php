@@ -95,6 +95,10 @@ class FrontEndController extends JoshController
         try {
             // Try to log the user in
             if (Sentinel::authenticate($request->only('email', 'password'), $request->get('remember-me', 0))) {
+                //return Redirect::intended('default_path');
+               // return Redirect::to(URL::previous());
+               // return Redirect::intended('/');
+
                 if(Sentinel::inRole('event-organizer'))
                     return Redirect::route("my-account-event-organizer")->with('success', Lang::get('auth/message.login.success'));
                 elseif(Sentinel::inRole('freelancer'))

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kuber\ViewCounter;
+namespace Kuber\ViewCounter\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 
