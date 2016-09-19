@@ -21,6 +21,8 @@ class SentinelUser
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+
+                \Session::put('url.intended', \URL::full());
                 return Redirect::route('login');
             }
         }
