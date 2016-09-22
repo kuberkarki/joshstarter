@@ -20,7 +20,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('get-all-appointments', 'AdminAPIController@GetAllAppointments');
 });
 
-Route::get('payment', [
+Route::post('payment', [
     'as'   => 'payment',
     'uses' => 'PaymentController@prepare',
 ]);
