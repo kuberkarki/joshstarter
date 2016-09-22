@@ -3,24 +3,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Payum\Core\GatewayInterface;
+/*use Payum\Core\GatewayInterface;
 use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Security\TokenInterface;
 use Payum\Core\Storage\StorageInterface;
-use Recca0120\LaravelPayum\Service\Payum as PayumService;
+use Recca0120\LaravelPayum\Service\Payum as PayumService;*/
 
 // use PayPal\Api\Amount;
 // use PayPal\Api\Payer;
 // use PayPal\Api\RedirectUrls;
 // use PayPal\Api\Transaction;
-use PayPal;
+/*use PayPal;
 use Srmklive\PayPal\Services\ExpressCheckout;
-use Srmklive\PayPal\Services\AdaptivePayments;
+use Srmklive\PayPal\Services\AdaptivePayments;*/
+
+use Omnipay\Omnipay;
+use URL;
 
 class PaymentController extends BaseController
 {
+
+    public function __construct(){
+        $gateway = Omnipay::create('PayPal_Express');
+        $gateway->setUsername('karki.kuber_api1.gmail.com');
+        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+    }
     public function prepare1(PayumService $payumService)
     {
         return $payumService->prepare('offline', function (
@@ -53,7 +62,7 @@ class PaymentController extends BaseController
         });
     }
 
-    public function done(PayumService $payumService, Request $request, $payumToken)
+    public function done1(PayumService $payumService, Request $request, $payumToken)
     {
         return $payumService->done($request, $payumToken, function (
             GetHumanStatus $status,
@@ -76,7 +85,29 @@ class PaymentController extends BaseController
         });
     }
 
-    public function prepare(){
+    public function done(){
+        $gateway = Omnipay::create('PayPal_Express'); 
+        $gateway = Omnipay::create('PayPal_Express'); 
+        $gateway = Omnipay::create('PayPal_Express');
+        $gateway->setUsername('karki.kuber_api1.gmail.com');
+        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+        
+        $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); 
+        $gateway->setTestMode(true); 
+        $params = session()->get('params'); 
+        $response = $gateway->completePurchase($params)->send(); 
+        $paypalResponse = $response->getData(); // this is the raw response object 
+
+        if(isset($paypalResponse['PAYMENTINFO_0_ACK']) && $paypalResponse['PAYMENTINFO_0_ACK'] === 'Success') {
+            // here you process the response. Save to database ...
+
+        } 
+        else { 
+            // Failed transaction ...
+        }
+    }
+
+    public function prepare2(){
         $provider = PayPal::setProvider('express_checkout'); 
         $data = [];
         $data['items'] = [
@@ -108,5 +139,35 @@ $response = $provider->setExpressCheckout($data);
 dd($response);
 return redirect($response['paypal_link']);
 
+    }
+
+    public function prepare(Request $request)
+    {        
+        $params = array( 
+            'cancelUrl' => 'http://localhost:8888/eventdayplanner/public/', 
+            'returnUrl' => 'http://localhost:8888/eventdayplanner/public/payment/done',
+            'amount' => '10.00', 
+        );
+
+        session()->put('params', $params); // here you save the params to the session so you can use them later.
+        session()->save();
+
+        $gateway = Omnipay::create('PayPal_Express'); 
+        $gateway = Omnipay::create('PayPal_Express');
+        $gateway->setUsername('karki.kuber_api1.gmail.com');
+        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+        
+        $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); // and the signature for the account 
+        $gateway->setTestMode(true); // set it to true when you develop and when you go to production to false
+        $response = $gateway->purchase($params)->send(); // here you send details to PayPal
+        
+        if ($response->isRedirect()) { 
+            // redirect to offsite payment gateway 
+            $response->redirect(); 
+         } 
+         else { 
+            // payment failed: display message to customer 
+            echo $response->getMessage();
+        } 
     }
 }
