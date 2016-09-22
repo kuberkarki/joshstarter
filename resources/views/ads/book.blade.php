@@ -31,7 +31,7 @@ Create New booking
                     <span>Booking Dates: {{$dates}}</span>
                     
 
-                    {!! Form::open(['url' => 'ads/bookings','files'=>true]) !!}
+                    {!! Form::open(['url' => 'payment','files'=>true]) !!}
                         {!! Form::hidden('dates', $dates) !!}
                         {!! Form::hidden('ads_id', $ad->id) !!}
 
@@ -72,7 +72,7 @@ Create New booking
                         <div class="col-sm-4">
                             
                             <button type="submit" class="btn btn-success">
-                                Book Now
+                                Pay with Paypal
                             </button>
                         </div>
                     </div>

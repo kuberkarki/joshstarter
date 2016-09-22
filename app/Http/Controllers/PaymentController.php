@@ -100,9 +100,12 @@ class PaymentController extends BaseController
 
         if(isset($paypalResponse['PAYMENTINFO_0_ACK']) && $paypalResponse['PAYMENTINFO_0_ACK'] === 'Success') {
             // here you process the response. Save to database ...
+            // 
+            dd($paypalResponse);
 
         } 
         else { 
+             dd($paypalResponse);
             // Failed transaction ...
         }
     }
@@ -142,11 +145,13 @@ return redirect($response['paypal_link']);
     }
 
     public function prepare(Request $request)
-    {        
+    {     
+
+    $price=$request->get('price');   
         $params = array( 
-            'cancelUrl' => 'http://localhost:8888/eventdayplanner/public/', 
-            'returnUrl' => 'http://localhost:8888/eventdayplanner/public/payment/done',
-            'amount' => '10.00', 
+            'cancelUrl' => url('/'),//'http://localhost:8888/eventdayplanner/public/', 
+            'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
+            'amount' => (float)$price, 
         );
 
         session()->put('params', $params); // here you save the params to the session so you can use them later.
