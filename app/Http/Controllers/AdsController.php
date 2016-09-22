@@ -18,6 +18,7 @@ use willvincent\Rateable\Rateable;
 use App\User;
 use Share;
 use App\Booking;
+use Session;
 
 class AdsController extends Controller {
 
@@ -60,9 +61,32 @@ class AdsController extends Controller {
 		return view('ads.ads', compact('ads','ads_category'));
 	}
 
-	public function book(request $request){
+	public function postbook(request $request){
+		
 		$id=$request->get('id');
 		$dates=$request->get('dates');
+
+		$bookdata = ['ads_id' => $id, 'dates' => $dates];
+		Session::forget('bookData');
+    	Session::set('bookData', $bookdata); // use set() not push()
+
+    	if(!Sentinel::check()){
+    		return redirect('login');
+    	}
+
+		
+
+		$ad=Ad::find($id);
+		return view('ads.book',compact('ad','dates'));
+
+	}
+	public function getbook(request $request){
+
+		if(!Session::get('bookData')){
+			redirect('/');
+		}
+		$id=Session::get('bookData.ads_id');;
+		$dates=Session::get('bookData.dates');
 		$ad=Ad::find($id);
 		return view('ads.book',compact('ad','dates'));
 

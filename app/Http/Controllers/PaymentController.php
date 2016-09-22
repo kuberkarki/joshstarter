@@ -20,6 +20,8 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 use Srmklive\PayPal\Services\AdaptivePayments;*/
 
 use Omnipay\Omnipay;
+use Omnipay\PayPal;
+use Omnipay\Common\CreditCard;
 use URL;
 
 class PaymentController extends BaseController
@@ -86,8 +88,6 @@ class PaymentController extends BaseController
     }
 
     public function done(){
-        $gateway = Omnipay::create('PayPal_Express'); 
-        $gateway = Omnipay::create('PayPal_Express'); 
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('karki.kuber_api1.gmail.com');
         $gateway->setPassword('YPZ2VJPMNNKW8V7F');
@@ -141,6 +141,56 @@ class PaymentController extends BaseController
 $response = $provider->setExpressCheckout($data);
 dd($response);
 return redirect($response['paypal_link']);
+
+    }
+
+    public function preparecard(Request $request){
+     $gateway = Omnipay::create('PayPal_Rest');
+        //$gateway->clientId('karki.kuber_api1.gmail.com');
+        //$gateway->secret('YPZ2VJPMNNKW8V7F');
+
+        $gateway->initialize(array(
+    'clientId' => 'MyPayPalClientId',
+    'secret'   => 'MyPayPalSecret',
+   'testMode' => true, // Or false when you are ready for live transactions
+));
+
+
+$card = new CreditCard(array(
+                'firstName' => 'Example',
+               'lastName' => 'User',
+                'number' => '4111111111111111',
+               'expiryMonth'           => '01',
+                'expiryYear'            => '2020',
+                'cvv'                   => '123',
+                'billingAddress1'       => '1 Scrubby Creek Road',
+                'billingCountry'        => 'AU',
+                'billingCity'           => 'Scrubby Creek',
+                'billingPostcode'       => '4999',
+               'billingState'          => 'QLD',
+    ));
+
+ try {
+        $transaction = $gateway->purchase(array(
+            'amount'        => '10.00',
+            'currency'      => 'AUD',
+            'description'   => 'This is a test purchase transaction.',
+            'card'          => $card,
+        ));
+        $response = $transaction->send();
+        $data = $response->getData();
+        echo "Gateway purchase response data == " . print_r($data, true) . "\n";
+ 
+        if ($response->isSuccessful()) {
+            echo "Purchase transaction was successful!\n";
+        }
+    } catch (\Exception $e) {
+        echo "Exception caught while attempting authorize.\n";
+        echo "Exception type == " . get_class($e) . "\n";
+        echo "Message == " . $e->getMessage() . "\n";
+    }
+
+
 
     }
 

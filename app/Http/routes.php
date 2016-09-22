@@ -25,6 +25,11 @@ Route::post('payment', [
     'uses' => 'PaymentController@prepare',
 ]);
 
+Route::post('payment-card', [
+    'as'   => 'payment-card',
+    'uses' => 'PaymentController@preparecard',
+]);
+
 Route::any('payment/done/{payumToken}', [
     'as'   => 'payment.done',
     'uses' => 'PaymentController@done',
@@ -95,7 +100,8 @@ Route::get('thumbnail2/{image}', function($image)
     });
 
     Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
-            Route::post('book', array('as' => 'book', 'uses' => 'AdsController@book'));
+            
+            Route::get('book', array('as' => 'book', 'uses' => 'AdsController@getbook'));
             Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
 
      });
@@ -103,6 +109,7 @@ Route::get('thumbnail2/{image}', function($image)
      Route::group(array('prefix' => 'ads'), function () {
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
             Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
+            Route::post('book', array('as' => 'book', 'uses' => 'AdsController@postbook'));
 
 
      });
