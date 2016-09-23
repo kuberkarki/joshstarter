@@ -101,7 +101,7 @@ class FrontEndController extends JoshController
                // return Redirect::intended('/');
 
                 if(Session::get('bookData'))
-                    return Redirect::intended('default_path');
+                    return Redirect::intended('/');
 
                 if(Sentinel::inRole('event-organizer'))
                     return Redirect::route("my-account-event-organizer")->with('success', Lang::get('auth/message.login.success'));
