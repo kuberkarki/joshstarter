@@ -30,7 +30,7 @@ Route::post('payment-card', [
     'uses' => 'PaymentController@preparecard',
 ]);
 
-Route::any('payment/done/{payumToken}', [
+Route::any('payment/done/{payumToken?}', [
     'as'   => 'payment.done',
     'uses' => 'PaymentController@done',
 ]);

@@ -87,14 +87,15 @@ class PaymentController extends BaseController
         });
     }
 
-    public function done(){
+    public function done(Request $request){
+        //echo $request->get('token');exit;
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('karki.kuber_api1.gmail.com');
         $gateway->setPassword('YPZ2VJPMNNKW8V7F');
-        
         $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); 
         $gateway->setTestMode(true); 
         $params = session()->get('params'); 
+
         $response = $gateway->completePurchase($params)->send(); 
         $paypalResponse = $response->getData(); // this is the raw response object 
 
@@ -174,9 +175,10 @@ class PaymentController extends BaseController
         $card = new CreditCard(array(
                 'Name' => $request->get('card_holder_name'),
                 'number' => $request->get('card_number'),
-               'expiryMonth'           => $request->get('expiry_month'),
-                'expiryYear'            => $request->get('expiry_year'),
-                'cvv'                   => $request->get('cvv'),
+                'expiryMonth' => $request->get('expiry_month'),
+                'expiryYear'=> $request->get('expiry_year'),
+                'cvv'=> $request->get('cvv'),
+
                //  'billingAddress1'       => '1 Scrubby Creek Road',
                //  'billingCountry'        => 'AU',
                //  'billingCity'           => 'Scrubby Creek',
@@ -184,14 +186,64 @@ class PaymentController extends BaseController
                // 'billingState'          => 'QLD',
         ));
 
+        
+
         try {
+
+            $id=Session::get('bookData.ads_id');;
+            $dates=Session::get('bookData.dates');
+
+            $days=count(explode(',',$dates));
+            $ad=Ad::find($id); 
+
+            $price_id=$request->get('price')*$days;
+
+
+            if($price_id){
+                $price_amount=ads_prices::find($price_id)->price;
+            }else{
+                $price_amount=$ad->price;
+            }
+
+             $dates=Session::set('bookData.price',$price_amount);
+
+
+            if(!$price_amount && !is_numeric($price)){
+                return  Redirect::to('ads/book')->with('error', 'Price Not Selected');
+            }
+
+            if(!$ad){
+                return  Redirect::to('ads/book')->with('error', 'No Ads Selected');
+            }
+
+            if($days<1){
+                return  Redirect::to('ads/book')->with('error', 'Date Selected');
+            }
             $transaction = $gateway->purchase(array(
-                'amount'        => '10.00',
+                'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
+                'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
+                'amount' => (float)$price_amount, 
                 'currency'      => 'USD',
-                'description'   => 'This is a test purchase transaction.',
-                'card'          => $card,
+                'description' => 'Booking '.$ad->title,
+                'BRANDNAME' => 'Event Day Planner',
             ));
             $response = $transaction->send();
+
+          //$response = $gateway->purchase($params)->send(); // here you send details to PayPal
+        
+        if ($response->isRedirect()) { 
+            // redirect to offsite payment gateway 
+            $response->redirect(); 
+         } 
+         else { 
+            // payment failed: display message to customer 
+            echo $response->getMessage();
+        } 
+
+
+
+
+
             $data = $response->getData();
             echo "Gateway purchase response data == " . print_r($data, true) . "\n";
      
@@ -244,8 +296,8 @@ class PaymentController extends BaseController
             'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
             'amount' => (float)$price_amount, 
-            'LOGOIMG' => asset('assets/images/eventday/eventdayPlanner.png'),
-            'name' => 'Booking '.$ad->title,
+            'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+            'description' => 'Booking '.$ad->title,
             'BRANDNAME' => 'Event Day Planner',
         );
 
