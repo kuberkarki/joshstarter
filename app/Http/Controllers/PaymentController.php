@@ -24,6 +24,8 @@ use Omnipay\PayPal;
 use Omnipay\Common\CreditCard;
 use URL;
 use Session;
+use App\Ad;
+use Sentinel;
 
 class PaymentController extends BaseController
 {
