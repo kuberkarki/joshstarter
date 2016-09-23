@@ -24,8 +24,9 @@ use Omnipay\PayPal;
 use Omnipay\Common\CreditCard;
 use URL;
 use Session;
-use App\Ad;
 use Sentinel;
+use App\Ad;
+use App\ads_prices;
 
 class PaymentController extends BaseController
 {
@@ -100,6 +101,19 @@ class PaymentController extends BaseController
         if(isset($paypalResponse['PAYMENTINFO_0_ACK']) && $paypalResponse['PAYMENTINFO_0_ACK'] === 'Success') {
             // here you process the response. Save to database ...
             // 
+            
+
+            $id=Session::get('bookData.ads_id');;
+            $dates=Session::get('bookData.dates');
+
+        foreach($dates as $date){
+            $booking=new booking();
+            $booking->ads_id=$id;
+            $booking->book_date=$date;
+            $booking->price=$request->get('price');
+            $booking->user_id=Sentinel::getUser()->id;
+            $booking->save();
+        }
             dd($paypalResponse);
 
         } 
@@ -137,25 +151,25 @@ class PaymentController extends BaseController
 
         $data['total'] = $total;
 
-$response = $provider->setExpressCheckout($data);
-dd($response);
-return redirect($response['paypal_link']);
+        $response = $provider->setExpressCheckout($data);
+        dd($response);
+        return redirect($response['paypal_link']);
 
     }
 
     public function preparecard(Request $request){
-     $gateway = Omnipay::create('PayPal_Rest');
+        $gateway = Omnipay::create('PayPal_Rest');
         //$gateway->clientId('karki.kuber_api1.gmail.com');
         //$gateway->secret('YPZ2VJPMNNKW8V7F');
 
         $gateway->initialize(array(
-    'clientId' => 'MyPayPalClientId',
-    'secret'   => 'MyPayPalSecret',
-   'testMode' => true, // Or false when you are ready for live transactions
-));
+        'clientId' => 'MyPayPalClientId',
+        'secret'   => 'MyPayPalSecret',
+       'testMode' => true, // Or false when you are ready for live transactions
+        ));
 
 
-$card = new CreditCard(array(
+        $card = new CreditCard(array(
                 'Name' => $request->get('card_holder_name'),
                 'number' => $request->get('card_number'),
                'expiryMonth'           => $request->get('expiry_month'),
@@ -166,27 +180,27 @@ $card = new CreditCard(array(
                //  'billingCity'           => 'Scrubby Creek',
                //  'billingPostcode'       => '4999',
                // 'billingState'          => 'QLD',
-    ));
-
- try {
-        $transaction = $gateway->purchase(array(
-            'amount'        => '10.00',
-            'currency'      => 'USD',
-            'description'   => 'This is a test purchase transaction.',
-            'card'          => $card,
         ));
-        $response = $transaction->send();
-        $data = $response->getData();
-        echo "Gateway purchase response data == " . print_r($data, true) . "\n";
- 
-        if ($response->isSuccessful()) {
-            echo "Purchase transaction was successful!\n";
+
+        try {
+            $transaction = $gateway->purchase(array(
+                'amount'        => '10.00',
+                'currency'      => 'USD',
+                'description'   => 'This is a test purchase transaction.',
+                'card'          => $card,
+            ));
+            $response = $transaction->send();
+            $data = $response->getData();
+            echo "Gateway purchase response data == " . print_r($data, true) . "\n";
+     
+            if ($response->isSuccessful()) {
+                echo "Purchase transaction was successful!\n";
+            }
+        } catch (\Exception $e) {
+            echo "Exception caught while attempting authorize.\n";
+            echo "Exception type == " . get_class($e) . "\n";
+            echo "Message == " . $e->getMessage() . "\n";
         }
-    } catch (\Exception $e) {
-        echo "Exception caught while attempting authorize.\n";
-        echo "Exception type == " . get_class($e) . "\n";
-        echo "Message == " . $e->getMessage() . "\n";
-    }
 
 
 
@@ -201,17 +215,38 @@ $card = new CreditCard(array(
     $days=count(explode(',',$dates));
     $ad=Ad::find($id); 
 
-    $price=$request->get('price');   
+    $price_id=$request->get('price')*$days;
+
+
+    if($price_id){
+        $price_amount=ads_prices::find($price_id)->price;
+    }else{
+        $price_amount=$ad->price;
+    }
+
+     $dates=Session::set('bookData.price',$price_amount);
+
+
+    if(!$price_amount && !is_numeric($price)){
+        return  Redirect::to('ads/book')->with('error', 'Price Not Selected');
+    }
+
+    if(!$ad){
+        return  Redirect::to('ads/book')->with('error', 'No Ads Selected');
+    }
+
+    if($days<1){
+        return  Redirect::to('ads/book')->with('error', 'Date Selected');
+    }
         $params = array( 
-            'cancelUrl' => url('/'),//'http://localhost:8888/eventdayplanner/public/', 
+            'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
-            'amount' => (float)$price, 
+            'amount' => (float)$price_amount, 
         );
 
         session()->put('params', $params); // here you save the params to the session so you can use them later.
         session()->save();
 
-        $gateway = Omnipay::create('PayPal_Express'); 
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('karki.kuber_api1.gmail.com');
         $gateway->setPassword('YPZ2VJPMNNKW8V7F');
