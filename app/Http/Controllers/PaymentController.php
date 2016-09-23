@@ -27,6 +27,7 @@ use Session;
 use Sentinel;
 use App\Ad;
 use App\ads_prices;
+use App\Booking;
 
 class PaymentController extends BaseController
 {
@@ -110,7 +111,7 @@ class PaymentController extends BaseController
             $dates=explode(',',$dateswithcomma);
 
             foreach($dates as $date){
-                $booking=new booking();
+                $booking=new Booking();
                 $booking->ads_id=$id;
                 $booking->book_date=$date;
                 $booking->price=$request->get('price');
@@ -238,6 +239,8 @@ class PaymentController extends BaseController
             $response->redirect(); 
          } 
          else { 
+
+            dd($response);
             // payment failed: display message to customer 
             echo $response->getMessage();
         } 
