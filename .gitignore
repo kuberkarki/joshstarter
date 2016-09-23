@@ -1,3 +1,5 @@
+/vendor
+/vendor1
 /node_modules
 /public/storage
 Homestead.yaml
