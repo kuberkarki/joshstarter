@@ -87,14 +87,15 @@ class PaymentController extends BaseController
         });
     }
 
-    public function done(){
+    public function done(Request $request){
+        //echo $request->get('token');exit;
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('karki.kuber_api1.gmail.com');
         $gateway->setPassword('YPZ2VJPMNNKW8V7F');
-        
         $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); 
         $gateway->setTestMode(true); 
         $params = session()->get('params'); 
+
         $response = $gateway->completePurchase($params)->send(); 
         $paypalResponse = $response->getData(); // this is the raw response object 
 
@@ -244,8 +245,8 @@ class PaymentController extends BaseController
             'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
             'amount' => (float)$price_amount, 
-            'LOGOIMG' => asset('assets/images/eventday/eventdayPlanner.png'),
-            'name' => 'Booking '.$ad->title,
+            'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+            'description' => 'Booking '.$ad->title,
             'BRANDNAME' => 'Event Day Planner',
         );
 
