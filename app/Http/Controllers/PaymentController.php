@@ -27,11 +27,7 @@ use URL;
 class PaymentController extends BaseController
 {
 
-    public function __construct(){
-        $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername('karki.kuber_api1.gmail.com');
-        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
-    }
+    
     public function prepare1(PayumService $payumService)
     {
         return $payumService->prepare('offline', function (
@@ -157,23 +153,22 @@ return redirect($response['paypal_link']);
 
 
 $card = new CreditCard(array(
-                'firstName' => 'Example',
-               'lastName' => 'User',
-                'number' => '4111111111111111',
-               'expiryMonth'           => '01',
-                'expiryYear'            => '2020',
-                'cvv'                   => '123',
-                'billingAddress1'       => '1 Scrubby Creek Road',
-                'billingCountry'        => 'AU',
-                'billingCity'           => 'Scrubby Creek',
-                'billingPostcode'       => '4999',
-               'billingState'          => 'QLD',
+                'Name' => $request->get('card_holder_name'),
+                'number' => $request->get('card_number'),
+               'expiryMonth'           => $request->get('expiry_month'),
+                'expiryYear'            => $request->get('expiry_year'),
+                'cvv'                   => $request->get('cvv'),
+               //  'billingAddress1'       => '1 Scrubby Creek Road',
+               //  'billingCountry'        => 'AU',
+               //  'billingCity'           => 'Scrubby Creek',
+               //  'billingPostcode'       => '4999',
+               // 'billingState'          => 'QLD',
     ));
 
  try {
         $transaction = $gateway->purchase(array(
             'amount'        => '10.00',
-            'currency'      => 'AUD',
+            'currency'      => 'USD',
             'description'   => 'This is a test purchase transaction.',
             'card'          => $card,
         ));
@@ -195,7 +190,13 @@ $card = new CreditCard(array(
     }
 
     public function prepare(Request $request)
-    {     
+    {   
+
+    $id=Session::get('bookData.ads_id');;
+    $dates=Session::get('bookData.dates');
+
+    $days=count(explode(',',$dates));
+    $ad=Ad::find($id); 
 
     $price=$request->get('price');   
         $params = array( 
