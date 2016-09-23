@@ -105,7 +105,9 @@ class PaymentController extends BaseController
             
 
             $id=Session::get('bookData.ads_id');;
-            $dates=Session::get('bookData.dates');
+            $dateswithcomma=Session::get('bookData.dates');
+
+            $dates=explode(',',$dateswithcomma);
 
             foreach($dates as $date){
                 $booking=new booking();
