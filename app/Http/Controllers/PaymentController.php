@@ -165,8 +165,8 @@ class PaymentController extends BaseController
         //$gateway->secret('YPZ2VJPMNNKW8V7F');
 
         $gateway->initialize(array(
-        'clientId' => 'MyPayPalClientId',
-        'secret'   => 'MyPayPalSecret',
+        'clientId' => 'AfMGFi1jXzgJZt2JvdMK5KSqgRrD-xRrozoOrOahS0aJ7Tu53oNRkIKkqZbpbKPCXESn3XZslTspjejs',
+        'secret'   => 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC',
        'testMode' => true, // Or false when you are ready for live transactions
         ));
 
