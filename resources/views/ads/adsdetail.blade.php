@@ -336,9 +336,17 @@ $(function() {
 });
 
 $( document ).ready(function() {
+  $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null){
+         return null;
+      }
+      else{
+         return results[1] || 0;
+      }
+  }
 
-  
-  
+
 
   $( "#frm" ).submit(function( event ) {
       
@@ -377,6 +385,10 @@ $( document ).ready(function() {
          });
       */
 });
+
+  
+  if($.urlParam('booknow')=='true')
+   $('#bookModal').modal('show');
 });
 </script>
 
