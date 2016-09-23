@@ -23,6 +23,7 @@ use Omnipay\Omnipay;
 use Omnipay\PayPal;
 use Omnipay\Common\CreditCard;
 use URL;
+use Session;
 
 class PaymentController extends BaseController
 {
