@@ -46,21 +46,21 @@ class PaymentController extends BaseController
 
            
             $payment->setNumber(uniqid());
-          $payment->setCurrencyCode('PHP');// Needed For Payum to Work
-          $payment->setClientId('customer-001'); // Auth User ID
-          $payment->setClientEmail('customer@example.com'); // Auth User Email
-          $payment->setDetails([
-            'BRANDNAME' => 'My Company', // Provide name for cancel and return url
-            'LOGOIMG' => 'https://profugo.org/wp-content/uploads/2013/08/logo-190x60.png', // Show at Top
-            'SOLUTIONTYPE' => 'Mark', //Buyer must have a PayPal account to check out
-            'LANDINGPAGE' => 'Login', // Billing(Credit Card) or Login Type Pages
-            'CARTBORDERCOLOR' => '009688', // Border Color
-            'CHANNELTYPE' => 'Merchant',
-            'L_BILLINGTYPE0' => '0',//Api::BILLINGTYPE_RECURRING_PAYMENTS, // Enables Recurring
-            'L_BILLINGAGREEMENTDESCRIPTION0' => '1 Week Free Trial then PREMIUM Membership ₱500 PHP Per Month', // Billing Agreement
-            'PAYMENTREQUEST_0_AMT' => 0, // Zero Transaction
-            'NOSHIPPING' => 1, // Enable no Shipping Fee for Digital Products
-          ]);
+              $payment->setCurrencyCode('PHP');// Needed For Payum to Work
+              $payment->setClientId('customer-001'); // Auth User ID
+              $payment->setClientEmail('customer@example.com'); // Auth User Email
+              $payment->setDetails([
+                'BRANDNAME' => 'My Company', // Provide name for cancel and return url
+                'LOGOIMG' => 'https://profugo.org/wp-content/uploads/2013/08/logo-190x60.png', // Show at Top
+                'SOLUTIONTYPE' => 'Mark', //Buyer must have a PayPal account to check out
+                'LANDINGPAGE' => 'Login', // Billing(Credit Card) or Login Type Pages
+                'CARTBORDERCOLOR' => '009688', // Border Color
+                'CHANNELTYPE' => 'Merchant',
+                'L_BILLINGTYPE0' => '0',//Api::BILLINGTYPE_RECURRING_PAYMENTS, // Enables Recurring
+                'L_BILLINGAGREEMENTDESCRIPTION0' => '1 Week Free Trial then PREMIUM Membership ₱500 PHP Per Month', // Billing Agreement
+                'PAYMENTREQUEST_0_AMT' => 0, // Zero Transaction
+                'NOSHIPPING' => 1, // Enable no Shipping Fee for Digital Products
+              ]);
         });
     }
 
@@ -106,14 +106,16 @@ class PaymentController extends BaseController
             $id=Session::get('bookData.ads_id');;
             $dates=Session::get('bookData.dates');
 
-        foreach($dates as $date){
-            $booking=new booking();
-            $booking->ads_id=$id;
-            $booking->book_date=$date;
-            $booking->price=$request->get('price');
-            $booking->user_id=Sentinel::getUser()->id;
-            $booking->save();
-        }
+            foreach($dates as $date){
+                $booking=new booking();
+                $booking->ads_id=$id;
+                $booking->book_date=$date;
+                $booking->price=$request->get('price');
+                $booking->user_id=Sentinel::getUser()->id;
+                $booking->save();
+            }
+
+            Session::forget('bookData');
             dd($paypalResponse);
 
         } 
@@ -163,8 +165,8 @@ class PaymentController extends BaseController
         //$gateway->secret('YPZ2VJPMNNKW8V7F');
 
         $gateway->initialize(array(
-        'clientId' => 'MyPayPalClientId',
-        'secret'   => 'MyPayPalSecret',
+        'clientId' => 'AfMGFi1jXzgJZt2JvdMK5KSqgRrD-xRrozoOrOahS0aJ7Tu53oNRkIKkqZbpbKPCXESn3XZslTspjejs',
+        'secret'   => 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC',
        'testMode' => true, // Or false when you are ready for live transactions
         ));
 
@@ -242,6 +244,9 @@ class PaymentController extends BaseController
             'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
             'amount' => (float)$price_amount, 
+            'LOGOIMG' => asset('assets/images/eventday/eventdayPlanner.png'),
+            'name' => 'Booking '.$ad->title,
+            'BRANDNAME' => 'Event Day Planner',
         );
 
         session()->put('params', $params); // here you save the params to the session so you can use them later.
