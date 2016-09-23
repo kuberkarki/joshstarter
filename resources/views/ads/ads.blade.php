@@ -127,7 +127,7 @@ My Ads
             <div class="navPhotoVideo">
               <a href="{!! url('ads/details',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
             </div>
-            <div class="adsThumnelButton"><a href="{{ url('ads/book',$ad->slug)}}" class="btn btn-primary">Book Now</a></div>
+            <div class="adsThumnelButton"><a href="{{ url('ads/details',$ad->slug)}}?booknow=true" class="btn btn-primary">Book Now</a></div>
             </div>
           </div>
         @endforeach
