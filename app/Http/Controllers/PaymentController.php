@@ -107,6 +107,7 @@ class PaymentController extends BaseController
 
             $id=Session::get('bookData.ads_id');;
             $dateswithcomma=Session::get('bookData.dates');
+            $price=Session::get('bookData.price');
 
             $dates=explode(',',$dateswithcomma);
 
@@ -114,7 +115,7 @@ class PaymentController extends BaseController
                 $booking=new Booking();
                 $booking->ads_id=$id;
                 $booking->book_date=$date;
-                $booking->price=$request->get('price');
+                $booking->price=$price;
                 $booking->user_id=Sentinel::getUser()->id;
                 $booking->save();
             }
