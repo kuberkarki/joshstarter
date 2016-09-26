@@ -3,6 +3,7 @@
 namespace Kuber\ViewCounter\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use  Sentinel;
 
 class LikeController extends BaseController {
   
@@ -15,7 +16,7 @@ class LikeController extends BaseController {
    */  
   public function like($class_name, $object_id)
   {
-
+    
     $message = 'view_counter.messages.like.';
     
     $class_name = "\\".self::getAppNamespace().ucfirst($class_name);
@@ -26,7 +27,7 @@ class LikeController extends BaseController {
     else
       $type = "error";
     
-    return \Redirect::back()->with($type, $message.$type);
+    return \Redirect::back();//->with($type, $message.$type);
   }
   
   /**
@@ -34,7 +35,7 @@ class LikeController extends BaseController {
    *
    * @return null
    */  
-  public function unlike($class_name, $object_id)
+  public function unliπke($class_name, $object_id)
   {
     $message = 'view_counter.messages.unlike.';
     

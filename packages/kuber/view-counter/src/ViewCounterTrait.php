@@ -29,15 +29,12 @@ trait ViewCounterTrait {
       ->orderBy('counter.view_counter', 'DESC');
   }
 
-  public function counter()
+ public function counter()
   {
-
     if(!isset($this->counter))
     {
-
       $class_name = snake_case(get_class($this));
       $this->counter = \Kuber\ViewCounter\Counter::firstOrCreate(array('class_name' => $class_name, 'object_id' => $this->id));
-
     }
     return $this->counter;
   }
@@ -62,12 +59,12 @@ trait ViewCounterTrait {
 
     if(!$this->isViewed())
     {
-      if(\Sentinel::check())
+      if(Sentinel::check())
       {
         $this->user_counters()->create(array(
           'class_name' => snake_case(get_class($this)),
           'object_id' => $this->id,
-          'user_id' => \Sentinel::getUser()->id,
+          'user_id' => Sentinel::getUser()->id,
           'action' => 'view'
         ));
          $class_name = snake_case(get_class($this));
@@ -170,39 +167,33 @@ trait ViewCounterTrait {
    */
   public function like()
   {
-    
     if(!$this->isLiked())
     {
-      if(\Sentinel::check())
+      if(Sentinel::check())
       {
         $this->user_counters()->create(array(
           'class_name' => snake_case(get_class($this)),
           'object_id' => $this->id,
-          'user_id' => \Sentinel::getUser()->id,
+          'user_id' => Sentinel::getUser()->id,
           'action' => 'like'
         ));
-        $this->counter()->increment('like_counter');
-        
-        return true;
-      } else {  
-        \Session::put($this->get_like_key(), time());
-
-   
-
-      $class_name = snake_case(get_class($this));
+         $class_name = snake_case(get_class($this));
       $this->counter = \Kuber\ViewCounter\Counter::firstOrCreate(array('class_name' => $class_name, 'object_id' => $this->id));
-
-   
-   
-
         $this->counter->increment('like_counter');
         
-       
+        return true;
+      } else {
+        \Session::put($this->get_like_key(), time());
+      //   $class_name = snake_case(get_class($this));
+      // $this->counter = \Kuber\ViewCounter\Counter::firstOrCreate(array('class_name' => $class_name, 'object_id' => $this->id));
+      //   $this->counter->increment('like_counter');
+        
         return true;
       }
     }
     return false;
   }
+
 
   /**
    * Unlike on this object
@@ -256,12 +247,11 @@ trait ViewCounterTrait {
    * @return Boolean
    */
   public function isLiked()
-  {
-
-    
+  {    
 
     if(!\Sentinel::check())
     {
+
 
       $viewed = \Session::get($this->get_like_key());
       if(!empty($viewed)) {

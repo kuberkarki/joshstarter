@@ -7,6 +7,7 @@ use Tshafer\Reviewable\Contracts\Reviewable;
 use Tshafer\Reviewable\Traits\Reviewable as ReviewableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Kuber\ViewCounter\ViewCounterTrait;
+use Sentinel;
 
 
 class Ad extends Model  {
