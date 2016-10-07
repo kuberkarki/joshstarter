@@ -139,6 +139,7 @@ class PaymentController extends BaseController
 
         } 
         else { 
+            dd($paypalResponse);
             return redirect('ads/book')->with('failed', 'Payment Failed');
             // dd($paypalResponse);
             // Failed transaction ...
