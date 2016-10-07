@@ -1,7 +1,5 @@
 # Thank you
 
-Thanks for purchasing Josh admin theme
-
 We are sure you will Enjoy using it!
 
 # Installation

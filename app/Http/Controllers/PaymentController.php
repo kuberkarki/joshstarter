@@ -28,6 +28,7 @@ use Sentinel;
 use App\Ad;
 use App\ads_prices;
 use App\Booking;
+use App\Payment;
 
 class PaymentController extends BaseController
 {
@@ -95,7 +96,10 @@ class PaymentController extends BaseController
         $gateway->setPassword('YPZ2VJPMNNKW8V7F');
         $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); 
         $gateway->setTestMode(true); 
-        $params = session()->get('params'); 
+        $params = session()->get('params');
+        if(!$params){
+            url::Redirect('404');exit;
+        }
 
         $response = $gateway->completePurchase($params)->send(); 
         $paypalResponse = $response->getData(); // this is the raw response object 
@@ -120,12 +124,23 @@ class PaymentController extends BaseController
                 $booking->save();
             }
 
+            $paypalResponse->booking_id=$booking->id;
+            $paypalResponse->payer=Sentinel::getUser()->id;
+            $paypalResponse->receiver=Sentinel::getUser()->id;
+            $paypalResponse->product_type='ads';
+            $paypalResponse->product_id=$id;
+
+
+            Payment::save($paypalResponse);
+
             Session::forget('bookData');
-            dd($paypalResponse);
+            //dd($paypalResponse);
+            return view('user.mybookings');
 
         } 
         else { 
-             dd($paypalResponse);
+            return redirect('ads/book')->with('failed', 'Payment Failed');
+            // dd($paypalResponse);
             // Failed transaction ...
         }
     }
