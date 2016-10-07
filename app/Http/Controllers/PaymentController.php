@@ -240,7 +240,7 @@ class PaymentController extends BaseController
                 return  Redirect::to('ads/book')->with('error', 'Date Selected');
             }
             $transaction = $gateway->purchase(array(
-                'cancelUrl' => url('ads/details',$ad->slug),//'http://localhost:8888/eventdayplanner/public/', 
+                'cancelUrl' => url('ads/book'),//'http://localhost:8888/eventdayplanner/public/', 
                 'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
                 'amount' => (float)$price_amount, 
                 'currency'      => 'USD',
@@ -318,7 +318,7 @@ class PaymentController extends BaseController
             'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
             'amount' => (float)$price_amount, 
-            'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+            //'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
             'description' => 'Booking '.$ad->title,
             'BRANDNAME' => 'Event Day Planner',
         );
