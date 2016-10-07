@@ -240,7 +240,7 @@ class PaymentController extends BaseController
                 return  Redirect::to('ads/book')->with('error', 'Date Selected');
             }
             $transaction = $gateway->purchase(array(
-                'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
+                'cancelUrl' => url('ads/details',$ad->slug),//'http://localhost:8888/eventdayplanner/public/', 
                 'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
                 'amount' => (float)$price_amount, 
                 'currency'      => 'USD',
