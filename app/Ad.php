@@ -99,4 +99,8 @@ class Ad extends Model  {
         return $this->hasMany('App\Ads_photos','ads_id','id');
     }
 
+    public function booking(){
+        return $this->hasMany('App\Booking','ads_id','id');
+    }
+
 }

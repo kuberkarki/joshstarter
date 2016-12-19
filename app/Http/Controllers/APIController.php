@@ -26,6 +26,22 @@ class APIController extends Controller
         }
         return response()->json($date);
     }
+
+    function GetAppointments($ad_id){
+        $bookings=Booking::where('ads_id',$ad_id)->lists('book_date');
+        //dd($bookings);
+        /*for($i=1;$i<=30;$i++){
+
+           $d= date('Y-m-d', strtotime(date('Y-m-d') . '+'.$i.' day'));
+            if (!in_array($d, $bookings->toArray())) {
+                    
+            
+            $date[]=$d;//date('Y-m-d H:i:s', strtotime(date('Y-m-d') . '+'.$i.' day'));
+        }
+        }*/
+        return response()->json($bookings);
+
+    }
   
 }
 

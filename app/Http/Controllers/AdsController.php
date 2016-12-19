@@ -128,6 +128,60 @@ class AdsController extends Controller {
 	}
 
 	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function bookingmanagement()
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$ads = Ad::where('user_id',$user->id)->paginate(15);
+		$ads_category = Ads_category::lists('name', 'id');
+		//dd($ads_category[1]);
+		return view('ads.managebooking', compact('ads','ads_category'));
+	}
+
+	public function reviewsmanagement()
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$ads = Ad::where('user_id',$user->id)->paginate(15);
+		$ads_category = Ads_category::lists('name', 'id');
+		//dd($ads_category[1]);
+		return view('ads.managereviews', compact('ads','ads_category'));
+	}
+
+
+
+	public function viewereviews($id)
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$ad = Ad::where('id',$id)->where('user_id',$user->id)->first();
+		$ads_category = Ads_category::lists('name', 'id');
+		//dd($ads_category[1]);
+		return view('ads.viewreviews', compact('ad','ads_category'));
+	}
+
+	public function totalrevenue()
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$ads = Ad::where('user_id',$user->id)->with('booking')->paginate(15);
+		//$ads_category = Ads_category::lists('name', 'id');
+		
+		return view('ads.totalrevenue', compact('ads','ads_category'));
+	}
+
+	
+
+
+	/**
 	 * Show the form for creating a new Ads.
 	 *
 	 * @return Response
@@ -305,6 +359,19 @@ class AdsController extends Controller {
 		//print_r($ad->photos()->get());
 
 		return view('ads.edit', compact('ad','ads_category','calendar'));
+	}
+
+	public function manageads($id,Request $request){
+		
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+
+		$ad = Ad::where('id',$id)->where('user_id',$user->id)->first();
+
+		if(!$ad)
+			return redirect('ads')->with('error','Error');
+		return view('ads.manage', compact('ad'));
 	}
 
 	/**
@@ -616,6 +683,18 @@ class AdsController extends Controller {
 		$ads_category = Ads_category::lists('name', 'id');
 		//$date=$date;
 		return view('ads.ajaxbookingdetail', compact('ad','ads_category'));
+
+	}
+
+	public function ajaxadsbookingmanagementdetail($id,$date){
+		$ad = Ad::findOrFail($id);
+		$ads_category = Ads_category::lists('name', 'id');
+		$booking=Booking::where('ads_id',$id)->where('book_date',$date)->first();
+		$user=User::findOrFail($booking->user_id);
+		//dd($booking->user_id);
+
+		//$date=$date;
+		return view('ads.ajaxbookingmanagementdetail', compact('ad','ads_category','booking','user'));
 
 	}
 

@@ -14,6 +14,7 @@ return array(
     'AddFieldsTobookings' => $baseDir . '/database/migrations/2016_09_14_191224_addFieldsTobookings.php',
     'AddFieldsuserAndPubilishToEventsTable' => $baseDir . '/database/migrations/2016_08_30_130943_addFieldsuserAndPubilishToEventsTable.php',
     'AddNameToUsers' => $baseDir . '/database/migrations/2016_09_07_090226_addNameToUsers.php',
+    'AddPortoflioToUsersTable' => $baseDir . '/database/migrations/2016_12_19_041415_add_portoflio_to_users_table.php',
     'AddSlugToAdsCategoryTable' => $baseDir . '/database/migrations/2016_09_04_152251_AddSlugToAds_categoryTable.php',
     'AddSlugToAdsTable' => $baseDir . '/database/migrations/2016_09_04_152003_AddSlugToAdsTable.php',
     'AddSlugToBlogsTable' => $baseDir . '/database/migrations/2015_08_11_064636_add_slug_to_blogs_table.php',

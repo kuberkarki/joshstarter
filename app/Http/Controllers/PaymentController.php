@@ -98,11 +98,19 @@ class PaymentController extends BaseController
         $gateway->setTestMode(true); 
         $params = session()->get('params');
         if(!$params){
-            url::Redirect('404');exit;
+            return redirect('404');exit;
         }
 
         $response = $gateway->completePurchase($params)->send(); 
         $paypalResponse = $response->getData(); // this is the raw response object 
+
+        if($paypalResponse['ACK'] === 'Failure'){
+            if($paypalResponse['L_ERRORCODE0'] === 10422){
+         // send user back to a page which contains the checkout form and populate the fields that were filled out previously for proper UI experience (so the customer doesn’t have to retype everything)
+             // let the customer know that the payment method was not accepted and they need to choose another way to pay.
+            return redirect('ads/book')->with('failed', 'Payment method not accepted');
+             }
+        }
 
         if(isset($paypalResponse['PAYMENTINFO_0_ACK']) && $paypalResponse['PAYMENTINFO_0_ACK'] === 'Success') {
             // here you process the response. Save to database ...
@@ -124,14 +132,59 @@ class PaymentController extends BaseController
                 $booking->save();
             }
 
-            $paypalResponse->booking_id=$booking->id;
-            $paypalResponse->payer=Sentinel::getUser()->id;
-            $paypalResponse->receiver=Sentinel::getUser()->id;
-            $paypalResponse->product_type='ads';
-            $paypalResponse->product_id=$id;
+            $payment=new Payment();
+            //$payment=;
+            //echo $PaypalResponse->TOKEN;exit;
+            //dd($paypalResponse);
+            ///$payment=json_decode(json_encode($paypalResponse));;//(object)$paypalResponse;
+
+                //dd($payment);
+
+            //$payment->save((object)$paypalResponse);
+            //$payment->TOKEN=$PaypalResponse->TOKEN;
+            //dd($payment);
+            $payment->TOKEN=$paypalResponse['TOKEN'];
+            $payment->SUCCESSPAGEREDIRECTREQUESTED=$paypalResponse['SUCCESSPAGEREDIRECTREQUESTED'];
+            $payment->TIMESTAMP=$paypalResponse['TIMESTAMP'];
+            $payment->CORRELATIONID=$paypalResponse['CORRELATIONID'];
+            $payment->ACK=$paypalResponse['ACK'];
+            $payment->VERSION=$paypalResponse['VERSION'];
+            $payment->BUILD=$paypalResponse['BUILD'];
+            //$payment->L_ERRORCODE0=$paypalResponse['L_ERRORCODE0'];
+            $payment->PAYMENTINFO_0_TRANSACTIONID=$paypalResponse['PAYMENTINFO_0_TRANSACTIONID'];
+            $payment->PAYMENTINFO_0_TRANSACTIONTYPE=$paypalResponse['PAYMENTINFO_0_TRANSACTIONTYPE'];
+            $payment->PAYMENTINFO_0_PAYMENTTYPE=$paypalResponse['PAYMENTINFO_0_PAYMENTTYPE'];
+            $payment->PAYMENTINFO_0_ORDERTIME=$paypalResponse['PAYMENTINFO_0_ORDERTIME'];
+            $payment->PAYMENTINFO_0_AMT=$paypalResponse['PAYMENTINFO_0_AMT'];
+            $payment->PAYMENTINFO_0_FEEAMT=$paypalResponse['PAYMENTINFO_0_FEEAMT'];
+            $payment->PAYMENTINFO_0_TAXAMT=$paypalResponse['PAYMENTINFO_0_TAXAMT'];
+            $payment->PAYMENTINFO_0_CURRENCYCODE=$paypalResponse['PAYMENTINFO_0_CURRENCYCODE'];
+            $payment->PAYMENTINFO_0_PAYMENTSTATUS=$paypalResponse['PAYMENTINFO_0_PAYMENTSTATUS'];
+            $payment->PAYMENTINFO_0_PENDINGREASON=$paypalResponse['PAYMENTINFO_0_PENDINGREASON'];
+            $payment->PAYMENTINFO_0_REASONCODE=$paypalResponse['PAYMENTINFO_0_REASONCODE'];
+            $payment->PAYMENTINFO_0_PROTECTIONELIGIBILITY=$paypalResponse['PAYMENTINFO_0_PROTECTIONELIGIBILITY'];
+            $payment->PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE=$paypalResponse['PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE'];
+            $payment->PAYMENTINFO_0_SECUREMERCHANTACCOUNTID=$paypalResponse['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'];
+            $payment->PAYMENTINFO_0_ERRORCODE=$paypalResponse['PAYMENTINFO_0_ERRORCODE'];
+            $payment->PAYMENTINFO_0_ACK=$paypalResponse['PAYMENTINFO_0_ACK'];
+
+            $payment->booking_id=$booking->id;
+            $payment->payer=Sentinel::getUser()->id;
+            $payment->receiver=Sentinel::getUser()->id;
+            $payment->product_type='ads';
+            $payment->product_id=$id;
+
+            //dd($payment);
 
 
-            Payment::save($paypalResponse);
+            $payment->save();
+
+            
+
+
+            //$payment=Payment::save($paypalResponse);
+
+
 
             Session::forget('bookData');
             //dd($paypalResponse);
@@ -240,7 +293,7 @@ class PaymentController extends BaseController
                 return  Redirect::to('ads/book')->with('error', 'Date Selected');
             }
             $transaction = $gateway->purchase(array(
-                'cancelUrl' => url('ads/details',$ad->slug),//'http://localhost:8888/eventdayplanner/public/', 
+                'cancelUrl' => url('ads/book'),//'http://localhost:8888/eventdayplanner/public/', 
                 'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
                 'amount' => (float)$price_amount, 
                 'currency'      => 'USD',
@@ -291,11 +344,11 @@ class PaymentController extends BaseController
     $days=count(explode(',',$dates));
     $ad=Ad::find($id); 
 
-    $price_id=$request->get('price')*$days;
+    $price_id=$request->get('price');
 
 
     if($price_id){
-        $price_amount=ads_prices::find($price_id)->price;
+        $price_amount=ads_prices::find($price_id)->price*$days;
     }else{
         $price_amount=$ad->price;
     }
@@ -318,7 +371,7 @@ class PaymentController extends BaseController
             'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
             'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
             'amount' => (float)$price_amount, 
-            'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+            //'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
             'description' => 'Booking '.$ad->title,
             'BRANDNAME' => 'Event Day Planner',
         );

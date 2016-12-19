@@ -170,6 +170,21 @@ class EventsController extends Controller {
 		return view('events.my-events', compact('events'))->with('frontarray',$this->frontarray);
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function bookingmanagement()
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+
+		$events = Event::where('user_id',$user->id)->get();
+		return view('ads.bookingmanagement', compact('events'))->with('frontarray',$this->frontarray);
+	}
+
 	public function showeditevent($event){
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();

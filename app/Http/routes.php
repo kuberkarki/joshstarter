@@ -16,6 +16,8 @@ Route::group(['prefix' => 'api'], function()
     // Customer API Routes
     Route::get('get-available-days/{ads_id}', 'APIController@GetAvailableDays');
 
+    Route::get('get-appointments/{ads_id}', 'APIController@GetAppointments');
+
     // Admin API Routes
     Route::get('get-all-appointments', 'AdminAPIController@GetAllAppointments');
 });
@@ -87,6 +89,10 @@ Route::get('thumbnail2/{image}', function($image)
 
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
+        Route::get('booking-management', array('as' => 'booking-management', 'uses' => 'AdsController@bookingmanagement'));
+        Route::get('reviews-management', array('as' => 'reviews-management', 'uses' => 'AdsController@reviewsmanagement'));
+
+        Route::get('total-revenue', array('as' => 'total-revenue', 'uses' => 'AdsController@totalrevenue'));
         Route::get('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@showeditevent'));
         Route::post('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@editevent'));
        Route::get('delete-event/{event_id}', array('as' => 'delete-event', 'uses' => 'EventsController@deleteevent'));
@@ -109,6 +115,7 @@ Route::get('thumbnail2/{image}', function($image)
      Route::group(array('prefix' => 'ads'), function () {
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
             Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
+            Route::get('ajax-booking-management-detail/{id}/{date}', array('as' => 'ajax-booking-management-detail', 'uses' => 'AdsController@ajaxadsbookingmanagementdetail'));
             Route::post('book', array('as' => 'book', 'uses' => 'AdsController@postbook'));
 
 
@@ -260,6 +267,7 @@ Route::get('thumbnail2/{image}', function($image)
 # My account display and update details
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccount'));
+        Route::get('portfolio', array('as' => 'portfolio', 'uses' => 'FrontEndController@portfolio'));
         Route::put('my-account', 'FrontEndController@update');
     });
     Route::get('logout', array('as' => 'logout', 'uses' => 'FrontEndController@getLogout'));
@@ -316,6 +324,10 @@ Route::get('thumbnail2/{image}', function($image)
 
      Route::group(array('middleware' => 'SentinelBusiness'), function () {
         Route::get('ads', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
+
+        Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
+        Route::get('manage-reviews/{ad_id}', array('as'=>'manage-reviews','uses'=>'AdsController@managereviews'));
+        Route::get('view-reviews/{ad_id}', array('as'=>'view-reviews','uses'=>'AdsController@viewereviews'));
         Route::get('create-ads', array('as' => 'create-ads', 'uses' => 'AdsController@createFrontend'));
         Route::post('ads', 'AdsController@storeFrontend');
        // Route::put('ads', 'AdsController@editads');
