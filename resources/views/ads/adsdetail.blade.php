@@ -138,7 +138,7 @@ If you are looking for live wedding music at your ceremony, or to find a perform
 
               @if(!$reviewed)
                 <h3>Leave a Review</h3>
-                {!! Form::open(array('url' => URL::to('submit-review'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
+                {!! Form::open(array('url' => URL::to('submit-review'), 'method' => 'post', 'class' => 'bf', 'id'=>'frmreview' ,'files'=> true)) !!}
               @else
                 <h3>Review again</h3>
                 {!! Form::open(array('url' => URL::to('submit-review-again'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
@@ -348,7 +348,7 @@ $( document ).ready(function() {
 
 
 
-  $( "#frm" ).submit(function( event ) {
+  $( "#frmreview" ).submit(function( event ) {
       
       if($('#rate').val()==''){
         alert('Please Rate');

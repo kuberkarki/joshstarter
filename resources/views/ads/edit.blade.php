@@ -50,7 +50,7 @@
                     <div class="panel-body">
                         <div id='external-events'></div>
                         <h3>Manage Bookings</h3>
-                        <div id="calendar"></div>
+                        <div id="calendar1"></div>
                         <!-- Modal -->
                         <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                              aria-hidden="true">

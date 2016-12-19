@@ -51,6 +51,7 @@
       if (this.options.rating === rating) {
         rating = void 0;
       }
+      $('#rate').val(rating)
       this.options.rating = rating;
       this.syncRating();
       return this.$el.trigger('starrr:change', rating);
