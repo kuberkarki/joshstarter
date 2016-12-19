@@ -80,6 +80,63 @@
                         </p> -->
                     </div>
                 </div>
+
+                <div class="reviewSection">
+                    <div class="headingCustomerPara">Reviews( {!! count($event->reviews()->get()) !!} )</div>
+                      <ul class="media-list">
+                        @foreach($event->reviews()->get() as $review)
+                            <div class="row">
+                                <div class="col-md-12">
+                                @for($i=1;$i<=5;$i++)
+                                    @if($review->rating>=$i)
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    @else
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    @endif
+                                @endfor
+
+                                {{-- */$user=App\user::find($review->author_id);/* --}}
+                                        {!! $user->first_name  ." ".$user->last_name !!} 
+                                        <span class="pull-right">
+                                        {!! $review->updated_at->diffForHumans() !!}
+                                        </span> 
+                        
+                                <p>{!! $review->body !!}</p>
+                              </div>
+                           </div>
+                        
+                        @endforeach
+              </ul>
+                @if(!$reviewed)
+                <h3>Leave a Review</h3>
+                {!! Form::open(array('url' => URL::to('submit-review-event'), 'method' => 'post', 'class' => 'bf', 'id'=>'frmreview' ,'files'=> true)) !!}
+              @else
+                <h3>Review again</h3>
+                {!! Form::open(array('url' => URL::to('submit-review-event-again'), 'method' => 'post', 'class' => 'bf', 'id'=>'frm' ,'files'=> true)) !!}
+                <input type="hidden" name="review_id" value="{!! $reviewed->id !!}">
+              @endif
+              <input type="hidden" name="id" value="{!! $event->id !!}">
+
+              <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                  {!! Form::text('title', null, array('class' => 'form-control input-lg','required' => 'required', 'placeholder'=>'Title')) !!}
+                  <span class="help-block">{{ $errors->first('title', ':message') }}</span>
+              </div>
+              
+              <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
+                  {!! Form::textarea('body', null, array('class' => 'form-control input-lg no-resize','required' => 'required', 'style'=>'height: 200px', 'placeholder'=>'Your review')) !!}
+                  <span class="help-block">{{ $errors->first('body', ':message') }}</span>
+              </div>
+              <div class="form-group ratingAds">
+                  <div data="{!! $event->id !!}" id="stars" class="stars starrr rating" data-logged="{{Sentinel::check()?true:false}}"></div>
+                  <input type="hidden" name="rate" id="rate" />
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-success btn-md"><i class="fa fa-comment"></i>
+                      Submit
+                  </button>
+              </div>
+              {!! Form::close() !!}
+              </div>
                 <!-- Media left section start -->
                 <h3 class="comments">{{$event->comments->count()}} Comments</h3><br />
                 <ul class="media-list">
@@ -197,4 +254,19 @@
         </div>
     </div>
     <!-- //Conatainer Section End -->
+@stop
+
+@section('footer_scripts')
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
+<script>
+
+
+
+
+$(function() {
+  return $(".starrr").starrr();
+});
+</script>
 @stop

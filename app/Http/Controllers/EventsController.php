@@ -44,11 +44,16 @@ class EventsController extends Controller {
      */
     public function getEventFrontend($slug = '')
     {
+    	if(Sentinel::check()){
+				$user=Sentinel::getUser();
+			}
         if ($slug == '') {
             $event= Event::first();
+            $reviewed=$event->reviews()->where('author_id',$user->id)->where('reviewable_id',$event->id)->first();
         }
         try {
             $event = Event::where('slug',$slug)->first();
+             $reviewed=$event->reviews()->where('author_id',$user->id)->where('reviewable_id',$event->id)->first();
             //$event->increment('views');
         } catch (ModelNotFoundException $e) {
             return Response::view('404', array(), 404);
@@ -56,7 +61,7 @@ class EventsController extends Controller {
 
         
         // Show the page
-        return View('event', compact('event'))->with('frontarray',$this->frontarray);
+        return View('event', compact('event','reviewed'))->with('frontarray',$this->frontarray);
 
     }
 
@@ -362,5 +367,35 @@ class EventsController extends Controller {
 
     	return View('events.show_messages')->with('frontarray',$this->frontarray)->with('events',$events);
     }
+
+    public function submitreview(request $request){
+    		if(Sentinel::check()){
+				$user=Sentinel::getUser();
+			}
+				$events = Event::find($request->get('id'));
+				$review = $events->review([
+				    'title' => $request->get('title'),
+				    'body' => $request->get('body'),
+				    'rating' => $request->get('rate'),
+				], $user);
+
+
+			return redirect('event/'.$events->slug)->with('success','Reviewed !!');
+    	}
+
+    	public function submitreviewagain(request $request){
+			$events = Event::find($request->get('id'));
+
+
+			$review = $events->updateReview($request->get('review_id'), [
+			    'title' => $request->get('title'),
+				 'body' => $request->get('body'),
+				 'rating' => $request->get('rate'),
+			]);
+
+
+
+			return redirect('event/'.$events->slug)->with('success','Reviewed !!');
+    	}
 
 }

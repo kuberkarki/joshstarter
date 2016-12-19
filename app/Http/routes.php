@@ -103,6 +103,10 @@ Route::get('thumbnail2/{image}', function($image)
 
         Route::post('submit-review-again', array('as' => 'submit-review-again', 'uses' => 'AdsController@submitreviewagain'));
 
+        Route::post('submit-review-event', array('as' => 'submit-review-event', 'uses' => 'EventsController@submitreview'));
+
+        Route::post('submit-review-event-again', array('as' => 'submit-review-eventagain', 'uses' => 'EventsController@submitreviewagain'));
+
     });
 
     Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
