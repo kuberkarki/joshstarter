@@ -83,7 +83,7 @@ My Ads
                               <!-- <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div> -->
                               <span class="review">({!! count($ad->ratings) !!})</span></li>
                             </ul>
-                           <a href="#" class="manage">Manage Booking</a>
+                           <a href="{{ route('manage-ads',$ad) }}" class="manage">Manage Booking</a>
                           </div>
                         </div>
                     </td>

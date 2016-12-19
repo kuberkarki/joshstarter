@@ -498,6 +498,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'AddFieldsTobookings' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_191224_addFieldsTobookings.php',
         'AddFieldsuserAndPubilishToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_30_130943_addFieldsuserAndPubilishToEventsTable.php',
         'AddNameToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_09_07_090226_addNameToUsers.php',
+        'AddPortoflioToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_19_041415_add_portoflio_to_users_table.php',
         'AddSlugToAdsCategoryTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_04_152251_AddSlugToAds_categoryTable.php',
         'AddSlugToAdsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_04_152003_AddSlugToAdsTable.php',
         'AddSlugToBlogsTable' => __DIR__ . '/../..' . '/database/migrations/2015_08_11_064636_add_slug_to_blogs_table.php',

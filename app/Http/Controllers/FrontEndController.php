@@ -135,6 +135,14 @@ class FrontEndController extends JoshController
         return Redirect::back()->withInput()->withErrors($this->messageBag);
     }
 
+     public function portfolio(User $user)
+    { 
+
+        $user = Sentinel::getUser();
+        $countries = $this->countries;
+        return View::make('business.portfolio', compact('user', 'countries'))->with('frontarray',$this->frontarray);
+    }
+
 
     //Business Acciunt
     //
@@ -205,7 +213,7 @@ class FrontEndController extends JoshController
         //update values
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
-        $user->email = $request->get('email');
+       // $user->email = $request->get('email');
         $user->dob = $request->get('dob');
         $user->bio = $request->get('bio');
         $user->gender = $request->get('gender');
@@ -219,6 +227,7 @@ class FrontEndController extends JoshController
         $user->office_number = $request->get('office_number');
         $user->mobile_number = $request->get('mobile_number');
         $user->duration = $request->get('duration');
+        $user->portfolio = $request->get('portfolio');
 
        // echo $user->office_number;exit;
         
@@ -252,6 +261,8 @@ class FrontEndController extends JoshController
             $success = Lang::get('users/message.success.update');
 
             // Redirect to the user page
+            if($request->get('redirection'))
+                return Redirect::route('portfolio')->with('success', $success);
             return Redirect::route('my-account')->with('success', $success);
         }
 
