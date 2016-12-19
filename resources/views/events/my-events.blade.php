@@ -40,7 +40,7 @@ My Events
     <div class="container textsmall">
         <h2>My Events</h2>
         <div class="row">
-        @include('usermenu')
+        @include('event_organizer.usermenu')
          <ul class="nav navbar-nav navbar-left">
                             
                             <li><a href="{{route('create-event')}}">Create Events</a></li>

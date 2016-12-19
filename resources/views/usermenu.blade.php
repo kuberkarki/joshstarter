@@ -1,7 +1,7 @@
 @if(Sentinel::inRole('freelancer'))
  @include('freelancer.usermenu')
 @elseif(Sentinel::inRole('event-organizer'))
- @include('event-organizer.usermenu')
+ @include('event_organizer.usermenu')
 @elseif(Sentinel::inRole('business'))
  @include('business.usermenu')
 @else
