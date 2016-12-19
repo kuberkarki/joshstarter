@@ -20,7 +20,7 @@ My Ads
 {{-- Page content --}}
 @section('content')
 <div id="url" style="display:none">{{ url('/')}}</div>
-<section class="mainContainer">
+<section class="">
   <div class="contantWrapper innercontantWrapper">
     <div class="container">
       <div class="row">
@@ -44,9 +44,8 @@ My Ads
       <div class="row">
         <div id="calendar" class="col-sm-7"></div>
         {{Form::open(array('url' => url('ads/book'),'id'=>'frmbook'))}}
-
-         <input type="hidden" name="dates" id="dates" />
-         <input type="hidden" name="id" value="{{$ad->id}}" />
+        <input type="hidden" id="date" value=""/>
+         
          {{Form::close()}}
       </div>
     </div>
@@ -85,8 +84,9 @@ var url = document.getElementById("url").textContent;
 var jdays = [];
 // Maintain array of dates
 var dates = new Array();
-cDate = moment();
-$('#currentDate').text("Current Date is " + cDate.format("MMMM Do, YYYY") );
+var d;
+//cDate = moment();
+//$('#currentDate').text("Current Date is " + cDate.format("MMMM Do, YYYY") );
 
 $(document).ready(function($){
   createCalendar();
@@ -105,7 +105,7 @@ function createCalendar()
     //My function to intialize the datepicker
     $('#calendar').datepicker({
       inline: true,
-      minDate: 0,
+      //minDate: 0,
       dateFormat: 'yy-mm-dd',
       beforeShowDay: highlightDays,
       onSelect: getTimes,
@@ -135,19 +135,36 @@ $('#dates').val(dates);
   return false;
 }
 
+$('body').on('hidden.bs.modal', '.modal', function () {
+  //$(this).removeData('bs.modal');
+  var modalData = $(this).data('bs.modal');
+  // Destroy modal if has remote source – don't want to destroy modals with static content.
+  if (modalData && modalData.options.remote) {
+    // Destroy component. Next time new component is created and loads fresh content
+    $(this).removeData('bs.modal');
+    // Also clear loaded content, otherwise it would flash before new one is loaded.
+    $(this).find(".modal-content").empty();
+    $(this).find(".modal-body").html();
+  }
+});
+
+$("#bookModal").on("show.bs.modal", function(e) {
+    $(this).removeData('bs.modal');
+     // var timestamp= new Date(e.timeStamp);
+     // console.log(timestamp)
+     d=$('#date').val();
+           // var $date=timestamp.getFullYear()+'-'+timestamp.getMonth()+'-'+timestamp.getDay();
+        $(this).find(".modal-body").load('{{ url('ads/ajax-booking-management-detail')}}/{{$ad->id}}/'+d);
+      });
 /**
  * Gets times available for the day selected
  * Populates the daytimes id with dates available
  */
 function getTimes(d)
 {
-  $("#bookModal").on("show.bs.modal", function(e) {
-          //alert('selected_date')
-            var link = $(e.relatedTarget);
-             $(".seldateerr").addClass('hide');
-            $(this).find(".modal-body").load('{{ url('ads/ajax-booking-management-detail')}}/{{$ad->id}}/'+d);
-      });
+  //alert(d);
 
+$('#date').val(d);
   $('#bookModal').modal('show');
    //addOrRemoveDate(d);
   /*var dateSelected = moment(d);

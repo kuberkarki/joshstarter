@@ -688,10 +688,17 @@ class AdsController extends Controller {
 
 	public function ajaxadsbookingmanagementdetail($id,$date){
 		$ad = Ad::findOrFail($id);
+		/*echo time();
+		echo "<br/>";
+		echo $date;
+		echo "<br/>";
+		$date=date('Y-m-d',$date);
+		echo $date;*/
 		$ads_category = Ads_category::lists('name', 'id');
 		$booking=Booking::where('ads_id',$id)->where('book_date',$date)->first();
+		//dd($booking);
 		$user=User::findOrFail($booking->user_id);
-		//dd($booking->user_id);
+		//dd($user);
 
 		//$date=$date;
 		return view('ads.ajaxbookingmanagementdetail', compact('ad','ads_category','booking','user'));
