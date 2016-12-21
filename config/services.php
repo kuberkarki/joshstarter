@@ -53,7 +53,7 @@ return [
     'linkedin' => [
         'client_id'     => env('LINKEDIN_ID','81l9han96op5a7'),
         'client_secret' => env('LINKEDIN_SECRET','dffszywxB9giUWrx'),
-        'redirect'      => env('LINKEDIN_REDIRECT','https://eventdayplanner.com/auth/callback/linkedin')
+        'redirect'      => env('LINKEDIN_REDIRECT','https://eventdayplanner.com/dev/public/auth/callback/linkedin')
     ],
 
 ];
