@@ -79,7 +79,7 @@ public function __construct(Socialite $socialite){
        public function getSocialAuthCallback($provider=null,$type=null)
        {
           if($user = $this->socialite->with($provider)->user()){
-             dd($user);
+             //dd($user);
              //echo $user->email;
 
 
