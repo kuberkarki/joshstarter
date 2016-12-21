@@ -61,6 +61,15 @@ Login
         <div class="bg-light animation flipInX">
             <a href="{{ route('forgot-password') }}">Forgot Password?</a>
         </div>
+
+        <div class="bg-light animation flipInX">
+            <ul>
+                <li><a href="{{ route('auth.getSocialAuth','google') }}">Login with Google</a></li>
+                <li><a href="{{ route('auth.getSocialAuth','facebook') }}">Login with Facebook</a></li>
+                <li><a href="{{ route('auth.getSocialAuth','twitter') }}">Login with Twitter</a></li>
+                <li><a href="{{ route('auth.getSocialAuth','linkedin') }}">Login with Linkedin</a></li>
+            </ul>
+        </div>
         </div>
     </div>
     <!-- //Content Section End -->

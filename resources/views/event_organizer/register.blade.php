@@ -38,6 +38,14 @@ Register
                     <div class="text-danger">{{ $error }}</div>
                 @endforeach
             @endif
+            <div class="social">
+            <ul>
+                <li><a href="{{ route('organizerauth.getSocialAuth','google') }}">Register with Google</a></li>
+                <li><a href="{{ route('organizerauth.getSocialAuth','facebook') }}">Register with Facebook</a></li>
+                <li><a href="{{ route('organizerauth.getSocialAuth','twitter') }}">Register with Twitter</a></li>
+                <li><a href="{{ route('organizerauth.getSocialAuth','linkedin') }}">Register with Linkedin</a></li>
+            </ul>
+        </div>
             <form action="{{ route('register-business') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />

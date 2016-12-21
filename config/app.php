@@ -176,6 +176,7 @@ return [
          Intervention\Image\ImageServiceProvider::class,
          Kuber\ViewCounter\ViewCounterServiceProvider::class,
          Chencha\Share\ShareServiceProvider::class,
+         AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider::class,
     ],
 
     /*
@@ -233,6 +234,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Share' => Chencha\Share\ShareFacade::class,
+        'SocialAuth' => AdamWathan\EloquentOAuth\Facades\OAuth::class,
 
     ],
 

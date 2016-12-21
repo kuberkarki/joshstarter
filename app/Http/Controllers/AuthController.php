@@ -51,12 +51,38 @@ public function __construct(Socialite $socialite){
            return $this->socialite->with($provider)->redirect();
        }
 
+       public function getSocialAuthBusiness($provider=null)
+       {
+           if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
+           $type="Business";
 
-       public function getSocialAuthCallback($provider=null)
+           return $this->socialite->with($provider,$type)->redirect();
+       }
+
+       public function getSocialAuthFreelancer($provider=null)
+       {
+           if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
+           $type="Freelancer";
+
+           return $this->socialite->with($provider,$type)->redirect();
+       }
+
+        public function getSocialAuthOrganizer($provider=null)
+       {
+           if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
+           $type="Event Organizer";
+
+           return $this->socialite->with($provider,$type)->redirect();
+       }
+
+
+       public function getSocialAuthCallback($provider=null,$type=null)
        {
           if($user = $this->socialite->with($provider)->user()){
-             //dd($user);
+             dd($user);
              //echo $user->email;
+
+
              $guser=User::where('email',$user->email)->first();
              if($guser){
                 Sentinel::login($guser, false);
@@ -65,24 +91,59 @@ public function __construct(Socialite $socialite){
 
              try {
 
+
+
                 //dd($user);
                 //dd($user->user['name']['familyName']);exit;
             // Register the user
-                $guser['first_name']=$user->user['name']['givenName'];
-                $guser['last_name']=$user->user['name']['familyName'];
-                $guser['email']=$user->email;
-                $guser['password']=md5($user->email);
+
+                if($provider=='google'){
+                    $guser['first_name']=$user->user['name']['givenName'];
+                    $guser['last_name']=$user->user['name']['familyName'];
+                    $guser['email']=$user->email;
+                    $guser['password']=$user->token;
+                }
+                if($provider=='twitter'){
+                    if(!$user->email){
+                        $guser=User::where('email',$user->id."@twitter.com")->first();
+                         if($guser){
+                            Sentinel::login($guser, false);
+                            return Redirect::route("my-account")->with('success', Lang::get('auth/message.signup.success'));
+                         }
+
+                    }
+                    $guser['first_name']=$user->nickname?$user->nickname:$user->name;
+                    $guser['last_name']='';
+                    if(!$user->email)
+                        $guser['email']=$user->id."@twitter.com";
+                    else
+                        $guser['email']=$user->email;
+                    $guser['password']=$user->token;
+                }
+                if($provider=='linkedin'){
+                    
+                    $guser['first_name']=$user->nickname?$user->nickname:$user->name;
+                    $guser['last_name']='';
+                    if(!$user->email)
+                        $guser['email']=$user->id."@linkedin.com";
+                    else
+                        $guser['email']=$user->email;
+                    $guser['password']=$user->token;
+                }
+                $guser['pic']=$user->avatar;
                 $guser['type']='social';
 
             $user = Sentinel::register($guser, true);
 
             //add user to 'User' group
-            /*if($request->get('type')=='Business'){
+            if($request->get('type')=='Business'){
                 $role = Sentinel::findRoleByName('Business');
             }
             elseif($request->get('type')=='Freelancer'){
                 $role = Sentinel::findRoleByName('Freelancer');
-            }else*/
+            }elseif($request->get('type')=='Event Organizer'){
+                $role = Sentinel::findRoleByName('Event Organizer');
+            }else
                 $role = Sentinel::findRoleByName('User');
 
             //print_r($role);exit;

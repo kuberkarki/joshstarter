@@ -2,12 +2,15 @@
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
 
 
 class User extends EloquentUser {
 
 	use Messagable;
+	use AuthenticableTrait;
 	/**
 	 * The database table used by the model.
 	 *

@@ -1,5 +1,4 @@
 <?php
-
 Route::group(['middleware' => 'web'], function () {
     /*
     |--------------------------------------------------------------------------
@@ -41,10 +40,54 @@ Route::any('payment/done/{payumToken?}', [
 Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');*/
 
 //Social Login
+/*Route::get('facebook/authorize', function() {
+    return SocialAuth::authorize('facebook');
+});
+
+Route::get('google/authorize', function() {
+    return SocialAuth::authorize('google');
+});
+
+
+Route::get('google/login', function() {
+    try {
+        SocialAuth::login('google');
+    } catch (ApplicationRejectedException $e) {
+        echo "here";
+        // User rejected application
+    } catch (InvalidAuthorizationCodeException $e) {
+        echo "here1";
+        // Authorization was attempted with invalid
+        // code,likely forgery attempt
+    }
+
+    // Current user is now available via Auth facade
+    $user = Auth::user();
+
+    dd($user);
+
+    return Redirect::intended();
+});*/
 Route::get('/auth/{provider?}',[
     'uses' => 'AuthController@getSocialAuth',
     'as'   => 'auth.getSocialAuth'
 ]);
+
+Route::get('/businessauth/{provider?}',[
+    'uses' => 'AuthController@getSocialAuthBusiness',
+    'as'   => 'businessauth.getSocialAuth'
+]);
+
+Route::get('/freelancerauth/{provider?}',[
+    'uses' => 'AuthController@getSocialAuthFreelancer',
+    'as'   => 'freelancerauth.getSocialAuth'
+]);
+
+Route::get('/organizerauth/{provider?}',[
+    'uses' => 'AuthController@getSocialAuthOrganizer',
+    'as'   => 'organizerauth.getSocialAuth'
+]);
+
 
 
 Route::get('/auth/callback/{provider?}',[

@@ -21,8 +21,10 @@
         "symfony/event-dispatcher": "^2.8",
         "omnipay/paypal":"~2.0",
         "nicolaslopezj/searchable": "1.*",
-        "chencha/share": "^5.2"
-},
+        "chencha/share": "^5.2",
+        "adamwathan/eloquent-oauth-l5": "^0.5.1",
+        "guzzlehttp/guzzle": "6.*"
+    },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",

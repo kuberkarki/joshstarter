@@ -36,14 +36,24 @@ return [
     ],
 
     'facebook' => [
-            'client_id'     => '1234567890444',
-            'client_secret' => '1aa2af333336fffvvvffffvff',
-            'redirect'      => 'http://laravel.dev/login/callback/facebook',
+            'client_id'     => '1164771373610687',
+            'client_secret' => 'e52399bdfc8d6891a32843e78b88dfea',
+            'redirect'      => 'http://eventdayplanner.com',
         ],
     'google' => [
         'client_id'     => env('GOOGLE_ID','521125266075-6a4lg5bsh6b924aq6igguu4rd960ejho.apps.googleusercontent.com'),
         'client_secret' => env('GOOGLE_SECRET','enOpVGZe06dDZ66pVmuOkz46'),
         'redirect'      => env('GOOGLE_REDIRECT','http://eventdayplanner.com/auth/callback/google')
+    ],
+    'twitter' => [
+        'client_id'     => env('TWITTER_ID','LqYhaavfPT0AseUjU98QJzOWz'),
+        'client_secret' => env('TWITTER_SECRET','2apNDtElmF3MNRA1UvxgQAhazWpoNe0ngenLEzuyE8WASytn4'),
+        'redirect'      => env('TWITTER_REDIRECT','https://eventdayplanner.com/auth/callback/twitter')
+    ],
+    'linkedin' => [
+        'client_id'     => env('LINKEDIN_ID','81l9han96op5a7'),
+        'client_secret' => env('LINKEDIN_SECRET','dffszywxB9giUWrx'),
+        'redirect'      => env('LINKEDIN_REDIRECT','https://eventdayplanner.com/auth/callback/linkedin')
     ],
 
 ];

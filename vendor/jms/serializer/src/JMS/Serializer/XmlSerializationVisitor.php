@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2013 Johannes M. Schmitt <schmittjoh@gmail.com>
+ * Copyright 2016 Johannes M. Schmitt <schmittjoh@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,10 +44,14 @@ class XmlSerializationVisitor extends AbstractVisitor
     private $nullWasVisited;
     private $objectMetadataStack;
 
+    /** @var boolean */
+    private $formatOutput;
+
     public function __construct($namingStrategy)
     {
         parent::__construct($namingStrategy);
         $this->objectMetadataStack = new \SplStack;
+        $this->formatOutput = true;
     }
 
     public function setDefaultRootName($name, $namespace = null)
@@ -171,6 +175,11 @@ class XmlSerializationVisitor extends AbstractVisitor
         $namespace = (null !== $this->currentMetadata && null !== $this->currentMetadata->xmlEntryNamespace) ? $this->currentMetadata->xmlEntryNamespace : null;
 
         foreach ($data as $k => $v) {
+
+            if (null === $v && $context->shouldSerializeNull() !== true) {
+                continue;
+            }
+
             $tagName = (null !== $this->currentMetadata && $this->currentMetadata->xmlKeyValuePairs && $this->isElementNameValid($k)) ? $k : $entryName;
 
             $entryNode = $this->createElement($tagName, $namespace);
@@ -221,7 +230,7 @@ class XmlSerializationVisitor extends AbstractVisitor
     {
         $v = $metadata->getValue($object);
 
-        if (null === $v && ! $context->shouldSerializeNull()) {
+        if (null === $v && $context->shouldSerializeNull() !== true) {
             return;
         }
 
@@ -366,7 +375,7 @@ class XmlSerializationVisitor extends AbstractVisitor
     public function createDocument($version = null, $encoding = null, $addRoot = true)
     {
         $doc = new \DOMDocument($version ?: $this->defaultVersion, $encoding ?: $this->defaultEncoding);
-        $doc->formatOutput = true;
+        $doc->formatOutput = $this->isFormatOutput();
 
         if ($addRoot) {
             if ($this->defaultRootNamespace) {
@@ -475,4 +484,19 @@ class XmlSerializationVisitor extends AbstractVisitor
         return (isset($metadata->xmlNamespaces[''])?$metadata->xmlNamespaces['']:null);
     }
 
+    /**
+     * @return bool
+     */
+    public function isFormatOutput()
+    {
+        return $this->formatOutput;
+    }
+
+    /**
+     * @param bool $formatOutput
+     */
+    public function setFormatOutput($formatOutput)
+    {
+        $this->formatOutput = (boolean) $formatOutput;
+    }
 }

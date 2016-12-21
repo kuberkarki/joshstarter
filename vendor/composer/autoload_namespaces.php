@@ -21,7 +21,6 @@ return array(
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'Cron' => array($vendorDir . '/mtdowling/cron-expression/src'),
     'Cmgmyr\\Messenger\\' => array($vendorDir . '/cmgmyr/messenger/src'),
     'Chencha\\Share' => array($vendorDir . '/chencha/share/src'),

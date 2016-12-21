@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'willvincent\\Rateable\\' => array($vendorDir . '/willvincent/laravel-rateable/src/Rateable'),
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Tshafer\\ServiceProvider\\' => array($vendorDir . '/tshafer/laravel-service-provider/src'),
@@ -30,6 +30,13 @@ return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Symfony\\Component\\ClassLoader\\' => array($vendorDir . '/symfony/class-loader'),
     'SuperClosure\\' => array($vendorDir . '/jeremeamia/SuperClosure/src'),
+    'SocialNorm\\SoundCloud\\' => array($vendorDir . '/socialnorm/soundcloud/src'),
+    'SocialNorm\\LinkedIn\\' => array($vendorDir . '/socialnorm/linkedin/src'),
+    'SocialNorm\\Instagram\\' => array($vendorDir . '/socialnorm/instagram/src'),
+    'SocialNorm\\Google\\' => array($vendorDir . '/socialnorm/google/src'),
+    'SocialNorm\\GitHub\\' => array($vendorDir . '/socialnorm/github/src'),
+    'SocialNorm\\Facebook\\' => array($vendorDir . '/socialnorm/facebook/src'),
+    'SocialNorm\\' => array($vendorDir . '/socialnorm/socialnorm/src'),
     'Scrutinizer\\Ocular\\' => array($vendorDir . '/scrutinizer/ocular/src/Scrutinizer/Ocular'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src/Psy'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
@@ -52,6 +59,7 @@ return array(
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
     'DebugBar\\' => array($vendorDir . '/maximebf/debugbar/src/DebugBar'),
     'Cviebrock\\EloquentTaggable\\' => array($vendorDir . '/cviebrock/eloquent-taggable/src'),
     'Cviebrock\\EloquentSluggable\\' => array($vendorDir . '/cviebrock/eloquent-sluggable/src'),
@@ -64,4 +72,6 @@ return array(
     'Barryvdh\\LaravelIdeHelper\\' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
     'Barryvdh\\Debugbar\\' => array($vendorDir . '/barryvdh/laravel-debugbar/src'),
     'App\\' => array($baseDir . '/app'),
+    'AdamWathan\\EloquentOAuth\\' => array($vendorDir . '/adamwathan/eloquent-oauth/src'),
+    'AdamWathan\\EloquentOAuthL5\\' => array($vendorDir . '/adamwathan/eloquent-oauth-l5/src'),
 );

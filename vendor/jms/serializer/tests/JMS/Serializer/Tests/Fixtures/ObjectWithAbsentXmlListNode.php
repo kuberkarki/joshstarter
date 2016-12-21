@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2013 Johannes M. Schmitt <schmittjoh@gmail.com>
+ * Copyright 2016 Johannes M. Schmitt <schmittjoh@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,4 +38,10 @@ class ObjectWithAbsentXmlListNode
      * @Serializer\Type("array<string>")
      */
     public $skipDefault;
+
+    /**
+     * @Serializer\XmlList(inline=false, namespace="http://www.example.com")
+     * @Serializer\Type("array<string>")
+     */
+    public $absentAndNs;
 }
