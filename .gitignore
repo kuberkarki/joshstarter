@@ -1,5 +1,5 @@
-/vendor
 /vendor1
+/vendor2
 /node_modules
 /public/storage
 /bootstrap/cache
