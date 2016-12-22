@@ -23,7 +23,7 @@
         "nicolaslopezj/searchable": "1.*",
         "chencha/share": "^5.2",
         "adamwathan/eloquent-oauth-l5": "^0.5.1",
-        "guzzlehttp/guzzle": "6.*"
+        "guzzlehttp/guzzle": "*"
 },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
