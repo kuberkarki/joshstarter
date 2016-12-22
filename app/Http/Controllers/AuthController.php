@@ -140,7 +140,7 @@ public function __construct(Socialite $socialite){
             if($type=='Business'){
                 $role = Sentinel::findRoleByName('Business');
             }
-            elseif($rtype=='Freelancer'){
+            elseif($type=='Freelancer'){
                 $role = Sentinel::findRoleByName('Freelancer');
             }elseif($type=='Event Organizer'){
                 $role = Sentinel::findRoleByName('Event Organizer');
