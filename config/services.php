@@ -36,10 +36,10 @@ return [
     ],
 
     'facebook' => [
-            'client_id'     => '1164771373610687',
-            'client_secret' => 'e52399bdfc8d6891a32843e78b88dfea',
-            'redirect'      => 'http://eventdayplanner.com',
-        ],
+        'client_id'     => env('FACEBOOK_ID','1214991548588669'),
+        'client_secret' => env('FACEBOOK_SECRET','453988fb07b807f310df5a89662fca5e'),
+        'redirect'      => env('FACEBOOK_REDIRECT','http://eventdayplanner.com/dev/public/auth/callback/facebook')
+    ],
     'google' => [
         'client_id'     => env('GOOGLE_ID','521125266075-6a4lg5bsh6b924aq6igguu4rd960ejho.apps.googleusercontent.com'),
         'client_secret' => env('GOOGLE_SECRET','enOpVGZe06dDZ66pVmuOkz46'),

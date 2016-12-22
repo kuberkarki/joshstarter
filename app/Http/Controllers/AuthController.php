@@ -137,12 +137,12 @@ public function __construct(Socialite $socialite){
             $user = Sentinel::register($guser, true);
 
             //add user to 'User' group
-            if($request->get('type')=='Business'){
+            if($type=='Business'){
                 $role = Sentinel::findRoleByName('Business');
             }
-            elseif($request->get('type')=='Freelancer'){
+            elseif($rtype=='Freelancer'){
                 $role = Sentinel::findRoleByName('Freelancer');
-            }elseif($request->get('type')=='Event Organizer'){
+            }elseif($type=='Event Organizer'){
                 $role = Sentinel::findRoleByName('Event Organizer');
             }else
                 $role = Sentinel::findRoleByName('User');
