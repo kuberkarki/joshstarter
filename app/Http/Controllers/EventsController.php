@@ -80,6 +80,28 @@ class EventsController extends Controller {
 		return view('create_event')->with('frontarray',$this->frontarray);
 	}
 
+	public function reviewsmanagement()
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$events = Event::where('user_id',$user->id)->paginate(15);
+		//$ads_category = Ads_category::lists('name', 'id');
+		//dd($ads_category[1]);
+		return view('events.managereviews', compact('events'));
+	}
+
+	public function viewereviews($id)
+	{
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$event = Event::where('id',$id)->where('user_id',$user->id)->first();
+		//$ads_category = Ads_category::lists('name', 'id');
+		//dd($ads_category[1]);
+		return view('events.viewreviews', compact('event'));
+	}
+
 	
 
 

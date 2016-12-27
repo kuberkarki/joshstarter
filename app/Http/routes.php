@@ -134,6 +134,7 @@ Route::get('thumbnail2/{image}', function($image)
         Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
         Route::get('booking-management', array('as' => 'booking-management', 'uses' => 'AdsController@bookingmanagement'));
         Route::get('reviews-management', array('as' => 'reviews-management', 'uses' => 'AdsController@reviewsmanagement'));
+        Route::get('events-reviews-management', array('as' => 'events-reviews-management', 'uses' => 'EventsController@reviewsmanagement'));
 
         Route::get('total-revenue', array('as' => 'total-revenue', 'uses' => 'AdsController@totalrevenue'));
         Route::get('edit-event/{event_id}', array('as' => 'edit-event', 'uses' => 'EventsController@showeditevent'));
@@ -375,6 +376,7 @@ Route::get('thumbnail2/{image}', function($image)
         Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
         Route::get('manage-reviews/{ad_id}', array('as'=>'manage-reviews','uses'=>'AdsController@managereviews'));
         Route::get('view-reviews/{ad_id}', array('as'=>'view-reviews','uses'=>'AdsController@viewereviews'));
+       
         Route::get('create-ads', array('as' => 'create-ads', 'uses' => 'AdsController@createFrontend'));
         Route::post('ads', 'AdsController@storeFrontend');
        // Route::put('ads', 'AdsController@editads');
@@ -403,6 +405,7 @@ Route::get('thumbnail2/{image}', function($image)
         Route::get('create-event', array('as' => 'create-event', 'uses' => 'EventsController@createEventFrontend'));
         Route::post('events', 'EventsController@storeFrontend');
         Route::put('event', 'EventsController@update');
+         Route::get('event-view-reviews/{event_id}', array('as'=>'event-view-reviews','uses'=>'EventsController@viewereviews'));
     });
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
