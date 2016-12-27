@@ -38,24 +38,31 @@ My Ads
                     @foreach($ad->reviews()->get() as $review)
                         <div class="row">
                             <div class="col-md-12">
-                            @for($i=1;$i<=5;$i++)
+                           
+                            
+
+                            {{-- */$reviewer=App\user::find($review->author_id);/* --}}
+                            
+                                    Buyer: {!! $reviewer->first_name?$reviewer->first_name:'no name'  ." ".$reviewer->last_name !!} 
+                                    <span class="pull-right">
+                                    {!! $review->updated_at->diffForHumans() !!}
+                                    </span> 
+                              <p>Rating: 
+                              @for($i=1;$i<=5;$i++)
                                 @if($review->rating>=$i)
                                     <span class="glyphicon glyphicon-star"></span>
                                 @else
                                     <span class="glyphicon glyphicon-star-empty"></span>
                                 @endif
                             @endfor
-
-                            {{-- */$user=App\user::find($review->author_id);/* --}}
-                                    {!! $user->first_name  ." ".$user->last_name !!} 
-                                    <span class="pull-right">
-                                    {!! $review->updated_at->diffForHumans() !!}
-                                    </span> 
-                    
-                            <p>{!! $review->body !!}</p>
+                            </p>
+                            <p>Ads Name: {{$ad->title}}</p>
+                             <p>Review Title: {!! $review->title !!}</p>
+                            <p>Review: {!! $review->body !!}</p>
                           </div>
                        </div>
                     
+                    <div class="col-xs-12 hrspacing"><hr class="hrcolor"></div>
                     @endforeach
               </ul>
         <div class="clearfix"></div>

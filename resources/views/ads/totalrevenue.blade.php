@@ -46,11 +46,11 @@ My Ads
                     <td>
                         <div class="row">
                           @if($ad->photo)
-                             <div class="col-sm-6"><img src="{{ URL::to('thumbnail/'.$ad->photo)  }}" class="img-responsive" alt="Image"></div>
+                             <div class="col-sm-3"><img src="{{ URL::to('thumbnail/'.$ad->photo)  }}" class="img-responsive" alt="Image"></div>
                         @else
-                        <div class="col-sm-6"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
+                        <div class="col-sm-3"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
                             @endif
-                          <div class="col-sm-6">
+                          <div class="col-sm-9">
                             <ul class="ratingAds">
                             <li>{{$ad->title}}</li>
                             <li>Total bookings: {{ count($ad->booking) }}</li>
@@ -69,16 +69,30 @@ My Ads
 
 
                            <a href="{{ route('manage-ads',$ad) }}" class="manage">View Bookings</a>
+                           <table class="table table-bordred">
+                            <tr><th>Total Earn</th><th>Withdrawls</th><th>Use to Order</th><th>Pending Clearance</th><th>Available Balance</th></tr>
+                            <tr>
+                              <td>{{$price}}</td>
+                              <td>0</td>
+                              <td>0</td>
+                              <td>{{$price}}</td>
+                              <td>{{$price}}</td>
+                              
+                             
+                            </tr>
+                           </table>
+
+                            <table class="table table-bordred">
+                            <tr><th>Withdraw</th><th>Paypal</th><th>Banktransfer</th></tr>
+                            <tr>
+                              <td>{{$price}}</td>
+                              <td>0</td>
+                              <td>0</td>
+                            </tr>
+                           </table>
                           </div>
                         </div>
                     </td>
-                    
-                    <td>
-                    <p data-placement="top" data-toggle="tooltip" title="Edit">
-                   
-                    <!-- <button class="btn btn-primary btn-xs" data-title="Edit" href="{!! route('edit-ads',$ad)!!}"  data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button> --></p>
-                    </td>
-                    
                 </tr>
                 @empty
                     <h3>No Ads Exists!</h3>
