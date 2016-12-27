@@ -55,7 +55,12 @@ class EventsController extends Controller {
         }
         try {
             $event = Event::where('slug',$slug)->first();
+            if(isset($user))
              $reviewed=$event->reviews()->where('author_id',$user->id)->where('reviewable_id',$event->id)->first();
+         	else{
+         		$reviewed=1;
+         		$user=null;
+         	}
             //$event->increment('views');
         } catch (ModelNotFoundException $e) {
             return Response::view('404', array(), 404);

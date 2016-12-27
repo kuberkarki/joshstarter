@@ -37,9 +37,7 @@ My Ads
                 <li><a href="#">Denied</a></li>
               </ul> -->
             </div>
-            <div class="col-sm-3">
-              <a href="{{route('create-ads')}}" class="btn btn-primary pull-right">create New Ads</a>
-            </div>
+            
       </div>
       <div class="row">
         <div id="calendar" class="col-sm-7"></div>

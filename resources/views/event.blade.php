@@ -106,7 +106,7 @@
                         </p> -->
                     </div>
                 </div>
-
+                @if(isset($user))
                 <div class="reviewSection">
                     <div class="headingCustomerPara">Reviews( {!! count($event->reviews()->get()) !!} )</div>
                       <ul class="media-list">
@@ -163,6 +163,8 @@
               </div>
               {!! Form::close() !!}
               </div>
+
+              @endif
                 <!-- Media left section start -->
                 <h3 class="comments">{{$event->comments->count()}} Comments</h3><br />
                 <ul class="media-list">
@@ -281,6 +283,7 @@
     </div>
     <!-- //Conatainer Section End -->
 
+<?php if(isset($user)){?>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -323,6 +326,7 @@
     </div>
   </div>
 </div>
+<?php } ?>
 @stop
 
 @section('footer_scripts')

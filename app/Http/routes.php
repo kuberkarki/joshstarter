@@ -153,21 +153,7 @@ Route::get('thumbnail2/{image}', function($image)
 
     });
 
-    Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
-            
-            Route::get('book', array('as' => 'book', 'uses' => 'AdsController@getbook'));
-            Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
-
-     });
-
-     Route::group(array('prefix' => 'ads'), function () {
-            Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
-            Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
-            Route::get('ajax-booking-management-detail/{id}/{date}', array('as' => 'ajax-booking-management-detail', 'uses' => 'AdsController@ajaxadsbookingmanagementdetail'));
-            Route::post('book', array('as' => 'book', 'uses' => 'AdsController@postbook'));
-
-
-     });
+    
              Route::post('search', array('as' => 'search', 'uses' => 'AdsController@search'));
 
         //Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
@@ -396,7 +382,6 @@ Route::get('thumbnail2/{image}', function($image)
         Route::post('ads', 'AdsController@storeFrontend');
         Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
         Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
-         Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
         Route::get('manage-reviews/{ad_id}', array('as'=>'manage-reviews','uses'=>'AdsController@managereviews'));
         Route::get('view-reviews/{ad_id}', array('as'=>'view-reviews','uses'=>'AdsController@viewereviews'));
     });
@@ -408,6 +393,24 @@ Route::get('thumbnail2/{image}', function($image)
         Route::put('event', 'EventsController@update');
          Route::get('event-view-reviews/{event_id}', array('as'=>'event-view-reviews','uses'=>'EventsController@viewereviews'));
     });
+
+     Route::group(array('prefix' => 'ads', 'middleware' => 'SentinelUser'), function () {
+             Route::get('/', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
+            
+            Route::get('book', array('as' => 'book', 'uses' => 'AdsController@getbook'));
+            Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
+            Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
+
+     });
+
+     Route::group(array('prefix' => 'ads'), function () {
+            Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
+            Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
+            Route::get('ajax-booking-management-detail/{id}/{date}', array('as' => 'ajax-booking-management-detail', 'uses' => 'AdsController@ajaxadsbookingmanagementdetail'));
+            Route::post('book', array('as' => 'book', 'uses' => 'AdsController@postbook'));
+
+
+     });
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
 

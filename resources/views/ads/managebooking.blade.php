@@ -29,9 +29,7 @@ My Ads
         @include('notifications')
        
       </div>
-      <div class="col-sm-3">
-        <a href="{{route('create-ads')}}" class="btn btn-primary pull-right">create New Ads</a>
-      </div>
+      
 </div>
 <div class="row">
     <div class="table-responsive">

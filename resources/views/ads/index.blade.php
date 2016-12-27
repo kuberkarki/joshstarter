@@ -27,13 +27,13 @@ My Ads
      
       <div class="col-sm-9">
         @include('notifications')
-        <ul class="adsNav-list">
+        <!-- <ul class="adsNav-list">
           <li><a href="#">Active</a></li> 
           <li><a href="#">Pending Approval</a></li> 
           <li><a href="#">Require Modification</a></li> 
           <li><a href="#">Draft</a></li> 
           <li><a href="#">Denied</a></li>
-        </ul>
+        </ul> -->
       </div>
       <div class="col-sm-3">
         <a href="{{route('create-ads')}}" class="btn btn-primary pull-right">create New Ads</a>
@@ -45,11 +45,11 @@ My Ads
             <thead>
                 <th><input type="checkbox" id="checkall" /></th>
                 <th>Active Ads</th>
-                <th>Impression</th>
-                <th>Click</th>
+                <th>Like</th>
                 <th>Views</th>
+               
                 <th>Book/Hire</th>
-                <th>Cancellation</th>
+                
                 <th>Edit</th>
                 <th>Delete</th>
             </thead>
@@ -87,11 +87,11 @@ My Ads
                           </div>
                         </div>
                     </td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{ $ad->likes_count() }}</td>
+                    <td>{{ $ad->views_count() }}</td>
+                    
+                    <td><a href="{{ route('manage-ads',$ad) }}" class="manage">{{ count($ad->booking) }}</a></td>
+                    
                     <td>
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                     <a class="btn btn-primary btn-xs" data-title="Edit" href="{!! route('edit-ads',$ad)!!}" ><span class="glyphicon glyphicon-pencil"></span></a>

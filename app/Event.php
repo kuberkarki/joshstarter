@@ -39,6 +39,32 @@ class Event extends Model  {
      * @var array
      */
     protected $guarded = ['id'];
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'events.name' => 10,
+            'events.description' => 8,
+            'events.location' => 2,
+             'users.company_name' => 9,
+             'users.address' => 2,
+             'users.name' => 2,
+            'users.first_name' => 2,
+            'users.last_name' => 2,
+        ],
+         'joins' => [
+            'users' => ['event.user_id','users.id']
+        ], 
+        // 'joins' => [
+        //     'ads_categories' => ['ads.ads_category_id','ads_categories.id'],
+        // ],
+        //  'joins' => [
+        //     'users' => ['ad.user_id','users.id'],
+        // ],
+    ];
      /**
      * Sluggable configuration.
      *

@@ -116,13 +116,15 @@ class AdsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function indexFrontend()
-	{
+	public function indexFrontend(){
+
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();
 		}
-		$ads = Ad::where('user_id',$user->id)->paginate(15);
+		$ads = Ad::where('user_id',$user->id)->with('booking')->paginate(15);
 		$ads_category = Ads_category::lists('name', 'id');
+
+		
 		//dd($ads_category[1]);
 		return view('ads.index', compact('ads','ads_category'));
 	}
