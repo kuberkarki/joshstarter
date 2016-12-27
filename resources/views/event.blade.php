@@ -41,6 +41,7 @@
     <div class="container">
         <h2 class="primary marl12">{{$event->name}}</h2>
         <div class="row content">
+        @include('notifications')
             <!-- Business Deal Section Start -->
             <div class="col-sm-8 col-md-8">
                 <div class=" thumbnail featured-post-wide img">
@@ -67,7 +68,32 @@
                         <p class="text-justify">
                             {!! $event->description !!}
                         </p>
+                        <p>
+                        <div class="socialTicket">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="customerSocial">
+                            
+                              <a href="{{ $share['facebook'] }}"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+
+                              <a href="{{ $share['twitter'] }}"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                              <a href="{{ $share['pinterest'] }}"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
+                              <a href="{{ $share['email'] }}"><i class="fa fa-envelope-square" aria-hidden="true"></i></a>
+                            </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="favBox pull-right"><a href="{{ route('view_counter.like', array('class_name' => 'Event', 'object_id' => $event->id)) }}"  class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> ({{ $event->likes_count()?$event->likes_count():0 }}) Likes</a>
+
+                              
+                             <!--  {{-- route('view_counter.like', array('class_name' => 'Ad', 'object_id' => $ad->id)) }}
+                {{ route('view_counter.unlike', array('class_name' => 'Ad', 'object_id' => $ad->id)) --}} --></div>
+                            </div>
+                          </div>
+                        </div>
+                        </p>
                         <p class="pull-right">
+
+                         <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send Message</button> 
                         <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a>
                         </p>
                         <!-- <p>
@@ -254,6 +280,49 @@
         </div>
     </div>
     <!-- //Conatainer Section End -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Message</h4>
+      </div>
+      <div class="modal-body">
+       {!! Form::open(['route' => 'messages.storefrontend-event','class'=>'form-horizontal','role'=>'form']) !!}
+                  
+                    
+                        <input type="hidden" name="subject" class="form-control" 
+                        id="subject" placeholder="subject" value="{!! $event->id !!}" />
+                    
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >message</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="message" 
+                            id="message" placeholder="message"></textarea>
+                    </div>
+                  </div>
+                   @if($users->count() > 0)
+                   
+                        @foreach($users as $user)
+                            <input type="hidden" name="recipients[]" value="{{ $user->id }}">{!!$user->name!!}
+                        @endforeach
+                   
+                    @endif
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Send</button>
+                    </div>
+                  </div>
+                </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
 @stop
 
 @section('footer_scripts')

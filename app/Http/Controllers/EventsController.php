@@ -15,6 +15,8 @@ use App\News;
 use App\Page;
 use App\EventComment;
 use App\Http\Requests\EventCommentRequest;
+use App\User;
+use Share;
 
 class EventsController extends Controller {
 
@@ -59,9 +61,16 @@ class EventsController extends Controller {
             return Response::view('404', array(), 404);
         }
 
+        $subject="Message on Ad-".$event->name;
+		$users = User::where('id', '=', $event->user_id)->get();
+
+		$adlink= "<a href=".url('event/'.$event->slug).">".$event->name."</a>";
+
+			$share=Share::load(url('event/'.$event->slug), $event->name)->services('facebook', 'gplus', 'twitter','email','pinterest');
+
         
         // Show the page
-        return View('event', compact('event','reviewed'))->with('frontarray',$this->frontarray);
+        return View('event', compact('event','reviewed','user','users','share'))->with('frontarray',$this->frontarray);
 
     }
 

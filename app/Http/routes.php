@@ -364,6 +364,7 @@ Route::get('thumbnail2/{image}', function($image)
     Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
     Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
     Route::post('storefrontend', ['as' => 'messages.storefrontend', 'uses' => 'MessagesController@storefrontend']);
+    Route::post('storefrontend-event', ['as' => 'messages.storefrontend-event', 'uses' => 'MessagesController@storefrontendevent']);
 
     Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
     Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);

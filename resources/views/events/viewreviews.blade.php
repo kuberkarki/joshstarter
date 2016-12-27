@@ -60,6 +60,7 @@ My Events
                             <p>{!! $review->body !!}</p>
                           </div>
                        </div>
+                        <div class="col-xs-12 hrspacing"><hr class="hrcolor"></div>
                     
                     @endforeach
               </ul>

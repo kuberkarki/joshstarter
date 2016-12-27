@@ -12,6 +12,7 @@ use Sentinel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use App\Ad;
+use App\Event;
 
 class MessagesController extends Controller
 {
@@ -134,6 +135,58 @@ class MessagesController extends Controller
         }
 
         return redirect('ads-detail/'.$ad->slug)->with('success','Message Sent');
+        //return redirect('messages');
+    }
+
+    public function storeFrontendevent()
+    {
+        
+        $input = Input::all();
+
+        $event=Event::findorfail($input['subject']);
+        $subject="Message on Event-".$event->name;
+        $eventlink= "<a href='".url('event/'.$event->slug)."'>View ".$event->name."</a>";
+
+        $message=$input['message'];
+        $chk=filter_var(trim($message), FILTER_VALIDATE_EMAIL);
+        if($chk)
+            return redirect('event/'.$event->slug)->with('error','Message Contains invalid things like email');
+
+
+
+        $thread = Thread::create(
+            [
+                'subject' => $subject,
+            ]
+        );
+
+        
+        
+
+        // Message
+        Message::create(
+            [
+                'thread_id' => $thread->id,
+                'user_id'   => Sentinel::getUser()->id,
+                'body'      => $input['message']."<br/>".$eventlink,
+            ]
+        );
+
+        // Sender
+        Participant::create(
+            [
+                'thread_id' => $thread->id,
+                'user_id'   => Sentinel::getUser()->id,
+                'last_read' => new Carbon,
+            ]
+        );
+
+        // Recipients
+        if (Input::has('recipients')) {
+            $thread->addParticipant(array($event->user_id));
+        }
+
+        return redirect('event/'.$event->slug)->with('success','Message Sent');
         //return redirect('messages');
     }
 
