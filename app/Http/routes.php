@@ -377,11 +377,11 @@ Route::get('thumbnail2/{image}', function($image)
     });
 
     Route::group(array('middleware' => 'SentinelFreelancer'), function () {
-        Route::get('ads', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
-        Route::get('create-ads', array('as' => 'create-ads', 'uses' => 'AdsController@createFrontend'));
-        Route::post('ads', 'AdsController@storeFrontend');
-        Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
-        Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
+        //Route::get('ads', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
+        //Route::get('create-ads', array('as' => 'create-ads', 'uses' => 'AdsController@createFrontend'));
+        //Route::post('ads', 'AdsController@storeFrontend');
+       // Route::get('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@showeditads'));
+        //Route::patch('edit-ads/{ad_id}', array('as' => 'edit-ads', 'uses' => 'AdsController@editads'));
         //Route::get('manage-reviews/{ad_id}', array('as'=>'manage-reviews','uses'=>'AdsController@managereviews'));
         //Route::get('view-reviews/{ad_id}', array('as'=>'view-reviews','uses'=>'AdsController@viewereviews'));
     });

@@ -43,7 +43,7 @@ My Ads
 
                             {{-- */$reviewer=App\user::find($review->author_id);/* --}}
                             
-                                    Buyer: {!! $reviewer->first_name?$reviewer->first_name:'no name'  ." ".$reviewer->last_name !!} 
+                                    Buyer: {!! $reviewer->first_name?$reviewer->first_name:$reviewer->name  ." ".$reviewer->last_name !!} 
                                     <span class="pull-right">
                                     {!! $review->updated_at->diffForHumans() !!}
                                     </span> 
