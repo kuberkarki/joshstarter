@@ -21,7 +21,7 @@ class SentinelFreelancer
             return Redirect::route('login');
         }
         if(!Sentinel::inRole('freelancer'))
-                 return Redirect::route('login');
+               ; // return Redirect::route('login');
         return $next($request);
     }
 }

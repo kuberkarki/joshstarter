@@ -23,7 +23,7 @@ My Ads
 
   <div class="row">
       <div class="col-sm-12"><h3>My Ads Listing</h3></div>
-      @include('business.usermenu')
+      @include('usermenu')
      
       <div class="col-sm-9">
         @include('notifications')
