@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
+class ComposerStaticInitd694c8e48b100f83cf2664323beecdd7
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -160,8 +160,8 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -1393,6 +1393,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'GuzzleHttp\\PrepareBodyMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php',
         'GuzzleHttp\\Promise\\AggregateException' => __DIR__ . '/..' . '/guzzlehttp/promises/src/AggregateException.php',
         'GuzzleHttp\\Promise\\CancellationException' => __DIR__ . '/..' . '/guzzlehttp/promises/src/CancellationException.php',
+        'GuzzleHttp\\Promise\\Coroutine' => __DIR__ . '/..' . '/guzzlehttp/promises/src/Coroutine.php',
         'GuzzleHttp\\Promise\\EachPromise' => __DIR__ . '/..' . '/guzzlehttp/promises/src/EachPromise.php',
         'GuzzleHttp\\Promise\\FulfilledPromise' => __DIR__ . '/..' . '/guzzlehttp/promises/src/FulfilledPromise.php',
         'GuzzleHttp\\Promise\\Promise' => __DIR__ . '/..' . '/guzzlehttp/promises/src/Promise.php',
@@ -1401,6 +1402,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'GuzzleHttp\\Promise\\RejectedPromise' => __DIR__ . '/..' . '/guzzlehttp/promises/src/RejectedPromise.php',
         'GuzzleHttp\\Promise\\RejectionException' => __DIR__ . '/..' . '/guzzlehttp/promises/src/RejectionException.php',
         'GuzzleHttp\\Promise\\TaskQueue' => __DIR__ . '/..' . '/guzzlehttp/promises/src/TaskQueue.php',
+        'GuzzleHttp\\Promise\\TaskQueueInterface' => __DIR__ . '/..' . '/guzzlehttp/promises/src/TaskQueueInterface.php',
         'GuzzleHttp\\Psr7\\AppendStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/AppendStream.php',
         'GuzzleHttp\\Psr7\\BufferStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/BufferStream.php',
         'GuzzleHttp\\Psr7\\CachingStream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/CachingStream.php',
@@ -2625,6 +2627,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'JMS\\Serializer\\Annotation\\XmlNamespace' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Annotation/XmlNamespace.php',
         'JMS\\Serializer\\Annotation\\XmlRoot' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Annotation/XmlRoot.php',
         'JMS\\Serializer\\Annotation\\XmlValue' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Annotation/XmlValue.php',
+        'JMS\\Serializer\\ArrayTransformerInterface' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ArrayTransformerInterface.php',
         'JMS\\Serializer\\Builder\\CallbackDriverFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Builder/CallbackDriverFactory.php',
         'JMS\\Serializer\\Builder\\DefaultDriverFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Builder/DefaultDriverFactory.php',
         'JMS\\Serializer\\Builder\\DriverFactoryInterface' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Builder/DriverFactoryInterface.php',
@@ -2632,6 +2635,13 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'JMS\\Serializer\\Construction\\ObjectConstructorInterface' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Construction/ObjectConstructorInterface.php',
         'JMS\\Serializer\\Construction\\UnserializeObjectConstructor' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Construction/UnserializeObjectConstructor.php',
         'JMS\\Serializer\\Context' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/Context.php',
+        'JMS\\Serializer\\ContextFactory\\CallableContextFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/CallableContextFactory.php',
+        'JMS\\Serializer\\ContextFactory\\CallableDeserializationContextFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/CallableDeserializationContextFactory.php',
+        'JMS\\Serializer\\ContextFactory\\CallableSerializationContextFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/CallableSerializationContextFactory.php',
+        'JMS\\Serializer\\ContextFactory\\DefaultDeserializationContextFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/DefaultDeserializationContextFactory.php',
+        'JMS\\Serializer\\ContextFactory\\DefaultSerializationContextFactory' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/DefaultSerializationContextFactory.php',
+        'JMS\\Serializer\\ContextFactory\\DeserializationContextFactoryInterface' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/DeserializationContextFactoryInterface.php',
+        'JMS\\Serializer\\ContextFactory\\SerializationContextFactoryInterface' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/ContextFactory/SerializationContextFactoryInterface.php',
         'JMS\\Serializer\\DeserializationContext' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/DeserializationContext.php',
         'JMS\\Serializer\\EventDispatcher\\Event' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/EventDispatcher/Event.php',
         'JMS\\Serializer\\EventDispatcher\\EventDispatcher' => __DIR__ . '/..' . '/jms/serializer/src/JMS/Serializer/EventDispatcher/EventDispatcher.php',
@@ -2763,6 +2773,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'League\\Flysystem\\Plugin\\PluginNotFoundException' => __DIR__ . '/..' . '/league/flysystem/src/Plugin/PluginNotFoundException.php',
         'League\\Flysystem\\ReadInterface' => __DIR__ . '/..' . '/league/flysystem/src/ReadInterface.php',
         'League\\Flysystem\\RootViolationException' => __DIR__ . '/..' . '/league/flysystem/src/RootViolationException.php',
+        'League\\Flysystem\\SafeStorage' => __DIR__ . '/..' . '/league/flysystem/src/SafeStorage.php',
         'League\\Flysystem\\UnreadableFileException' => __DIR__ . '/..' . '/league/flysystem/src/UnreadableFileException.php',
         'League\\Flysystem\\Util' => __DIR__ . '/..' . '/league/flysystem/src/Util.php',
         'League\\Flysystem\\Util\\ContentListingFormatter' => __DIR__ . '/..' . '/league/flysystem/src/Util/ContentListingFormatter.php',
@@ -2811,6 +2822,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Metadata\\Cache\\CacheInterface' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/Cache/CacheInterface.php',
         'Metadata\\Cache\\DoctrineCacheAdapter' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/Cache/DoctrineCacheAdapter.php',
         'Metadata\\Cache\\FileCache' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/Cache/FileCache.php',
+        'Metadata\\Cache\\PsrCacheAdapter' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/Cache/PsrCacheAdapter.php',
         'Metadata\\ClassHierarchyMetadata' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/ClassHierarchyMetadata.php',
         'Metadata\\ClassMetadata' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/ClassMetadata.php',
         'Metadata\\Driver\\AbstractFileDriver' => __DIR__ . '/..' . '/jms/metadata/src/Metadata/Driver/AbstractFileDriver.php',
@@ -2964,6 +2976,9 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Monolog\\Handler\\RotatingFileHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/RotatingFileHandler.php',
         'Monolog\\Handler\\SamplingHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SamplingHandler.php',
         'Monolog\\Handler\\SlackHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SlackHandler.php',
+        'Monolog\\Handler\\SlackWebhookHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SlackWebhookHandler.php',
+        'Monolog\\Handler\\Slack\\SlackRecord' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/Slack/SlackRecord.php',
+        'Monolog\\Handler\\SlackbotHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SlackbotHandler.php',
         'Monolog\\Handler\\SocketHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SocketHandler.php',
         'Monolog\\Handler\\StreamHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/StreamHandler.php',
         'Monolog\\Handler\\SwiftMailerHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/SwiftMailerHandler.php',
@@ -2979,6 +2994,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Monolog\\Processor\\MemoryPeakUsageProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MemoryPeakUsageProcessor.php',
         'Monolog\\Processor\\MemoryProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MemoryProcessor.php',
         'Monolog\\Processor\\MemoryUsageProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MemoryUsageProcessor.php',
+        'Monolog\\Processor\\MercurialProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MercurialProcessor.php',
         'Monolog\\Processor\\ProcessIdProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/ProcessIdProcessor.php',
         'Monolog\\Processor\\PsrLogMessageProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/PsrLogMessageProcessor.php',
         'Monolog\\Processor\\TagProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/TagProcessor.php',
@@ -3023,6 +3039,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Omnipay\\PayPal\\Message\\ExpressCompleteAuthorizeRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressCompleteAuthorizeRequest.php',
         'Omnipay\\PayPal\\Message\\ExpressCompleteOrderRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressCompleteOrderRequest.php',
         'Omnipay\\PayPal\\Message\\ExpressCompletePurchaseRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressCompletePurchaseRequest.php',
+        'Omnipay\\PayPal\\Message\\ExpressCompletePurchaseResponse' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressCompletePurchaseResponse.php',
         'Omnipay\\PayPal\\Message\\ExpressFetchCheckoutRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressFetchCheckoutRequest.php',
         'Omnipay\\PayPal\\Message\\ExpressInContextAuthorizeRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressInContextAuthorizeRequest.php',
         'Omnipay\\PayPal\\Message\\ExpressInContextAuthorizeResponse' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/ExpressInContextAuthorizeResponse.php',
@@ -3051,12 +3068,14 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Omnipay\\PayPal\\Message\\RestListPurchaseRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestListPurchaseRequest.php',
         'Omnipay\\PayPal\\Message\\RestPurchaseRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestPurchaseRequest.php',
         'Omnipay\\PayPal\\Message\\RestReactivateSubscriptionRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestReactivateSubscriptionRequest.php',
+        'Omnipay\\PayPal\\Message\\RestRefundCaptureRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestRefundCaptureRequest.php',
         'Omnipay\\PayPal\\Message\\RestRefundRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestRefundRequest.php',
         'Omnipay\\PayPal\\Message\\RestResponse' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestResponse.php',
         'Omnipay\\PayPal\\Message\\RestSearchTransactionRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestSearchTransactionRequest.php',
         'Omnipay\\PayPal\\Message\\RestSuspendSubscriptionRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestSuspendSubscriptionRequest.php',
         'Omnipay\\PayPal\\Message\\RestTokenRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestTokenRequest.php',
         'Omnipay\\PayPal\\Message\\RestUpdatePlanRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestUpdatePlanRequest.php',
+        'Omnipay\\PayPal\\Message\\RestVoidRequest' => __DIR__ . '/..' . '/omnipay/paypal/src/Message/RestVoidRequest.php',
         'Omnipay\\PayPal\\PayPalItem' => __DIR__ . '/..' . '/omnipay/paypal/src/PayPalItem.php',
         'Omnipay\\PayPal\\PayPalItemBag' => __DIR__ . '/..' . '/omnipay/paypal/src/PayPalItemBag.php',
         'Omnipay\\PayPal\\ProGateway' => __DIR__ . '/..' . '/omnipay/paypal/src/ProGateway.php',
@@ -3954,6 +3973,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'SuperClosure\\Analyzer\\Visitor\\MagicConstantVisitor' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Visitor/MagicConstantVisitor.php',
         'SuperClosure\\Analyzer\\Visitor\\ThisDetectorVisitor' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Visitor/ThisDetectorVisitor.php',
         'SuperClosure\\Exception\\ClosureAnalysisException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureAnalysisException.php',
+        'SuperClosure\\Exception\\ClosureSerializationException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureSerializationException.php',
         'SuperClosure\\Exception\\ClosureUnserializationException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/ClosureUnserializationException.php',
         'SuperClosure\\Exception\\SuperClosureException' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Exception/SuperClosureException.php',
         'SuperClosure\\SerializableClosure' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/SerializableClosure.php',
@@ -4452,6 +4472,7 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
         'Symfony\\Component\\VarDumper\\Exception\\ThrowingCasterException' => __DIR__ . '/..' . '/symfony/var-dumper/Exception/ThrowingCasterException.php',
         'Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait' => __DIR__ . '/..' . '/symfony/var-dumper/Test/VarDumperTestTrait.php',
         'Symfony\\Component\\VarDumper\\VarDumper' => __DIR__ . '/..' . '/symfony/var-dumper/VarDumper.php',
+        'Symfony\\Component\\Yaml\\Command\\LintCommand' => __DIR__ . '/..' . '/symfony/yaml/Command/LintCommand.php',
         'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Dumper.php',
         'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Escaper.php',
         'Symfony\\Component\\Yaml\\Exception\\DumpException' => __DIR__ . '/..' . '/symfony/yaml/Exception/DumpException.php',
@@ -4562,10 +4583,10 @@ class ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2d1053f6d6018348f2f00c2e1a9b8a97::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$classMap;
 
         }, null, ClassLoader::class);
     }
