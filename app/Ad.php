@@ -94,6 +94,11 @@ class Ad extends Model  {
         return $this->hasMany('App\Ads_prices','ads_id','id');
     }
 
+    public function services()
+    {
+        return $this->hasMany('App\Ads_services','ads_id','id');
+    }
+
     public function photos()
     {
         return $this->hasMany('App\Ads_photos','ads_id','id');
