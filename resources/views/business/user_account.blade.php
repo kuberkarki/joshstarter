@@ -192,8 +192,11 @@
                                 <div class="col-lg-6">
                                     
                                                         
-                                        <textarea rows="5" cols="30"  placeholder=" " id="bio" class="form-control"
-                                               name="bio" >{!! old('bio',$user->bio) !!}</textarea>
+                                        <textarea rows="5" cols="30"   id="bio" class="form-control"
+                                               name="bio" onKeyDown="limitText(this.form.bio,this.form.countdown,110);" onKeyUp="limitText(this.form.bio,this.form.countdown,110);" maxlength="110" >{!! old('bio',$user->bio) !!}</textarea><br/>
+                                               <font size="1">(Maximum characters: 110)<br>
+You have <input readonly type="text" name="countdown" size="3" value="110"> characters left.</font>
+
                                    
                                     <span class="help-block">{{ $errors->first('bio', ':message') }}</span>
                                 </div>
@@ -318,4 +321,13 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/select2/js/select2.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/frontend/user_account.js') }}"></script>
+    <script language="javascript" type="text/javascript">
+function limitText(limitField, limitCount, limitNum) {
+    if (limitField.value.length > limitNum) {
+        limitField.value = limitField.value.substring(0, limitNum);
+    } else {
+        limitCount.value = limitNum - limitField.value.length;
+    }
+}
+</script>
 @stop

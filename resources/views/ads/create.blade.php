@@ -65,6 +65,10 @@
                                 <input id="geocomplete" value="{!! old('location') !!}" type="text" placeholder="Type in an address" class='form-control' name="location" />
                                 
                             </div>
+                             <div class="form-group">
+                                {!! Form::label('time', 'Time: ') !!}
+                                {!! Form::text('time', old('time'), ['class' => 'form-control']) !!}
+                            </div>
 
         					<div class="form-group">
                                 {!! Form::label('description', 'Description: ') !!}
@@ -141,13 +145,18 @@
                     </div>
 
         					<div class="form-group">
-                                {!! Form::label('additional_package_offer', 'Additional Package Offer: ') !!}
-                                {!! Form::textarea('additional_package_offer', old('additional)package_offer'), ['class' => 'form-control']) !!}
+                               <!--  {!! Form::label('additional_package_offer', 'Additional Package Offer: ') !!}
+                                {!! Form::textarea('additional_package_offer', old('additional)package_offer'), ['class' => 'form-control']) !!} -->
                             </div>
 
         					<div class="form-group">
-                                {!! Form::label('additional_ads_title', 'Additional Ads Title: ') !!}
-                                {!! Form::text('additional_ads_title', old('additional_ads_title'), ['class' => 'form-control']) !!}
+                                <!-- {!! Form::label('additional_ads_title', 'Additional Ads Title: ') !!}
+                                {!! Form::text('additional_ads_title', old('additional_ads_title'), ['class' => 'form-control']) !!} -->
+
+                                 <div class="services_price_fields_wrap">
+                                    <a href="javascript:void(0);" class="services_price_add_button">Additional Searvices</a>
+                                    <div>Additional Service Name:<input type="input" name="services[]">Price:<input type="input" name="serviceprice[]"></div>
+                          </div>
                             </div>
 
         					
@@ -281,6 +290,21 @@
     
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+
+    var y=1;
+     $('.services_price_add_button').click(function(e){ //on add input button click
+        e.preventDefault();
+        if(y < 3){ //max input box allowed
+            y++; //text box increment
+             $('.services_price_fields_wrap').append('<div class="services_additional_field">Additional Service Name:<input type="input" name="services[]"/>Price:<input type="input" name="serviceprice[]"><span class="remove"><a href="#" class="services_remove_field">Remove</a></span></div>'); //add input box
+
+        }
+    });
+
+     $('.services_price_fields_wrap').on("click",".services_remove_field", function(e){ //user click on remove text
+        console.log($(this).closest('div'));
+        e.preventDefault(); $(this).closest('div').remove(); y--;
     })
 });
 

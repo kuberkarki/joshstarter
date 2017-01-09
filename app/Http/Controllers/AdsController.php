@@ -12,6 +12,7 @@ use Sentinel;
 use Validator;
 use App\Ads_photos;
 use App\Ads_prices;
+use App\Ads_services;
 use Redirect;
 use URL;
 use willvincent\Rateable\Rateable;
@@ -207,8 +208,13 @@ class AdsController extends Controller {
 		$photos=($request['mytext']);
 		$prices=$request['myprice'];
 		$guests=$request['myguest'];
+		$services=$request['services'];
+		$serviceprices=$request['serviceprice'];
+
+
+
 		$galimage=array();
-		$galprice=array();
+		$galprice=array();$serprice=array();
 
 		 
 		
@@ -258,7 +264,7 @@ class AdsController extends Controller {
             return Redirect::to(URL::previous() )->withInput()->withErrors($validator);
         }
 
-		$ad= new Ad($request->except('photo_image','mytext','myprice','myguest'));
+		$ad= new Ad($request->except('photo_image','mytext','myprice','myguest','services','serviceprice'));
 		if ($request->hasFile('photo_image')) {
         			$file            = $request->file('photo_image');
         			$destinationPath =  public_path().'/uploads/crudfiles/';
@@ -314,6 +320,26 @@ class AdsController extends Controller {
         		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
         	}
         	 Ads_prices::insert($galprice);
+        }
+
+         if(count($services) && $request['services'][0]!=''){
+        	for($i=0; $i<count($services); $i++){
+        			$price=(int)( $request['serviceprice'][$i]);
+        			$service=( $request['services'][$i]);
+
+        			
+
+        			
+        			
+					$serprice[]=array('ads_id'=>$ad->id,'price'=>$price,'name'=>$service);
+        			//echo $photo["temp_name"];
+        			//echo $file            = $_FILES["fileToUpload"]["tmp_name"];
+        			//$destinationPath =  public_path().'/uploads/crudfiles/';
+        			//$filename        = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+        			//$ad->photo = $filename;
+        		//$galimage[]=array('ads_id'=>$ad->id,'photo'=>$filename);
+        	}
+        	 Ads_services::insert($serprice);
         }
 
         //$ad->id;

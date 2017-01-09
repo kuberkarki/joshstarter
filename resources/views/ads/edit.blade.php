@@ -219,13 +219,32 @@
                     </div>
 
 					<div class="form-group">
-                        {!! Form::label('additional_package_offer', 'Additional Package Offer: ') !!}
-                        {!! Form::textarea('additional_package_offer', null, ['class' => 'form-control']) !!}
-                    </div>
+                       {!! Form::label('services', 'Additional Services: ') !!}
+                      @if(count($ad->services()))
+                        <div class="row">
+                        <ul>
+                          @foreach($ad->services()->get() as $service)
+                            <li class="service-{{$service->id}}"> 
+                            <div class="col-md-6">
+                            {{ $service->name}}  = {{ $service->price}}
+    
+                            
+                            </div>
+                            <div class="col-md-6">
+                            <a class="removeserviceprice" data="{{ $service->id }}" href="javascript:void(0);">Remove</a>
+                            </div>
+                            </li>
+                          @endforeach
+                          </ul>
+                          </div>
 
-					<div class="form-group">
-                        {!! Form::label('additional_ads_title', 'Additional Ads Title: ') !!}
-                        {!! Form::text('additional_ads_title', null, ['class' => 'form-control']) !!}
+                        @endif
+                        
+                        <div class="service_fields_wrap">
+                                    <a href="javascript:void(0);" class="service_add_field_button">Additional Serviecs</a>
+                                    
+                                    <div>Additional Service Name:<input type="input" name="services[]">Price:<input type="input" name="serviceprice[]"></div>
+                          </div>
                     </div>
 
 					
@@ -383,6 +402,21 @@ $(document).ready(function() {
       $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
           e.preventDefault(); $(this).parent('div').remove(); x--;
       })
+
+       var y=1;
+     $('.services_price_add_button').click(function(e){ //on add input button click
+        e.preventDefault();
+        if(y < 3){ //max input box allowed
+            y++; //text box increment
+             $('.services_price_fields_wrap').append('<div class="services_additional_field">Additional Service Name:<input type="input" name="services[]"/>Price:<input type="input" name="serviceprice[]"><span class="remove"><a href="#" class="services_remove_field">Remove</a></span></div>'); //add input box
+
+        }
+    });
+
+     $('.services_price_fields_wrap').on("click",".services_remove_field", function(e){ //user click on remove text
+        console.log($(this).closest('div'));
+        e.preventDefault(); $(this).closest('div').remove(); y--;
+    })
 });
 
    
