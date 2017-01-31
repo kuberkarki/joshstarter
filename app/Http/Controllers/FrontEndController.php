@@ -83,7 +83,9 @@ class FrontEndController extends JoshController
                 ->orderBy('total', 'DESC')
                 ->limit(5)->get();
 
-        $sponsoredevents=Event::where('issponsored',true)->where('type','Public')->where('date','>',$formatted_date)->orderByRaw("RAND()")->limit(6)->get();
+        $sponsoredevents=Event::where('issponsored','1')->where('type','Public')->where('date','>',$formatted_date)->orderByRaw("RAND()")->limit(6)->get();
+
+        dd($sponsoredevents);
 
         
         
