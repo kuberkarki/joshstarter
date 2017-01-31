@@ -183,9 +183,6 @@ Edit a event
                         {!! Form::label('issponsored', 'Is Sponsored: ') !!}
                         {!! Form::checkbox('issponsored', true, ['class' => 'form-control']) !!}
                     </div> -->
-
-					
-
                     <div class="form-group">
                         {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
                     </div>
