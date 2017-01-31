@@ -28,6 +28,8 @@ use Captcha;
 use Validator;
 use App\Ads_category;
 use Session;
+use Helper;
+use DB;
 
 
 
@@ -51,12 +53,41 @@ class FrontEndController extends JoshController
         return View::make('welcome');
     }
 
-    public function home(){
+    public function home(Request $request){
+
+       
         $date = new DateTime;
         $date->modify('-50 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
+        $filtereventbyprice = session('filtereventbyprice');
 
-        $events=Event::where('type','Public')->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
+
+
+        if($filtereventbyprice && $filtereventbyprice!='-1'){
+            $price=Helper::exchangeToUSD($filtereventbyprice);
+            
+                $events=Event::where('type','Public')->where(function($q) use($price){
+                    $q->where('ticket_price','<=',DB::raw($price));
+                    //$q->orWhere('ticket_price','=','Free');
+                })->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
+
+        }else{
+            $events=Event::where('type','Public')->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
+
+        }
+
+
+        $popularevents= Event::select(['*', DB::raw('count(event_comments.id) as total')])
+                ->leftJoin('event_comments', 'events.id', '=', 'event_comments.event_id')
+                ->groupBy('events.id')
+                ->orderBy('total', 'DESC')
+                ->limit(5)->get();
+
+        $sponsoredevents=Event::where('issponsored',true)->where('type','Public')->where('date','>',$formatted_date)->orderByRaw("RAND()")->limit(6)->get();
+
+        
+        
+        
         $newss = News::latest()->simplePaginate(6);
         $newss->setPath('news');
 
@@ -66,7 +97,14 @@ class FrontEndController extends JoshController
 
 
         //$tags = $this->tags;
-        return View::make('index',compact('ads_category'))->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
+        return View::make('index',compact('ads_category','popularevents','sponsoredevents'))->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
+    }
+
+    public function filtereventbyprice(Request $request){
+
+       session(['filtereventbyprice' => $request->get('price')]);
+        
+        return redirect('/');
     }
 
     /**

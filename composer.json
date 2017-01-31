@@ -36,6 +36,7 @@
     },
     "autoload": {
         "classmap": [
+            "app/libraries",
             "database"
         ],
         "psr-4": {

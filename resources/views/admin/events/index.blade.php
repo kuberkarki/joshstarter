@@ -42,6 +42,7 @@ events List
 							<th>Type</th>
 							<th>Location</th>
 							<th>Date</th>
+                            <th>Sponsored</th>
 							
                             <th>Actions</th>
                         </tr>
@@ -54,6 +55,20 @@ events List
 							<td>{!! $event->type !!}</td>
 							<td>{!! $event->location !!}</td>
 							<td>{!! $event->date !!}</td>
+                            <td>
+
+                            @if($event->issponsored)
+                            <a href="{{ route('admin.events.cancelsponsor', $event->id) }}" >
+                                    <i class="livicon" data-name="star-full" data-size="18" data-loop="true" data-c="#01BC8C" data-hc="#f56954" title="sponsor event"></i>
+                                </a>
+                            @endif
+                            @if(!$event->issponsored)
+                            <a href="{{ route('admin.events.sponsor', $event->id) }}" >
+                                    <i class="livicon" data-name="star-full" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#000" title="sponsor event"></i>
+                                </a>
+                            @endif
+                                
+                            </td>
 							
                             <td>
                                 <a href="{{ route('admin.events.show', $event->id) }}">
@@ -80,6 +95,13 @@ events List
 {{-- Body Bottom confirm modal --}}
 @section('footer_scripts')
 <div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="sponsor_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
     </div>

@@ -169,4 +169,24 @@
             </a>
         </li>
     </ul>
+</li><li {!! (Request::is('admin/exchanges') || Request::is('admin/exchanges/create') || Request::is('admin/exchanges/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Exchanges</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/exchanges') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/exchanges') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Exchanges
+            </a>
+        </li>
+        <li {!! (Request::is('admin/exchanges/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/exchanges/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Exchange
+            </a>
+        </li>
+    </ul>
 </li>

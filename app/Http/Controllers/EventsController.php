@@ -34,9 +34,11 @@ class EventsController extends Controller {
     {
         // Grab all the newss
         $events = Event::latest()->simplePaginate(5);
-        $newss->setPath('event');
+        $events->setPath('event');
        // $tags = $this->tags;
         // Show the page
+
+
         return View('events', compact('events'))->with('frontarray',$this->frontarray);
     }
 
@@ -358,6 +360,40 @@ class EventsController extends Controller {
             $model = '';
             $confirm_route =  route('admin.events.delete',['id'=>$id]);
             return View('admin/layouts/modal_confirmation', compact('error','model', 'confirm_route'));
+
+    	}
+
+    	/**
+    	 * Sponsored the given Event.
+    	 *
+    	 * @param  int      $id
+    	 * @return Redirect
+    	 */
+    	public function getSponsor($id = null)
+    	{
+    		$event = Event::find($id);
+    		$event->issponsored=true;
+    		$event->save();
+
+            // Redirect to the group management page
+            return redirect('admin/events')->with('success', 'sponsored');
+
+    	}
+
+    	/**
+    	 * cancelSponsored the given Event.
+    	 *
+    	 * @param  int      $id
+    	 * @return Redirect
+    	 */
+    	public function getcancelsponsor($id = null)
+    	{
+    		$event = Event::find($id);
+    		$event->issponsored=false;
+    		$event->save();
+
+            // Redirect to the group management page
+            return redirect('admin/events')->with('success', 'canceled sponsore');
 
     	}
 

@@ -23,6 +23,7 @@ class Ad extends Model  {
      * @var string
      */
     protected $table = 'ads';
+    protected $strSlug;
 
     protected $sluggable = [
         'build_from' => 'title',
@@ -46,8 +47,13 @@ class Ad extends Model  {
         ],
          'joins' => [
             'users' => ['ads.user_id','users.id'],
+            //'bookings' => ['ads.id','bookings.ads_id'],
             'ads_categories' => ['ads.ads_category_id','ads_categories.id'],
-        ], 
+
+        ],
+        /*'joins' => [
+            'bookings' => ['ads.id','booking.ads_id'],
+        ],*/
         // 'joins' => [
         //     'ads_categories' => ['ads.ads_category_id','ads_categories.id'],
         // ],
@@ -107,5 +113,13 @@ class Ad extends Model  {
     public function booking(){
         return $this->hasMany('App\Booking','ads_id','id');
     }
+
+    public function availablebooking(){
+        return $this->hasMany('App\Booking','ads_id','id')->where('book_date','<>',$this->strSlug);
+    }
+
+  /*  public static function available($date){
+         return App\Ad->hasMany('App\Booking','ads_id','id')->where('book_date','<>',$date)->get();
+    }*/
 
 }

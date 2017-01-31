@@ -41,7 +41,7 @@ Book Now
             
 					<div class="form-group">
                         {!! Form::label('price', 'Price: ') !!}
-                        : ${!! $ad->price !!} Per Day
+                        : {!! Helper::getPrice($ad->price) !!} Per Day
                     </div>
                     
 
@@ -53,7 +53,7 @@ Book Now
             
                     <li> 
                         <label>{!! Form::radio('price', $price->id, ['class' => 'form-control']) !!}
-                      ${!! $price->price!!} Guests: {{$price->minguest}} to {{ $price->maxguest}}</label>
+                      {!! Helper::getPrice($price->price) !!} Guests: {{$price->minguest}} to {{ $price->maxguest}}</label>
                     </li>
                     @endforeach
                     </ul>

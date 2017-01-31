@@ -8,6 +8,7 @@ Search Ads
 
 {{-- page level styles --}}
 @section('header_styles')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @stop
 
 
@@ -25,9 +26,11 @@ Search Ads
           <div class="leftList">
             <h3>Main Catagory</h3>
             <ul>
-            @foreach($ads_category as $cat)
-              <li><a href="{!! url('list-ads',$cat->slug) !!}">{!! $cat->name !!}</a></li>
-            @endforeach
+            @if($ads_category)
+              @foreach($ads_category as $cat)
+                <li><a href="{!! url('list-ads',$cat->slug) !!}">{!! $cat->name !!}</a></li>
+              @endforeach
+            @endif
               
             </ul>
           </div>
@@ -92,8 +95,8 @@ Search Ads
                   <div class="row">
                     <div class="col-md-5 col-sm-5 col-xs-12">
                     
-                   <label><input type="checkbox" /> Business Search</label>
-                   <label><input type="checkbox" /> Events Search</label>
+                   <label><input type="radio" value='business' name="type" {{ !$iseventsearch?"checked":""}} /> Business Search</label>
+                   <label><input type="radio" value='event' name="type" {{ $iseventsearch?"checked":""}} /> Events Search</label>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                     
@@ -105,7 +108,7 @@ Search Ads
                     <div class="col-md-3 col-sm-3 col-xs-12">
                     
                   <div class="input-group">
-                      <input type="text" name="location" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                      <input type="text" name="location" class="form-control" placeholder="Location" aria-describedby="basic-addon1" value="{{$location}}">
                     </div>
                     </div><!-- end inner row -->
                   </div>
@@ -114,7 +117,7 @@ Search Ads
                   <div class="row">
                     <div class="col-md-7 col-sm-7 col-xs-12">
                       <div class="input-group">
-                      <input type="text" class="form-control" name="date" placeholder="Date" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" id="datepicker" name="date" placeholder="Date" aria-describedby="basic-addon1" value={{$date}}>
                       <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     </div>
                     </div>
@@ -127,57 +130,112 @@ Search Ads
               </div><!-- end outer row -->
               {!! Form::close() !!}
         <h2>Search Reasults for '{!! $query !!}'</h2>
-        @if(count($ads))
-        @foreach($ads as $ad)
-          <div class="col-sm-4">
-            <div class="panel panel-default">
-              <a href="{!! url('ads/details',$ad->slug) !!}">
-                <div class="panel-image">
-                  <div class="sal_price"> 
-                    @if($ad->price_type=='Fixed')
-                      ${!! $ad->price !!}
-                    @elseif(count($ad->prices()->first()))
-                      Min ${!! $ad->prices()->first()->price !!}
-                    @endif
-                  </div>
-                  @if($ad->photo)
-                        <img src="{{ URL::to('/thumbnail/'.$ad->photo)  }}" class="img-responsive img-hove" alt="{!! $ad->title !!}">
-                  @else
-                    <img class="img-responsive img-hover" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $ad->title !!}">
-                  @endif
-                  </div>
-                  </a>
-                  <div class="panel-body">
-                  <a href="{!! url('ads/details',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a><br/>
-                <ul class="ratingAds">
-                  <li>
-                 
-                    <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div>
-                  
-                  <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
-                  <span class="review">(<span id="total-{!! $ad->id!!}">{!! count($ad->ratings) !!}</span>)</span></li>
-                </ul>
-                <a href="{!! url('ads/details',$ad->slug) !!}">
-                  <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
-                  <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>
-                  <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
-                     <!--  <p>{!! str_limit($ad->description,150, '...') !!}</p> -->
+        @if($isbusinesssearch)
+            @if(count($ads))
+            @foreach($ads as $ad)
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <a href="{!! url('ads/details',$ad->slug) !!}">
+                    <div class="panel-image">
+                      <div class="sal_price"> 
+                        @if($ad->price_type=='Fixed')
+                          {!! Helper::getPrice($ad->price) !!}
+                        @elseif(count($ad->prices()->first()))
+                          Min {!! Helper::getPrice($ad->prices()->first()->price) !!}
+                        @endif
+                      </div>
+                      @if($ad->photo)
+                            <img src="{{ URL::to('/thumbnail/'.$ad->photo)  }}" class="img-responsive img-hove" alt="{!! $ad->title !!}">
+                      @else
+                        <img class="img-responsive img-hover" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $ad->title !!}">
+                      @endif
+                      </div>
+                      </a>
+                      <div class="panel-body">
+                      <a href="{!! url('ads/details',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a><br/>
+                    <ul class="ratingAds">
+                      <li>
+                     
+                        <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div>
+                      
+                      <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
+                      <span class="review">(<span id="total-{!! $ad->id!!}">{!! count($ad->ratings) !!}</span>)</span></li>
+                    </ul>
+                    <a href="{!! url('ads/details',$ad->slug) !!}">
+                      <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
+                      <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->location !!}</div>
+                      <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
+                         <!--  <p>{!! str_limit($ad->description,150, '...') !!}</p> -->
+                    </div>
+                    </a>
+
+
+                <div class="navPhotoVideo">
+                  <a href="{!! url('ads/details',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
                 </div>
-                </a>
-
-
-            <div class="navPhotoVideo">
-              <a href="{!! url('ads/details',$ad->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
-            </div>
-            <div class="adsThumnelButton"><a href="{{ url('ads/book',$ad->slug)}}" class="btn btn-primary">Book Now</a></div>
-            </div>
-          </div>
-        @endforeach
-        @else
-          <h2>No Ads in List</h2>
-        @endif
-
+                <div class="adsThumnelButton"><a href="{{ url('ads/details',$ad->slug)}}?booknow=true" class="btn btn-primary">Book Now</a></div>
+                </div>
+              </div>
+            @endforeach
+            @else
+              <h2>No Ads in List</h2>
+            @endif
+                @if(count($ads))
                 @include('pagination.default', ['paginator' => $ads])
+                @endif
+          @elseif($iseventsearch)
+          @if(count($events))
+            @foreach($events as $event)
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <a href="{!! url('event',$event->slug) !!}">
+                    <div class="panel-image">
+                      <div class="sal_price"> 
+                       
+                          {!! Helper::getPrice($event->ticket_price) !!}
+                        
+                      </div>
+                      @if($event->photo)
+                            <img src="{{ URL::to('/thumbnail/'.$event->photo)  }}" class="img-responsive img-hove" alt="{!! $event->title !!}">
+                      @else
+                        <img class="img-responsive img-hover" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $event->name !!}">
+                      @endif
+                      </div>
+                      </a>
+                      <div class="panel-body">
+                      <a href="{!! url('event',$event->slug) !!}"><h3>{!! $event->name !!} </h3></a><br/>
+                    <ul class="ratingAds">
+                      <li>
+                     
+                        <div data="{!! $event->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$event->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div>
+                      
+                      <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
+                      <span class="review">(<span id="total-{!! $event->id!!}">{!! count($event->ratings) !!}</span>)</span></li>
+                    </ul>
+                    <a href="{!! url('event',$event->slug) !!}">
+                      <div class="date">{{--$event->created_at->diffForHumans()--}}</div>
+                      <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>
+                      <!-- <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div> -->
+                         <!--  <p>{!! str_limit($event->description,150, '...') !!}</p> -->
+                    </div>
+                    </a>
+
+
+                <div class="navPhotoVideo">
+                  <a href="{!! url('event',$event->slug) !!}">More Detail</a><a href="#">Photo</a><a href="#">Video</a>
+                </div>
+                <div class="adsThumnelButton"><a href="{{ url('event',$event->slug)}}?booknow=true" class="btn btn-primary">Book Now</a></div>
+                </div>
+              </div>
+            @endforeach
+            @else
+              <h2>No Events in List</h2>
+            @endif
+                @if(count($events))
+                @include('pagination.default', ['paginator' => $events])
+                @endif
+          @else
+          @endif
 
           
         </div>
@@ -296,7 +354,13 @@ Search Ads
 {{-- page level scripts --}}
 @section('footer_scripts')
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
-
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="{{ asset('assets/js/eventday/moment.js') }}"></script>
+    <script>
+    $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+    </script>
 <script>
 
 

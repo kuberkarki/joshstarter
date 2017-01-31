@@ -56,7 +56,7 @@ class Event extends Model  {
             'users.last_name' => 2,
         ],
          'joins' => [
-            'users' => ['event.user_id','users.id']
+            'users' => ['events.user_id','users.id']
         ], 
         // 'joins' => [
         //     'ads_categories' => ['ads.ads_category_id','ads_categories.id'],

@@ -110,6 +110,28 @@ Route::get('thumbnail2/{image}', function($image)
 
     return $img->response('jpg');
 });
+
+Route::get('thumbnail3/{image}', function($image)
+{
+    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(95, 78);
+
+    return $img->response('jpg');
+});
+
+Route::get('currency/{currency}', function ($currency) {
+    // Retrieve a piece of data from the session...
+     //echo $value = session('currency');exit;
+
+    // Store a piece of data in the session...
+    session(['currency' => $currency]);
+    return redirect()->back();
+    //return Redirect::intended('/');
+    /*echo Request::segment(3);exit;
+    if (Request::isMethod('post'))
+        return redirect('/');
+    else
+        return redirect()->back();*/
+});
    
 
     /**
@@ -126,6 +148,7 @@ Route::get('thumbnail2/{image}', function($image)
     Route::model('users', 'App\User');
 
     Route::pattern('slug', '[a-z0-9- _]+');
+    Route::post('filtereventbyprice',array('as' => 'filtereventbyprice','uses' => 'FrontEndController@filtereventbyprice'));
 
 
    
@@ -374,6 +397,7 @@ Route::get('thumbnail2/{image}', function($image)
         Route::post('delete-ads-price', array('as' => 'delete-ads-price', 'uses' => 'AdsController@deleteadsprice')) ;
         Route::get('ajax-ads-detail/{id}/{date}', array('as' => 'ajax-ads-detail', 'uses' => 'AdsController@ajaxadsdetail'));
 
+
     });
 
 
@@ -401,6 +425,8 @@ Route::get('thumbnail2/{image}', function($image)
             Route::post('bookings', array('as' => 'bookings', 'uses' => 'AdsController@submitbook'));
             Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
 
+
+
      });
 
      Route::group(array('prefix' => 'ads'), function () {
@@ -408,6 +434,7 @@ Route::get('thumbnail2/{image}', function($image)
             Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
             Route::get('ajax-booking-management-detail/{id}/{date}', array('as' => 'ajax-booking-management-detail', 'uses' => 'AdsController@ajaxadsbookingmanagementdetail'));
             Route::post('book', array('as' => 'book', 'uses' => 'AdsController@postbook'));
+            Route::post('block', array('as' => 'block-ads', 'uses' => 'AdsController@blockad'));
 
 
      });

@@ -93,9 +93,10 @@ My Ads
                 <div class="panel-image">
                   <div class="sal_price"> 
                     @if($ad->price_type=='Fixed')
-                      ${!! $ad->price !!}
+                    {!! Helper::getPrice($ad->price) !!}
+                     
                     @elseif(count($ad->prices()->first()))
-                      Min ${!! $ad->prices()->first()->price !!}
+                      Min {!! Helper::getPrice($ad->prices()->first()->price) !!}
                     @endif
                   </div>
                   @if($ad->photo)

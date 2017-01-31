@@ -5,6 +5,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin'])
 	Route::resource('events', 'EventsController');
 	Route::get('events/{id}/delete', array('as' => 'admin.events.delete', 'uses' => 'EventsController@getDelete'));
 	Route::get('events/{id}/confirm-delete', array('as' => 'admin.events.confirm-delete', 'uses' => 'EventsController@getModalDelete'));
+	Route::get('events/{id}/sponsor', array('as' => 'admin.events.sponsor', 'uses' => 'EventsController@getSponsor'));
+	Route::get('events/{id}/cancelsponsor', array('as' => 'admin.events.cancelsponsor', 'uses' => 'EventsController@getcancelsponsor'));
+	//Route::get('events/{id}/confirm-delete', array('as' => 'admin.events.confirm-delete', 'uses' => 'EventsController@getModalDelete'));
 });Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('ads', 'AdsController');
 	Route::get('ads/{id}/delete', array('as' => 'admin.ads.delete', 'uses' => 'AdsController@getDelete'));
 	Route::get('ads/{id}/confirm-delete', array('as' => 'admin.ads.confirm-delete', 'uses' => 'AdsController@getModalDelete'));
@@ -20,4 +23,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin'])
 });Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('ads_categories', 'Ads_categoriesController');
 	Route::get('ads_categories/{id}/delete', array('as' => 'admin.ads_categories.delete', 'uses' => 'Ads_categoriesController@getDelete'));
 	Route::get('ads_categories/{id}/confirm-delete', array('as' => 'admin.ads_categories.confirm-delete', 'uses' => 'Ads_categoriesController@getModalDelete'));
+});Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('exchanges', 'ExchangesController');
+	Route::get('exchanges/{id}/delete', array('as' => 'admin.exchanges.delete', 'uses' => 'ExchangesController@getDelete'));
+	Route::get('exchanges/{id}/confirm-delete', array('as' => 'admin.exchanges.confirm-delete', 'uses' => 'ExchangesController@getModalDelete'));
 });

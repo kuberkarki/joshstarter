@@ -8,8 +8,9 @@ My Ads
 
 {{-- page level styles --}}
 @section('header_styles')
-    <link href="{{ asset('assets/css/eventday/calendar.css') }}" rel="stylesheet">
-
+   <!--  <link href="{{ asset('assets/css/eventday/calendar.css') }}" rel="stylesheet"> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
     <!--page level css starts-->
     <!--end of page level css-->
 @stop
@@ -19,8 +20,73 @@ My Ads
 
 {{-- Page content --}}
 @section('content')
+<section class="" >
+  <div class="contantWrapper innercontantWrapper">
+    <div class="container">
+      <div class="row">
+            <div class="col-sm-12"><h3>Manage Ads -> {{ $ad->title }}</h3></div>
+            @include('business.usermenu')
+           
+            <div class="col-sm-9">
+              @include('notifications')
+            
+            </div>
+            
+      </div>
+      <div class="row">
+      <div class="col-sm-6">
+          {{Form::open(array('url' => url('ads/block'),'id'=>'frmbook'))}}
+          <input type="hidden" name="ads" value="{{$ad->id}}" />
+          <input class="date" id="datepicker" name="date"/><input type="submit" value="Block date"/>
+          {{Form::close()}}
+        </div>
+
+        <div class="col-sm-12">
+        &nbsp;
+        </div>
+        <div  class="col-sm-12">
+
+          <ul>
+
+          @foreach($bookings as $booking)
+            @if($booking->user_id==$user->id)
+              <li style="color:ORANGE;">
+                <div style='border-bottom: 1px solid #ccc;'>
+                  {!! date('F j,Y',strtotime($booking->book_date)) !!}<br/>
+                  Booking Blocked
+                </div>
+              </li>
+            @else
+              <li>
+                <div style='border-bottom: 1px solid #ccc;'>
+                    {!! date('F j,Y',strtotime($booking->book_date)) !!}
+                    @if($booking->user->first_name || $booking->user->last_name)
+                    <br/>
+                    Booked By: {{$booking->user->first_name." ".$booking->user->last_name}}
+                    @elseif($booking->user->company_name)
+                    {{" ".$booking->user->company_name}} <br/>
+                    @endif
+                    @if($booking->user->mobile_number || $booking->user->office_number)
+                    <br/>(contact: {{$booking->user->mobile_number." ".$booking->user->office_number}})
+                    @endif
+                    <br/>Price: {!! Helper::getPrice($booking->price) !!}<br/>
+                    
+                    <!-- <a href="#">More Details</a> -->
+                </div>
+                </li>
+            @endif
+          @endforeach
+          </ul>
+        </div>
+        {{Form::open(array('url' => url('ads/book'),'id'=>'frmbook'))}}
+        <input type="hidden" id="date" value=""/>
+         {{Form::close()}}
+      </div>
+    </div>
+  </div>
+</section>
 <div id="url" style="display:none">{{ url('/')}}</div>
-<section class="">
+<section class="" style="display:none">
   <div class="contantWrapper innercontantWrapper">
     <div class="container">
       <div class="row">
@@ -207,5 +273,8 @@ function padNumber(number) {
         ret = "0" + ret;
     return ret;
 }
+$( function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
 </script>
 @stop

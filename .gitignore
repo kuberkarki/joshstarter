@@ -1,6 +1,4 @@
 /vendor
-/vendor1
-/vendor2
 /node_modules
 /public/storage
 /bootstrap/cache
@@ -12,3 +10,4 @@ composer.lock
 _ide_helper.php
 .DS_Store
 composer.phar
+

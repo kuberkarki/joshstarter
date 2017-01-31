@@ -20,19 +20,75 @@ use App\User;
 use Share;
 use App\Booking;
 use Session;
+use DB;
+use App\Event;
 
 class AdsController extends Controller {
+	private $objFoo;
+	public function __construct(Ad $foo){
+         $this->objFoo = $foo;
+     }
 
 	public function search(request $request){
 		$query=$request->get('keyword');
 		$location=$request->get('location');
+		$date=$request->get('date');
+		
+	 if($request->get('type')=='business'){
+	 	$isbusinesssearch=1;//$request->get('business');
+	 	$iseventsearch=0;
+	 }else{
+	 	$iseventsearch=1;
+	 	$isbusinesssearch=0;
+	 }
+	 
 
-		$ads = Ad::search($query)
-            ->paginate(15);
+	 $ads=$events=$ads_category=null;
 
-		$ads_category=Ads_category::all();
 
-		return view('ads.search',compact('ads','ads_category','query'));
+		if($isbusinesssearch){
+			if($date){
+				$ads = Ad::search($query)
+				->Join('bookings', function($join) use($date){
+									
+		                             $join->on('bookings.ads_id', '=', 'ads.id');
+		                             $join->on('book_date','<>',DB::raw("'$date'"));
+		                            
+		                         })->select(array('ads.*','ads_id','book_date'))->Where('location', 'like', '%' . $location . '%')->groupBy('ads.id')->paginate(15);
+
+
+		     }
+		     else{
+				$ads = Ad::search($query)->Where('location', 'like', '%' . $location . '%')->paginate(15);
+			}
+				$ads_category=Ads_category::all();
+		}
+
+		if($iseventsearch){
+			if($date){
+				$events = Event::search($query)
+				/*->Join('bookings', function($join) use($date){
+									
+		                             $join->on('bookings.ads_id', '=', 'ads.id');
+		                             $join->on('book_date','<>',DB::raw("'$date'"));
+		                            
+		                         })->select(array('ads.*','ads_id','book_date'))*/->Where('location', 'like', '%' . $location . '%')->groupBy('events.id')->paginate(15);
+
+
+		     }
+		     else{
+				$events = Event::search($query)->Where('location', 'like', '%' . $location . '%')->paginate(15);
+			}
+				
+		}
+
+
+
+
+
+
+
+		return view('ads.search',compact('ads','ads_category','query','events','location','date','iseventsearch','isbusinesssearch'));
 
 		//dd($ads);
 	}
@@ -79,6 +135,51 @@ class AdsController extends Controller {
 
 		$ad=Ad::find($id);
 		return view('ads.book',compact('ad','dates'));
+
+	}
+
+	public function blockad(request $request){
+		
+		$id=$request->get('ads');
+		$dates=$request->get('date');
+		//echo $dates;exit;
+
+
+		$bookdata = ['ads_id' => $id, 'dates' => $dates];
+		//Session::forget('bookData');
+    	//Session::set('bookData', $bookdata); // use set() not push()
+
+    	if(!Sentinel::check()){
+    		return redirect('login');
+    	}
+
+		
+
+		$ad=Ad::find($id)->where('user_id',Sentinel::getUser()->id);
+
+		if(!$ad){
+			return redirect()->route('manage-ads',$id)->with('error', 'Ads Can\'t be blocked');
+		}
+
+		$booking=Booking::where('book_date',$dates)->where('ads_id',$id)->first();
+
+		
+
+		if($booking){
+			return redirect()->route('manage-ads',$id)->with('error', 'Ads Already Blocked or Booked');
+		}
+
+
+			$booking=new booking();
+			$booking->ads_id=$id;
+			$booking->book_date=$dates;
+			$booking->price=0;
+			$booking->user_id=Sentinel::getUser()->id;
+			$booking->save();
+		
+
+		return redirect()->route('manage-ads',$id)->with('success', 'Successfully Blocked');
+		
 
 	}
 	public function getbook(request $request){
@@ -396,10 +497,16 @@ class AdsController extends Controller {
 		}
 
 		$ad = Ad::where('id',$id)->where('user_id',$user->id)->first();
+		//dd($ad);
 
 		if(!$ad)
 			return redirect('ads')->with('error','Error');
-		return view('ads.manage', compact('ad'));
+
+		$bookings=Booking::where('ads_id',$id)->groupBy('book_date')->orderBy('book_date','DESC')->with('user')->get();
+
+		
+
+		return view('ads.manage', compact('ad','bookings','user'));
 	}
 
 	/**

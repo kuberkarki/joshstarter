@@ -235,6 +235,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Share' => Chencha\Share\ShareFacade::class,
         'SocialAuth' => AdamWathan\EloquentOAuth\Facades\OAuth::class,
+        'Helper' => App\Helpers\Helper::class,
 
     ],
 

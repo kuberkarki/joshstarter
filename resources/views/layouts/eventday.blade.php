@@ -71,7 +71,16 @@
                        
                         @foreach($frontarray['mainmenu'] as $menu)
                         <li><a href="{{ route('page',$menu->slug)}}">{{$menu->name}}</a></li>
+
                         @endforeach
+                        <li><div class="dropdown">
+                              <a onclick="myFunction()" class="dropbtn">Currency</a>
+                              <div id="myDropdown" class="dropdown-content">
+                                <a {{ (session('currency')=='USD' || session('currency')=='')?'class="selected"':"" }} href="{{ URL::to('currency','USD') }}">USD</a>
+                                <a {{ (session('currency')=='EUR')?'class="selected"':"" }} href="{{ URL::to('currency','EUR') }}">EUR</a>
+                                <a {{ (session('currency')=='GBP')?'class="selected"':"" }} href="{{ URL::to('currency','GBP') }}">GBP</a>
+                              </div>
+                            </div></li>
                           
                          
                   </ul>
@@ -161,7 +170,28 @@
 <!--global js start-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="{{ asset('assets/js/eventday/bootstrap.min.js')}}"></script>
-    
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>  
     <!--global js end-->
     <!-- begin page level js -->
     @yield('footer_scripts')

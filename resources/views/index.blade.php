@@ -7,6 +7,7 @@ Home
 @stop
 
 @section('header_styles')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @stop
 
 @section('top')
@@ -50,8 +51,8 @@ Home
                   <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                     
-                   <label><input type="checkbox" /> Business Search</label>
-                   <label><input type="checkbox" /> Events Search</label>
+                   <label><input type="radio" name="type" value="business" checked /> Business Search</label>
+                   <label><input type="radio" name="type" value="event" /> Events Search</label>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                     
@@ -72,13 +73,13 @@ Home
                   <div class="row">
                     <div class="col-md-7 col-sm-7 col-xs-12">
                       <div class="input-group">
-                      <input type="text" class="form-control" name="date" placeholder="Date" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" name="date" id='datepicker' placeholder="Date" aria-describedby="basic-addon1">
                       <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     </div>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12">
                       <button type="submit" class="btn btn-secondary searchBtn">Search</button>
-                      <a href="#" class="advSearch"> Advance Search </a>
+                      <!-- <a href="#" class="advSearch"> Advance Search </a> -->
                     </div>
                   </div><!-- end inner row -->
                 </div>
@@ -103,15 +104,20 @@ Home
       <div class="row">
       <div class="filterSearch">
         <div class="col-sm-9">
-        <h3>Upcomming events near you</h3></div>
+        <h3>Upcomming events</h3></div>
         <div class="col-sm-3">
         <div class="fliterR">
         <div class="filter"> Filter by </div>
-        <select id="price" class="form-control">
+        {!! Form::open(['url' => 'filtereventbyprice']) !!}
+        <select id="price" name="price" class="form-control" onchange="this.form.submit()">
                     <option>Price</option>
-                    <option>1500</option>
-                    <option>2000</option>
+                    <option value="10">Below {!! Helper::getPricesymbol() !!} 10</option>
+                    <option value="50">Below {!! Helper::getPricesymbol() !!} 50</option>
+                    <option value="100">Below {!! Helper::getPricesymbol() !!} 100</option>
+                    <option value="200">Below {!! Helper::getPricesymbol() !!} 200</option>
+                    <option value="-1">All</option>
         </select>
+        {!! Form::close() !!}
         </div>
         </div>
       </div>
@@ -134,7 +140,7 @@ Home
              <div class="panel-body">
               <h3>{!! $event->name !!}</h3>
               <!-- <div class="date">Date 25th June2016</div> -->
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>Price: {!! Helper::getPrice($event->ticket_price) !!}
               <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> 
               
               {!! date('D, M d, g a ',strtotime($event->date)) !!}
@@ -291,47 +297,41 @@ Home
                     
           </div>
           <div class="col-sm-4">
-            <h3>Popular Events in London, UK</h3>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="{{ URL::to('newsitem/'.$newsitem->slug) }}"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
+            <h3>Popular Events</h3>
+            @if(count($popularevents))
+              @foreach($popularevents as $event)
+                <p style="min-height: 100px;">
+                @if($event->photo)
+                <img class="img-responsive img-hover" src="thumbnail3/{!! $event->photo !!}" alt="">
+                @else
+                 <img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt="">
+                @endif
+
+                <a href="{{ URL::to('event/'.$event->slug) }}"><strong> {!! $event->name !!} </strong>
+               {!! str_limit($event->description,100, '...') !!}
+                </a></p>
+              @endforeach
+            @endif
+          
           </div>
           
           <div class="col-sm-4">
-            <h3>Events Around the World</h3>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
+            <h3>Sponsored Events</h3>
+            @if(count($sponsoredevents))
+              @foreach($sponsoredevents as $event)
+              <p style="min-height: 100px;">
+                @if($event->photo)
+                <img class="img-responsive img-hover" src="thumbnail3/{!! $event->photo !!}" alt="">
+                @else
+                 <img src="{{ asset('assets/images/eventday/news1.jpg')}}" alt="">
+                @endif
+
+                <a href="{{ URL::to('event/'.$event->slug) }}"><strong> {!! $event->name !!} </strong>
+               {!! str_limit($event->description,100, '...') !!}
+                </a></p>
+              @endforeach
+            @endif
+          
           </div>
         </div>
       </div>
@@ -366,6 +366,16 @@ Home
 @stop
 
 @section('footer_scripts')
+<!-- page level js starts-->
+    
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="{{ asset('assets/js/eventday/moment.js') }}"></script>
+    <script>
+    $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+    </script>
+    <!--page level js ends-->
 @stop
 
 
@@ -942,6 +952,13 @@ Home
     <script type="text/javascript" src="{{ asset('assets/vendors/owl.carousel/js/owl.carousel.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/frontend/carousel.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/frontend/index.js') }}"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script>
+    $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+    </script>
     <!--page level js ends-->
 
 @stop

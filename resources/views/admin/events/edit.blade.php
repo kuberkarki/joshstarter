@@ -179,6 +179,11 @@ Edit a event
 
                     </div>
 
+                    <!-- <div class="form-group">
+                        {!! Form::label('issponsored', 'Is Sponsored: ') !!}
+                        {!! Form::checkbox('issponsored', true, ['class' => 'form-control']) !!}
+                    </div> -->
+
 					
 
                     <div class="form-group">
