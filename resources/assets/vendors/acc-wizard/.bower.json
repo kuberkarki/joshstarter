@@ -1,0 +1,13 @@
+{
+  "name": "acc-wizard",
+  "homepage": "https://github.com/sathomas/acc-wizard",
+  "_release": "32e2533a63",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "32e2533a63d2d8447d043cce4fd1dc0bd0fd0919"
+  },
+  "_source": "https://github.com/sathomas/acc-wizard.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/sathomas/acc-wizard.git"
+}
