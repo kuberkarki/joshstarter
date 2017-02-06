@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-form-builder",
+  "homepage": "https://github.com/sajidshah/bootstrap3_formbuilder",
+  "_release": "93610ab6eb",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "93610ab6ebc1d63ed722299fbb95b14dd718d574"
+  },
+  "_source": "https://github.com/sajidshah/bootstrap3_formbuilder.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/sajidshah/bootstrap3_formbuilder.git"
+}

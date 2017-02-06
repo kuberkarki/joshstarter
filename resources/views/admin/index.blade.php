@@ -154,9 +154,9 @@
     <!--   maps -->
     <script src="{{ asset('assets/vendors/bower-jvectormap/js/jquery-jvectormap-1.2.2.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/bower-jvectormap/js/jquery-jvectormap-world-mill-en.js') }}"></script>
-    <script src="{{ asset('assets/vendors/Chart.js/js/Chart.js') }}"></script>
-    <!--  todolist-->
-    <script src="{{ asset('assets/js/pages/todolist.js') }}"></script>
+    <!-- <script src="{{ asset('assets/vendors/Chart.js/js/Chart.js') }}"></script>
+      todolist
+    <script src="{{ asset('assets/js/pages/todolist.js') }}"></script> -->
     <script src="{{ asset('assets/js/pages/dashboard.js') }}" type="text/javascript"></script>
 
 
