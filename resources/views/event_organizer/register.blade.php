@@ -46,7 +46,7 @@ Register
                 <li><a href="{{ route('organizerauth.getSocialAuth','linkedin') }}">Register with Linkedin</a></li>
             </ul>
         </div>
-            <form action="{{ route('register-business') }}" method="POST">
+            <form action="{{ route('register-event-organizer') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
