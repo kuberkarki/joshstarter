@@ -101,7 +101,11 @@
                 }
             ],
             "description": "Stupid simple OAuth authentication with Laravel and Eloquent",
+<<<<<<< HEAD
+            "time": "2017-01-25 15:48:57"
+=======
             "time": "2017-01-25T15:48:57+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "cartalyst/sentinel",
@@ -427,7 +431,11 @@
                 "messaging",
                 "user messaging"
             ],
+<<<<<<< HEAD
+            "time": "2017-01-07 23:40:19"
+=======
             "time": "2017-01-07T23:40:19+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "cocur/slugify",
@@ -491,7 +499,11 @@
                 "slug",
                 "slugify"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-09 19:27:52"
+=======
             "time": "2017-02-09T19:27:52+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "cviebrock/eloquent-sluggable",
@@ -1201,7 +1213,11 @@
                 "thumbnail",
                 "watermark"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-04 10:37:19"
+=======
             "time": "2017-02-04T10:37:19+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1508,7 +1524,11 @@
                 "serialization",
                 "xml"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-14 14:35:22"
+=======
             "time": "2017-02-14T14:35:22+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "laravel/framework",
@@ -1829,7 +1849,11 @@
                 "sftp",
                 "storage"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-09 11:33:58"
+=======
             "time": "2017-02-09T11:33:58+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "league/fractal",
@@ -3139,7 +3163,11 @@
                 "mail",
                 "mailer"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-13 07:52:53"
+=======
             "time": "2017-02-13T07:52:53+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "symfony/console",
@@ -4195,7 +4223,11 @@
                 "profiler",
                 "webprofiler"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-15 14:40:19"
+=======
             "time": "2017-02-15T14:40:19+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -4261,7 +4293,11 @@
                 "phpstorm",
                 "sublime"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-14 15:45:07"
+=======
             "time": "2017-02-14T15:45:07+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -4529,7 +4565,11 @@
                 "test double",
                 "testing"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-09 13:29:38"
+=======
             "time": "2017-02-09T13:29:38+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -5053,7 +5093,11 @@
                 "testing",
                 "xunit"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-06 05:18:07"
+=======
             "time": "2017-02-06T05:18:07+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5537,7 +5581,11 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+            "time": "2017-01-21 17:06:35"
+=======
             "time": "2017-01-21T17:06:35+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "symfony/css-selector",
@@ -5701,7 +5749,11 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+            "time": "2017-01-21 17:06:35"
+=======
             "time": "2017-01-21T17:06:35+00:00"
+>>>>>>> 9e9a19af9f9e33c79ee6d36b1ea00743bca6d8ae
         },
         {
             "name": "webmozart/assert",
