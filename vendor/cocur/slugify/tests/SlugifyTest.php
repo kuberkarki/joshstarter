@@ -155,6 +155,9 @@ class SlugifyTest extends \PHPUnit_Framework_TestCase
             ['azerbaijani', 'əöüğşçı', 'eougsci'],
             ['azerbaijani', 'Fərhad Səfərov', 'ferhad-seferov'],
             ['croatian', 'Č Ć Ž Š Đ č ć ž š đ', 'c-c-z-s-dj-c-c-z-s-dj'],
+            ['danish', 'Æ æ Ø ø Å å É é', 'ae-ae-oe-oe-aa-aa-e-e'],
+            ['serbian', 'А Б В Г Д Ђ Е Ж З И Ј К Л Љ М Н Њ О П Р С Т Ћ У Ф Х Ц Ч Џ Ш а б в г д ђ е ж з и ј к л љ м н њ о п р с т ћ у ф х ц ч џ ш Š Đ Ž Ć Č š đ ž ć č', 'a-b-v-g-d-dj-e-z-z-i-j-k-l-lj-m-n-nj-o-p-r-s-t-c-u-f-h-c-c-dz-s-a-b-v-g-d-dj-e-z-z-i-j-k-l-lj-m-n-nj-o-p-r-s-t-c-u-f-h-c-c-dz-s-s-dj-z-c-c-s-dj-z-c-c'],
+            ['lithuanian', 'Ą Č Ę Ė Į Š Ų Ū Ž ą č ę ė į š ų ū ž', 'a-c-e-e-i-s-u-u-z-a-c-e-e-i-s-u-u-z'],
         ];
     }
 
@@ -184,6 +187,34 @@ class SlugifyTest extends \PHPUnit_Framework_TestCase
 
         $this->slugify = new Slugify(['separator' => 'dummy']);
         $this->assertEquals($expected, $this->slugify->slugify($actual, '__'));
+    }
+
+    /**
+     * @test
+     * @covers Cocur\Slugify\Slugify::slugify()
+     */
+    public function slugifyOptionsArray()
+    {
+        $this->assertEquals('file-name', $this->slugify->slugify('file name'));
+        $this->assertEquals('file+name', $this->slugify->slugify('file name', ['separator' => '+']));
+
+        $this->assertEquals('name-1', $this->slugify->slugify('name(1)'));
+        $this->assertEquals('name(1)', $this->slugify->slugify('name(1)', ['regexp' => '/([^a-z0-9.()]|-)+/']));
+
+        $this->assertEquals('file-name', $this->slugify->slugify('FILE NAME'));
+        $this->assertEquals('FILE-NAME', $this->slugify->slugify('FILE NAME', ['lowercase' => false]));
+    }
+
+    /**
+     * @test
+     * @covers Cocur\Slugify\Slugify::slugify()
+     */
+    public function slugifyCustomRuleSet()
+    {
+        $slugify = new Slugify();
+
+        $this->assertSame('fur', $slugify->slugify('für', ['ruleset' => 'turkish']));
+        $this->assertSame('fuer', $slugify->slugify('für'));
     }
 
     public function defaultRuleProvider()
@@ -223,7 +254,8 @@ class SlugifyTest extends \PHPUnit_Framework_TestCase
             [str_repeat('Übergrößenträger', 1000), str_repeat('uebergroessentraeger', 1000)],
             [str_repeat('my🎉', 5000), substr(str_repeat('my-', 5000), 0, -1)],
             [str_repeat('hi🇦🇹', 5000), substr(str_repeat('hi-', 5000), 0, -1)],
-			['Č Ć Ž Š Đ č ć ž š đ', 'c-c-z-s-d-c-c-z-s-d'],
+            ['Č Ć Ž Š Đ č ć ž š đ', 'c-c-z-s-d-c-c-z-s-d'],
+            ['Ą Č Ę Ė Į Š Ų Ū Ž ą č ę ė į š ų ū ž', 'a-c-e-e-i-s-u-u-z-a-c-e-e-i-s-u-u-z'],
         ];
     }
 }

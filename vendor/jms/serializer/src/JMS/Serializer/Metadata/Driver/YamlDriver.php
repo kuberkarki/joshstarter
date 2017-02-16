@@ -96,6 +96,14 @@ class YamlDriver extends AbstractFileDriver
                         $pMetadata->untilVersion = (string) $pConfig['until_version'];
                     }
 
+                    if (isset($pConfig['exclude_if'])) {
+                        $pMetadata->excludeIf = (string) $pConfig['exclude_if'];
+                    }
+
+                    if (isset($pConfig['expose_if'])) {
+                        $pMetadata->excludeIf = "!(" . $pConfig['expose_if'].")";
+                    }
+
                     if (isset($pConfig['serialized_name'])) {
                         $pMetadata->serializedName = (string) $pConfig['serialized_name'];
                     }
@@ -276,8 +284,18 @@ class YamlDriver extends AbstractFileDriver
                 if ( ! isset($config['discriminator']['map']) || ! is_array($config['discriminator']['map'])) {
                     throw new RuntimeException('The "map" attribute must be set, and be an array for discriminators.');
                 }
+                $groups = isset($config['discriminator']['groups']) ? $config['discriminator']['groups'] : array();
+                $metadata->setDiscriminator($config['discriminator']['field_name'], $config['discriminator']['map'], $groups);
 
-                $metadata->setDiscriminator($config['discriminator']['field_name'], $config['discriminator']['map']);
+                if (isset($config['discriminator']['xml_attribute'])) {
+                    $metadata->xmlDiscriminatorAttribute = (bool) $config['discriminator']['xml_attribute'];
+                }
+                if (isset($config['discriminator']['xml_element'])) {
+                    if (isset($config['discriminator']['xml_element']['cdata'])) {
+                        $metadata->xmlDiscriminatorCData = (bool) $config['discriminator']['xml_element']['cdata'];
+                    }
+                }
+
             }
         }
     }

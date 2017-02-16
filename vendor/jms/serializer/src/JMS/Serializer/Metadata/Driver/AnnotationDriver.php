@@ -19,6 +19,8 @@
 namespace JMS\Serializer\Metadata\Driver;
 
 use JMS\Serializer\Annotation\Discriminator;
+use JMS\Serializer\Annotation\ExcludeIf;
+use JMS\Serializer\Annotation\XmlDiscriminator;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Annotation\HandlerCallback;
 use JMS\Serializer\Annotation\AccessorOrder;
@@ -97,8 +99,11 @@ class AnnotationDriver implements DriverInterface
                 if ($annot->disabled) {
                     $classMetadata->discriminatorDisabled = true;
                 } else {
-                    $classMetadata->setDiscriminator($annot->field, $annot->map);
+                    $classMetadata->setDiscriminator($annot->field, $annot->map, $annot->groups);
                 }
+            } elseif ($annot instanceof XmlDiscriminator) {
+                $classMetadata->xmlDiscriminatorAttribute = (bool) $annot->attribute;
+                $classMetadata->xmlDiscriminatorCData = (bool) $annot->cdata;
             }
         }
 
@@ -158,8 +163,15 @@ class AnnotationDriver implements DriverInterface
                         $propertyMetadata->serializedName = $annot->name;
                     } elseif ($annot instanceof Expose) {
                         $isExpose = true;
+                        if (null !== $annot->if) {
+                            $propertyMetadata->excludeIf = "!(" . $annot->if . ")";
+                        }
                     } elseif ($annot instanceof Exclude) {
-                        $isExclude = true;
+                        if (null !== $annot->if) {
+                            $propertyMetadata->excludeIf = $annot->if;
+                        } else {
+                            $isExclude = true;
+                        }
                     } elseif ($annot instanceof Type) {
                         $propertyMetadata->setType($annot->name);
                     } elseif ($annot instanceof XmlElement) {
