@@ -92,9 +92,14 @@
                         </div>
                         </p>
                         <p class="pull-right">
-
+                            <?php if(isset($user)){?>
                          <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send Message</button> 
-                        <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a>
+                            <?php } else{
+                                ?>
+                                <a href="{{url('login')}}">Login to Send Message</a> 
+                                <?php
+                                }?>
+                        <a href="{{ url('events/book',$event->id) }}" ><i class="fa fa-ticket" aria-hidden="true" ></i> Book Tickets</a>
                         </p>
                         <!-- <p>
                             <strong>Tags: </strong>
@@ -221,58 +226,30 @@
             <!-- Recent Posts Section Start -->
             <div class="col-sm-4 col-md-4 col-full-width-left">
                 <div class="the-box">
-                        <h3 class="small-heading text-center">RECENT EVENTS</h3>
+                        <h3 class="small-heading text-center">UPCOMING EVENTS</h3>
                         <ul class="media-list media-xs media-dotted">
+                         @foreach($upcomingevents as $event)
                             <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar1.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
+                                 @if($event->photo)
+                                    <img class="img-responsive img-hover pull-left" src="../thumbnail3/{!! $event->photo !!}" alt="">
+                                    @else
+                                    <img class="img-responsive img-hover pull-left" src="../thumbnail3/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
+                                    @endif
                                 <div class="media-body">
                                     <h4 class="media-heading primary">
-                                                        <a href="#">Elizabeth Owens at Duis autem vel eum iriure dolor in hendrerit in</a>
+                                                        <a href="{{ URL::to('event/'.$event->slug) }}">{!! $event->name !!}</a>
                                                     </h4>
                                     <p class="date">
-                                        <small class="text-danger">2hours ago</small>
+                                        <small class="text-danger">{!! date('D, M d, g a ',strtotime($event->date)) !!}</small>
                                     </p>
                                     <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
+                                       {!! str_limit($event->description,150, '...') !!}
                                     </p>
                                 </div>
                             </li>
                             <hr>
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar4.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading primary">
-                                                        <a href="#">Harold Chavez at Duis autem vel eum iriure dolor in hendrerit in</a>
-                                                    </h4>
-                                    <p class="date">
-                                        <small class="text-danger">5hours ago</small>
-                                    </p>
-                                    <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
-                                    </p>
-                                </div>
-                            </li>
-                            <hr>
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img src="{{ asset('assets/images/authors/avatar5.jpg') }}" class="img-circle img-responsive pull-left" alt="riot">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading primary">
-                                                        <a href="#">Mihaela Cihac at Duis autem vel eum iriure dolor in hendrerit in</a>
-                                                    </h4>
-                                    <p class="date">
-                                        <small class="text-danger">10hours ago</small>
-                                    </p>
-                                    <p class="small">
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo
-                                    </p>
-                                </div>
-                            </li>
+                            @endforeach
+                            
                         </ul>
                 </div>
                 <!-- /.the-box .bg-primary .no-border .text-center .no-margin -->
@@ -326,7 +303,31 @@
     </div>
   </div>
 </div>
+
+
 <?php } ?>
+
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Select a Date</h4>
+      </div>
+          <div class="modal-body">
+          <h1>Loading...</h1>
+          </div>
+          <div class="modal-footer ">
+          <div class="alert alert-warning hide seldateerr">
+            <strong>Warning!</strong> Date not selected.
+          </div>
+        <button id="booknow" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Book Now</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 @stop
 
 @section('footer_scripts')
@@ -335,11 +336,53 @@
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
 <script>
 
-
-
-
 $(function() {
   return $(".starrr").starrr();
 });
+
+$( document ).ready(function() {
+  $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null){
+         return null;
+      }
+      else{
+         return results[1] || 0;
+      }
+  }
+      $("#bookModal").on("show.bs.modal", function(e) {
+          //alert(selected_date)
+            var link = $(e.relatedTarget);
+             $(".seldateerr").addClass('hide');
+            $(this).find(".modal-body").load('{{ url('event/ajax-booking-detail')}}/{{$event->id}}');
+        });
+
+  $('#booknow').click(function(e){
+      //e.preventDefault();
+      //alert($('#dates').val());
+
+      if($('#dates').val()==''){
+        //alert('Date Not Selected')
+        //
+        $(".seldateerr").removeClass('hide');
+        
+         return false;
+      }
+
+      $('#frmbook').submit();
+      /*
+      $.post('http://path/to/post', 
+         $('#myForm').serialize(), 
+         function(data, status, xhr){
+           // do something here with response;
+         });
+      */
+});
+
+  
+  if($.urlParam('booknow')=='true')
+   $('#bookModal').modal('show');
+});
+
 </script>
 @stop

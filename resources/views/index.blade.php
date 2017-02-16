@@ -149,7 +149,7 @@ Home
               <div class="property-meta">
               <ul>
                 <li><a href="{{ URL::to('event/'.$event->slug) }}"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
+                <li class="pull-right"> <a href="{{ url('events/book',$event->id) }}"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
               </ul>
               </div>
             </div>

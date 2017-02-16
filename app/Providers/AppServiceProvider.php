@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.eventday', function($view)
         {
-           $frontarray['onenews'] = News::latest()->first();
+           $frontarray['onenews'] = News::where('isTopNews','1')->first();
             $frontarray['mainmenu']=Page::where('type','Main Menu')->get();
             $frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
                 $view->with('frontarray', $frontarray);

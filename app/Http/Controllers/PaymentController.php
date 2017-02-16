@@ -23,12 +23,14 @@ use Omnipay\Omnipay;
 use Omnipay\PayPal;
 use Omnipay\Common\CreditCard;
 use URL;
+use Redirect;
 use Session;
 use Sentinel;
 use App\Ad;
 use App\ads_prices;
 use App\Booking;
 use App\Payment;
+use App\Event;
 
 class PaymentController extends BaseController
 {
@@ -199,6 +201,124 @@ class PaymentController extends BaseController
         }
     }
 
+    public function done_event(Request $request){
+        $params = session()->get('params');
+        //echo $request->get('token');exit;
+        $gateway = Omnipay::create('PayPal_Express');
+        $gateway->setUsername('karki.kuber_api1.gmail.com');
+        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+        $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); 
+        $gateway->setTestMode(true); 
+        $params = session()->get('params');
+
+        if(!$params){
+            return redirect('404');exit;
+        }
+
+        
+
+        $response = $gateway->completePurchase($params)->send(); 
+        $paypalResponse = $response->getData(); // this is the raw response object 
+
+        if($paypalResponse['ACK'] === 'Failure'){
+            if($paypalResponse['L_ERRORCODE0'] === 10422){
+         // send user back to a page which contains the checkout form and populate the fields that were filled out previously for proper UI experience (so the customer doesn’t have to retype everything)
+             // let the customer know that the payment method was not accepted and they need to choose another way to pay.
+            return redirect('events/book',$params['id'])->with('failed', 'Payment method not accepted');
+             }
+        }
+
+        if(isset($paypalResponse['PAYMENTINFO_0_ACK']) && $paypalResponse['PAYMENTINFO_0_ACK'] === 'Success') {
+            // here you process the response. Save to database ...
+            // 
+            
+
+            $id=$params['id'];
+            $dateswithcomma=Session::get('bookData.dates');
+            $price=Session::get('bookData.price');
+
+            $dates=explode(',',$dateswithcomma);
+
+            foreach($dates as $date){
+                $booking=new Booking();
+                $booking->ads_id=null;
+                $booking->event_id=$id;
+                $booking->quantity=$params['quantity'];
+                //$booking->book_date=$date;
+                //$booking->price=$price;
+                $booking->price=$param['amount'];
+                $booking->user_id=Sentinel::getUser()->id;
+                $booking->save();
+            }
+
+            $payment=new Payment();
+            //$payment=;
+            //echo $PaypalResponse->TOKEN;exit;
+            //dd($paypalResponse);
+            ///$payment=json_decode(json_encode($paypalResponse));;//(object)$paypalResponse;
+
+                //dd($payment);
+
+            //$payment->save((object)$paypalResponse);
+            //$payment->TOKEN=$PaypalResponse->TOKEN;
+            //dd($payment);
+            $payment->TOKEN=$paypalResponse['TOKEN'];
+            $payment->SUCCESSPAGEREDIRECTREQUESTED=$paypalResponse['SUCCESSPAGEREDIRECTREQUESTED'];
+            $payment->TIMESTAMP=$paypalResponse['TIMESTAMP'];
+            $payment->CORRELATIONID=$paypalResponse['CORRELATIONID'];
+            $payment->ACK=$paypalResponse['ACK'];
+            $payment->VERSION=$paypalResponse['VERSION'];
+            $payment->BUILD=$paypalResponse['BUILD'];
+            //$payment->L_ERRORCODE0=$paypalResponse['L_ERRORCODE0'];
+            $payment->PAYMENTINFO_0_TRANSACTIONID=$paypalResponse['PAYMENTINFO_0_TRANSACTIONID'];
+            $payment->PAYMENTINFO_0_TRANSACTIONTYPE=$paypalResponse['PAYMENTINFO_0_TRANSACTIONTYPE'];
+            $payment->PAYMENTINFO_0_PAYMENTTYPE=$paypalResponse['PAYMENTINFO_0_PAYMENTTYPE'];
+            $payment->PAYMENTINFO_0_ORDERTIME=$paypalResponse['PAYMENTINFO_0_ORDERTIME'];
+            $payment->PAYMENTINFO_0_AMT=$paypalResponse['PAYMENTINFO_0_AMT'];
+            $payment->PAYMENTINFO_0_FEEAMT=$paypalResponse['PAYMENTINFO_0_FEEAMT'];
+            $payment->PAYMENTINFO_0_TAXAMT=$paypalResponse['PAYMENTINFO_0_TAXAMT'];
+            $payment->PAYMENTINFO_0_CURRENCYCODE=$paypalResponse['PAYMENTINFO_0_CURRENCYCODE'];
+            $payment->PAYMENTINFO_0_PAYMENTSTATUS=$paypalResponse['PAYMENTINFO_0_PAYMENTSTATUS'];
+            $payment->PAYMENTINFO_0_PENDINGREASON=$paypalResponse['PAYMENTINFO_0_PENDINGREASON'];
+            $payment->PAYMENTINFO_0_REASONCODE=$paypalResponse['PAYMENTINFO_0_REASONCODE'];
+            $payment->PAYMENTINFO_0_PROTECTIONELIGIBILITY=$paypalResponse['PAYMENTINFO_0_PROTECTIONELIGIBILITY'];
+            $payment->PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE=$paypalResponse['PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE'];
+            $payment->PAYMENTINFO_0_SECUREMERCHANTACCOUNTID=$paypalResponse['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'];
+            $payment->PAYMENTINFO_0_ERRORCODE=$paypalResponse['PAYMENTINFO_0_ERRORCODE'];
+            $payment->PAYMENTINFO_0_ACK=$paypalResponse['PAYMENTINFO_0_ACK'];
+
+            $payment->booking_id=$booking->id;
+            $payment->payer=Sentinel::getUser()->id;
+            $payment->receiver=Sentinel::getUser()->id;
+            $payment->product_type='event';
+            $payment->product_id=$id;
+
+            //dd($payment);
+
+
+            $payment->save();
+
+            
+
+
+            //$payment=Payment::save($paypalResponse);
+
+
+
+            //Session::forget('bookData');
+            Session::forget('params');
+            //dd($paypalResponse);
+            return Redirect('mybookings');
+
+        } 
+        else { 
+            dd($paypalResponse);
+            return redirect('event/book',$id)->with('failed', 'Payment Failed');
+            // dd($paypalResponse);
+            // Failed transaction ...
+        }
+    }
+
     public function prepare2(){
         $provider = PayPal::setProvider('express_checkout'); 
         $data = [];
@@ -338,62 +458,131 @@ class PaymentController extends BaseController
     public function prepare(Request $request)
     {   
 
-    $id=Session::get('bookData.ads_id');;
-    $dates=Session::get('bookData.dates');
+        $id=Session::get('bookData.ads_id');;
+        $dates=Session::get('bookData.dates');
 
-    $days=count(explode(',',$dates));
-    $ad=Ad::find($id); 
+        $days=count(explode(',',$dates));
+        $ad=Ad::find($id); 
 
-    $price_id=$request->get('price');
+        $price_id=$request->get('price');
 
 
-    if($price_id){
-        $price_amount=ads_prices::find($price_id)->price*$days;
-    }else{
-        $price_amount=$ad->price;
+        if($price_id){
+            $price_amount=ads_prices::find($price_id)->price*$days;
+        }else{
+            $price_amount=$ad->price;
+        }
+
+         $dates=Session::set('bookData.price',$price_amount);
+
+
+        if(!$price_amount && !is_numeric($price)){
+            return  Redirect::to('ads/book')->with('error', 'Price Not Selected');
+        }
+
+        if(!$ad){
+            return  Redirect::to('ads/book')->with('error', 'No Ads Selected');
+        }
+
+        if($days<1){
+            return  Redirect::to('ads/book')->with('error', 'Date Selected');
+        }
+            $params = array( 
+                'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
+                'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
+                'amount' => (float)$price_amount, 
+                //'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+                'description' => 'Booking '.$ad->title,
+                'BRANDNAME' => 'Event Day Planner',
+            );
+
+            session()->put('params', $params); // here you save the params to the session so you can use them later.
+            session()->save();
+
+            $gateway = Omnipay::create('PayPal_Express');
+            $gateway->setUsername('karki.kuber_api1.gmail.com');
+            $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+            
+            $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); // and the signature for the account 
+            $gateway->setTestMode(true); // set it to true when you develop and when you go to production to false
+            $response = $gateway->purchase($params)->send(); // here you send details to PayPal
+            
+            if ($response->isRedirect()) { 
+                // redirect to offsite payment gateway 
+                $response->redirect(); 
+             } 
+             else { 
+                // payment failed: display message to customer 
+                echo $response->getMessage();
+            } 
     }
 
-     $dates=Session::set('bookData.price',$price_amount);
+    public function prepareevent(Request $request)
+    {   
 
+        $id=$request->get('event_id');
+        $quantity=$request->get('quantity');
 
-    if(!$price_amount && !is_numeric($price)){
-        return  Redirect::to('ads/book')->with('error', 'Price Not Selected');
-    }
-
-    if(!$ad){
-        return  Redirect::to('ads/book')->with('error', 'No Ads Selected');
-    }
-
-    if($days<1){
-        return  Redirect::to('ads/book')->with('error', 'Date Selected');
-    }
-        $params = array( 
-            'cancelUrl' => url('ads/detail',$ad),//'http://localhost:8888/eventdayplanner/public/', 
-            'returnUrl' => url('payment/done'),//'http://localhost:8888/eventdayplanner/public/payment/done',
-            'amount' => (float)$price_amount, 
-            //'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
-            'description' => 'Booking '.$ad->title,
-            'BRANDNAME' => 'Event Day Planner',
-        );
-
-        session()->put('params', $params); // here you save the params to the session so you can use them later.
-        session()->save();
-
-        $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername('karki.kuber_api1.gmail.com');
-        $gateway->setPassword('YPZ2VJPMNNKW8V7F');
         
-        $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); // and the signature for the account 
-        $gateway->setTestMode(true); // set it to true when you develop and when you go to production to false
-        $response = $gateway->purchase($params)->send(); // here you send details to PayPal
+        $event=Event::find($id); 
+
+        $price=$event->ticket_price;
+
+
         
-        if ($response->isRedirect()) { 
-            // redirect to offsite payment gateway 
-            $response->redirect(); 
-         } 
-         else { 
-            // payment failed: display message to customer 
-            echo $response->getMessage();
-        } 
+        $price_amount=$price*$quantity;
+        
+
+        if(!$event){
+            return  Redirect::to('events/book/'.$id)->with('error', 'No Event Selected');
+        }
+
+        if(!$price_amount && !is_numeric($price)){
+
+            //freebooking
+                $booking=new Booking();
+                $booking->ads_id=null;
+                $booking->event_id=$id;
+                $booking->quantity=$quantity;
+                
+                $booking->price=$price_amount;
+                $booking->user_id=Sentinel::getUser()->id;
+                $booking->save();
+            return  Redirect::to('events/book/'.$id)->with('success', 'Booked Successfully!!');
+        }
+
+        
+
+       
+            $params = array( 
+                'cancelUrl' => url('event',$event->slug),//'http://localhost:8888/eventdayplanner/public/', 
+                'returnUrl' => url('payment/done_event'),//'http://localhost:8888/eventdayplanner/public/payment/done',
+                'amount' => (float)$price_amount, 
+                //'image_url' => asset('assets/images/eventday/eventdayPlanner.png'),
+                'description' => 'Booking '.$event->name,
+                'BRANDNAME' => 'Event Day Planner',
+                'id' =>$id,
+                'quantity'=>$quantity,
+            );
+
+            session()->put('params', $params); // here you save the params to the session so you can use them later.
+            session()->save();
+
+            $gateway = Omnipay::create('PayPal_Express');
+            $gateway->setUsername('karki.kuber_api1.gmail.com');
+            $gateway->setPassword('YPZ2VJPMNNKW8V7F');
+            
+            $gateway->setSignature('An5ns1Kso7MWUdW4ErQKJJJ4qi4-ASuSuCUJVsm.Tdya5GhFc7JzkhJC'); // and the signature for the account 
+            $gateway->setTestMode(true); // set it to true when you develop and when you go to production to false
+            $response = $gateway->purchase($params)->send(); // here you send details to PayPal
+            
+            if ($response->isRedirect()) { 
+                // redirect to offsite payment gateway 
+                $response->redirect(); 
+             } 
+             else { 
+                // payment failed: display message to customer 
+                echo $response->getMessage();
+            } 
     }
 }

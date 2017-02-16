@@ -1,5 +1,39 @@
 <?php
 Route::group(['middleware' => 'web'], function () {
+    
+    Route::group(array('prefix' => 'api'), function () {
+    // Customer API Routes
+    Route::get('get-available-days/{ads_id}', 'APIController@GetAvailableDays');
+
+    Route::get('get-appointments/{ads_id}', 'APIController@GetAppointments');
+
+    // Admin API Routes
+    Route::get('get-all-appointments', 'AdminAPIController@GetAllAppointments');
+});
+Route::post('payment', [
+    'as'   => 'payment',
+    'uses' => 'PaymentController@prepare',
+]);
+
+Route::post('payment-card', [
+    'as'   => 'payment-card',
+    'uses' => 'PaymentController@preparecard',
+]);
+
+Route::any('payment/done/{payumToken?}', [
+    'as'   => 'payment.done',
+    'uses' => 'PaymentController@done',
+]);
+Route::any('payment/done_event/{payumToken?}', [
+    'as'   => 'payment.done_event',
+    'uses' => 'PaymentController@done_event',
+]);
+
+Route::post('paymentevent', [
+    'as'   => 'paymentevent',
+    'uses' => 'PaymentController@prepareevent',
+]);
+
     /*
     |--------------------------------------------------------------------------
     | Application Routes
@@ -8,9 +42,7 @@ Route::group(['middleware' => 'web'], function () {
     | Here is where you can register all of the routes for an application.
     | It's a breeze. Simply tell Laravel the URIs it should respond to
     | and give it the Closure to execute when that URI is requested.
-    |
-    */
-Route::group(['prefix' => 'api'], function()
+    |'api'], function()
 {
     // Customer API Routes
     Route::get('get-available-days/{ads_id}', 'APIController@GetAvailableDays');
@@ -270,6 +302,9 @@ Route::get('currency/{currency}', function ($currency) {
             Route::get('{news}/restore', array('as' => 'restore/news', 'uses' => 'NewsController@getRestore'));
             Route::get('{news}/show', array('as' => 'news/show', 'uses' => 'NewsController@show'));
             Route::post('{news}/storecomment', array('as' => 'restore/news', 'uses' => 'NewsController@storecomment'));
+
+            Route::get('news/{id}/makeTop', array('as' => 'admin.news.makeTop', 'uses' => 'NewsController@makeTop'));
+    Route::get('news/{id}/cancelTop', array('as' => 'admin.news.cancelTop', 'uses' => 'NewsController@cancelTop'));
         });
 
         /*routes for News category*/
@@ -323,6 +358,7 @@ Route::get('currency/{currency}', function ($currency) {
     Route::post('forgot-password/{userId}/{passwordResetCode}', 'FrontEndController@postForgotPasswordConfirm');
 # My account display and update details
     Route::group(array('middleware' => 'SentinelUser'), function () {
+         Route::get('my-bookings', array('as' => 'my-bookings', 'uses' => 'FrontEndController@myBookings'));
         Route::get('my-account', array('as' => 'my-account', 'uses' => 'FrontEndController@myAccount'));
         Route::get('portfolio', array('as' => 'portfolio', 'uses' => 'FrontEndController@portfolio'));
         Route::put('my-account', 'FrontEndController@update');
@@ -429,6 +465,17 @@ Route::get('currency/{currency}', function ($currency) {
 
      });
 
+     Route::group(array('prefix' => 'events', 'middleware' => 'SentinelUser'), function () {
+            // Route::get('/', array('as'=>'ads','uses'=>'AdsController@indexFrontend'));
+            
+            Route::get('book/{event_id}', array('as' => 'book', 'uses' => 'EventsController@getbook'));
+            Route::post('bookings', array('as' => 'bookings', 'uses' => 'EventsController@submitbook'));
+           // Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
+
+
+
+     });
+
      Route::group(array('prefix' => 'ads'), function () {
             Route::get('details/{ads}', array('as' => 'details', 'uses' => 'AdsController@adsdetail'));
             Route::get('ajax-booking-detail/{id}', array('as' => 'ajax-booking-detail', 'uses' => 'AdsController@ajaxadsbookingdetail'));
@@ -438,6 +485,7 @@ Route::get('currency/{currency}', function ($currency) {
 
 
      });
+     
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
 

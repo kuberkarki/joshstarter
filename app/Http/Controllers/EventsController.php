@@ -17,6 +17,7 @@ use App\EventComment;
 use App\Http\Requests\EventCommentRequest;
 use App\User;
 use Share;
+use DateTime;
 
 class EventsController extends Controller {
 
@@ -75,9 +76,16 @@ class EventsController extends Controller {
 
 			$share=Share::load(url('event/'.$event->slug), $event->name)->services('facebook', 'gplus', 'twitter','email','pinterest');
 
+
+
+		 $date = new DateTime;
+        $date->modify('-50 minutes');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+		 $upcomingevents=Event::where('type','Public')->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
+
         
         // Show the page
-        return View('event', compact('event','reviewed','user','users','share'))->with('frontarray',$this->frontarray);
+        return View('event', compact('event','reviewed','user','users','share','upcomingevents'))->with('frontarray',$this->frontarray);
 
     }
 
@@ -469,5 +477,43 @@ class EventsController extends Controller {
 
 			return redirect('event/'.$events->slug)->with('success','Reviewed !!');
     	}
+
+    	public function ajaxeventbookingdetail($id){
+		$event = Event::findOrFail($id);
+		//$ads_category = Ads_category::lists('name', 'id');
+		//$date=$date;
+		return view('event.ajaxbookingdetail', compact('event'));
+
+	}
+
+	public function getbook(request $request,$id){
+		$user=array();
+		if(Sentinel::check()){
+				$user=Sentinel::getUser();
+			}
+
+		$event=Event::find($id);
+		return view('events.book',compact('event','user'));
+
+	}
+
+	public function submitbook(request $request){
+
+		$dates=explode(',',$request->get('dates'));
+
+		foreach($dates as $date){
+			$booking=new booking();
+			$booking->ads_id=$request->get('ads_id');
+			$booking->book_date=$date;
+			$booking->price=$request->get('price');
+			$booking->user_id=Sentinel::getUser()->id;
+			$booking->save();
+		}
+
+		return redirect('/')->with('success', 'Successfully Booked');
+
+
+		
+	}
 
 }

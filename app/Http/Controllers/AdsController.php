@@ -49,7 +49,7 @@ class AdsController extends Controller {
 		if($isbusinesssearch){
 			if($date){
 				$ads = Ad::search($query)
-				->Join('bookings', function($join) use($date){
+				->leftJoin('bookings', function($join) use($date){
 									
 		                             $join->on('bookings.ads_id', '=', 'ads.id');
 		                             $join->on('book_date','<>',DB::raw("'$date'"));
@@ -98,19 +98,118 @@ class AdsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function ads($slug=null)
+	public function ads($slug=null,Request $request)
 	{
+
+		
+				$from= $request->get('from');
+		
+			$to=$request->get('to');
+		
+		
 		
 		if($slug){
 			$adscategory=Ads_category::where('slug',$slug)->first();
-			if(!$adscategory)
+			if(!$adscategory){
 				$ads=Ad::all();
-			else
-			$ads=Ad::where('ads_category_id',$adscategory->id)->paginate(12);
+			}
+			else{
+				if($from>$to){
+					$ads=array();
+				}
+				if($from && $to){
+					$ads=array();
+
+						$ads_raw=Ad::where('ads_category_id',$adscategory->id)->get();
+
+						foreach($ads_raw as $ad){
+
+							$bookings=Booking::where('ads_id',$ad->id)->whereBetween('book_date', [$from, $to])->get();
+
+							//echo count($bookings);
+							if(count($bookings)==0){
+								$ads[]=$ad;
+							}
+
+		                             
+										
+						}
+
+
+						
+
+
+
+
+
+
+					/*$startTime = strtotime( $from );
+							$endTime = strtotime( $to );
+					$query='(';
+
+					for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
+							  $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
+
+							  if($i!=$startTime){
+							  	$query .=" And ";
+							  }
+							  $query .=" `bookings`.book_date <> '$thisDate' " ;
+							}
+					$query .=')';
+
+					
+					$ads=Ad::where('ads_category_id',$adscategory->id)
+
+						 ->leftJoin('bookings', function($join) use($from,$to){
+									
+		                             $join->on('bookings.ads_id', '=', 'ads.id');
+		                             //$join->on('book_date','<>',DB::raw("'$to'"));
+		                             $startTime = strtotime( $from );
+									$endTime = strtotime( $to );
+
+		                             for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
+									  $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
+									  $join->on('book_date','<>',DB::raw("'$thisDate'"));
+									}
+		                            
+		                         })->select(array('ads.*','ads_id','book_date'))->groupBy('ads.id')->paginate(12);
+					*//*->leftJoin('bookings',function($q) use($from,$to){
+
+							$q->on('bookings.ads_id', '=', 'ads.id');
+							//$q->whereBetween('book_date', [$from, $to]);
+							$startTime = strtotime( $from );
+							$endTime = strtotime( $to );
+
+							// Loop between timestamps, 24 hours at a time
+							for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
+							  $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
+							  $q->on('book_date','<>',DB::raw($thisDate));
+							}
+
+							//$q->groupBy('ads_id');
+
+						})*/
+					/*->leftJoin(
+					        DB::raw("
+					            (select
+					                * From `bookings`
+					            where ".$query."
+					            group by `bookings`.`ads_id`) `bookings`
+					        "), 'ads.id', '=', 'bookings.ads_id'
+					    )
+					->groupBy('ads_id')->paginate(12);*/
+					
+
+
+				}else{
+					$ads=Ad::where('ads_category_id',$adscategory->id)->get()/*->paginate(12)*/;
+				}
+			}
 		}
 		else
-			$ads = Ad::paginate(12);
+			$ads = Ad::all();//paginate(12);
 		$ads_category = Ads_category::all();
+
 
 
 		//dd($ads_category);
