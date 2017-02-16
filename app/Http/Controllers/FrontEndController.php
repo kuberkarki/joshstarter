@@ -239,6 +239,22 @@ class FrontEndController extends JoshController
     }
 
     /**
+     * get user details and display
+     */
+    public function myBookings(User $user)
+    {
+        $user = Sentinel::getUser();
+        $events_booked=\App\Booking::where('user_id',$user->id)->whereNotNull('event_id')->with('event')->get();
+        $ads_booked=\App\Booking::where('user_id',$user->id)->whereNotNull('ads_id')->with('ad')->get();
+
+        
+
+
+        
+        return View::make('user.mybookings', compact('user','events_booked','ads_booked'))->with('frontarray',$this->frontarray);
+    }
+
+    /**
      * update user details and display
      * @param Request $request
      * @param User $user

@@ -49,6 +49,7 @@
                             <th>@lang('news/table.title')</th>
                             <th>@lang('news/table.comments')</th>
                             <th>@lang('news/table.created_at')</th>
+                            <th>Is Top News</th>
                             <th>@lang('news/table.actions')</th>
                         </tr>
                     </thead>
@@ -60,6 +61,16 @@
                                 <td>{{ $news->title }}</td>
                                 <td>{{ $news->comments->count() }}</td>
                                 <td>{{ $news->created_at->diffForHumans() }}</td>
+                                <td>@if($news->isTopNews)
+                            <a href="{{ route('admin.news.cancelTop', $news->id) }}" >
+                                    <i class="livicon" data-name="star-full" data-size="18" data-loop="true" data-c="#01BC8C" data-hc="#f56954" title="Top News"></i>
+                                </a>
+                            @endif
+                            @if(!$news->isTopNews)
+                            <a href="{{ route('admin.news.makeTop', $news->id) }}" >
+                                    <i class="livicon" data-name="star-full" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#000" title="Top News"></i>
+                                </a>
+                            @endif</td>
                                 <td>
                                     <a href="{{ URL::to('admin/news/' . $news->id . '/show' ) }}"><i class="livicon"
                                                                                                      data-name="info"

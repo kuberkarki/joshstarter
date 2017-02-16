@@ -23,4 +23,14 @@ class Booking extends Model  {
         return $this->belongsTo('App\User');
     }
 
+    public function event()
+    {
+        return $this->belongsTo('App\Event');
+    }
+
+    public function ad()
+    {
+        return $this->belongsTo('App\Ad','ads_id','id');
+    }
+
 }

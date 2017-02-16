@@ -21,6 +21,44 @@
 
 {{-- Page content --}}
 @section('content')
-List my Booked Ads <br/>
-List my Booked Tickets
+<div class="container ">
+<h2>My Bookings</h2>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Events</a></li>
+  <li><a data-toggle="tab" href="#menu1">Ads</a></li>
+  
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <h3>Booked Event Tickets</h3>
+    <ul>
+    @foreach($events_booked as $event)
+    	<li><div>
+    			<h3><a href="{{url('event',$event->event->slug)}}">{{$event->event->name}}</a></h3>
+    			<b>Quantity:</b>{{$event->quantity}}<br/>
+    			<b>Price:</b>{!! Helper::getPrice($event->price) !!}
+    		</div>
+    	</li>
+    @endforeach
+    </ul>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Booked Ads</h3>
+    @if(count($ads_booked))
+	    @foreach($ads_booked as $ad)
+	    	<div>
+	    			<h3><a href="{{url('ads.details',$ad->ad->slug)}}">{{$ad->ad->title}}</a></h3>
+	    			<b>Date:</b>{{$ad->book_date}}<br/>
+	    			<b>Price:</b>{!! Helper::getPrice($ad->price) !!}
+	    		</div>
+	    @endforeach
+	 @else
+	 	No Ads Booked Yet !!
+	 @endif
+  </div>
+  
+</div>
+</div>
 @stop

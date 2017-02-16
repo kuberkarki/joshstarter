@@ -8,6 +8,7 @@ My Ads
 
 {{-- page level styles --}}
 @section('header_styles')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @stop
 
 
@@ -36,11 +37,11 @@ My Ads
             <h3>Filter on Availability</h3>
             <div class="row">
               <div class="col-sm-5"><div class="input-group">
-                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <input name="fromdate" type="text" id='datepicker1' placeholder="Date"  class="form-control" placeholder="Date" onchange="filterbydate()" aria-describedby="basic-addon1">
                     </div></div>
               <div class="col-sm-2 txtCntr">To</div>
               <div class="col-sm-5"><div class="input-group">
-                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <input name="todate" type="text" id='datepicker2' placeholder="Date"  class="form-control" placeholder="Date" onchange="filterbydate()" aria-describedby="basic-addon1">
                     </div></div>
             </div>
           </div>
@@ -137,7 +138,7 @@ My Ads
         @endif
           
         </div>
-                        @include('pagination.limit_links', ['paginator' => $ads])
+                       
 
       </div>
       </div>
@@ -254,6 +255,7 @@ My Ads
 {{-- page level scripts --}}
 @section('footer_scripts')
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
 <script>
 $(function() {
@@ -294,7 +296,29 @@ $( document ).ready(function() {
   $('#stars-existing').on('starrr:change', function(e, value){
     //$('#count-existing').html(value);
   });
+  $( function() {
+    var date = new Date();
+        date.setMonth(date.getMonth()+1);
+    $( "#datepicker1" ).datepicker(
+      {
+        dateFormat: 'yy-mm-dd',
+        minDate: 0,
+        maxDate:date
+    });
+     $( "#datepicker2" ).datepicker({dateFormat: 'yy-mm-dd',minDate: 0,maxDate:date});
+  } );
+
+
 });
+
+function filterbydate(){
+    var from,to;
+    from=$('#datepicker1').val();
+    to=$('#datepicker2').val();
+    if(from!='' && to!=''){
+      window.location.href = "{{Request::url()}}?from="+from+'&to='+to;
+    }
+  }
 </script>
 
 @stop

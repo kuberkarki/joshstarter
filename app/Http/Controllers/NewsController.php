@@ -251,4 +251,38 @@ class NewsController extends JoshController
 
         return redirect('admin/news/' . $news->id . '/show');
     }
+
+    /**
+         * Sponsored the given Event.
+         *
+         * @param  int      $id
+         * @return Redirect
+         */
+        public function makeTop($id = null)
+        {
+            $news = News::find($id);
+            $news->isTopNews=true;
+            $news->save();
+
+            // Redirect to the group management page
+            return redirect('admin/news')->with('success', 'Top News Added');
+
+        }
+
+        /**
+         * cancelSponsored the given Event.
+         *
+         * @param  int      $id
+         * @return Redirect
+         */
+        public function cancelTop($id = null)
+        {
+            $news = News::find($id);
+            $news->isTopNews=false;
+            $news->save();
+
+            // Redirect to the group management page
+            return redirect('admin/news')->with('success', 'Canceled Top News');
+
+        }
 }

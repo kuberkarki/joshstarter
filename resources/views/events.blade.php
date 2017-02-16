@@ -74,7 +74,7 @@ event
                     <!-- /.featured-post-wide -->
                     <!-- END FEATURED POST -->
                     @empty
-                        <h3>No Posts Exists!</h3>
+                        <h3>No Events Exists!</h3>
                     @endforelse
                     <ul class="pager">
                         {!! $events->render() !!}
@@ -92,11 +92,11 @@ event
                             <ul class="nav nav-tabs ">
                                 <li class="active">
                                     <a href="#tab_default_1" data-toggle="tab">
-                                        Popular Posts </a>
+                                        Popular Events </a>
                                 </li>
                                 <li>
                                     <a href="#tab_default_2" data-toggle="tab">
-                                        Recent Posts </a>
+                                        Upcoming Events </a>
                                 </li>
                             </ul>
                             <!-- //Nav Nav-tabs End -->
