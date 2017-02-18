@@ -537,7 +537,7 @@ class PaymentController extends BaseController
             return  Redirect::to('events/book/'.$id)->with('error', 'No Event Selected');
         }
 
-        if(!$price_amount && !is_numeric($price)){
+        if(!$price_amount && !is_numeric($price_amount)){
 
             //freebooking
                 $booking=new Booking();

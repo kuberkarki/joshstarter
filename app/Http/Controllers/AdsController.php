@@ -22,6 +22,7 @@ use App\Booking;
 use Session;
 use DB;
 use App\Event;
+use Helper;
 
 class AdsController extends Controller {
 	private $objFoo;
@@ -100,14 +101,8 @@ class AdsController extends Controller {
 	 */
 	public function ads($slug=null,Request $request)
 	{
-
-		
-				$from= $request->get('from');
-		
-			$to=$request->get('to');
-		
-		
-		
+		$from= $request->get('from');
+		$to=$request->get('to');
 		if($slug){
 			$adscategory=Ads_category::where('slug',$slug)->first();
 			if(!$adscategory){
@@ -134,15 +129,6 @@ class AdsController extends Controller {
 		                             
 										
 						}
-
-
-						
-
-
-
-
-
-
 					/*$startTime = strtotime( $from );
 							$endTime = strtotime( $to );
 					$query='(';
@@ -199,9 +185,60 @@ class AdsController extends Controller {
 					    )
 					->groupBy('ads_id')->paginate(12);*/
 					
+				}elseif($request->get('rating')){
+					$ads=array();
+						$ads_raw=Ad::where('ads_category_id',$adscategory->id)->get();
 
+						foreach($ads_raw as $ad){
+							if($ad->avragereviews()==$request->get('rating')){
+								$ads[]=$ad;
+							}
+						}
 
-				}else{
+				}elseif($request->get('price')){
+					$ads=array();
+					$pricerange=explode('-',$request->get('price'));
+
+					if(is_numeric($pricerange[0]))
+						$minprice=Helper::exchangeToUSD($pricerange[0]);
+					if(is_numeric($pricerange[1]))
+						$maxprice=Helper::exchangeToUSD($pricerange[1]);
+					else
+						$maxprice=999999999999;
+
+					$ads_raw=Ad::where('ads_category_id',$adscategory->id)->get();
+
+						foreach($ads_raw as $ad){
+							if($ad->price_type=='Fixed'){
+								if($ad->price>=$minprice && $ad->price<=$maxprice){
+									$ads[]=$ad;
+								}
+
+							}else{
+								if(count($ad->prices()->first())){
+									$pricelist=($ad->prices()->orderBy('ads_prices.price','DESC')->get());
+									//dd($pricelist[0]);
+									
+                      				if($minprice>=$pricelist[0]->price && $maxprice<=$pricelist[count($pricelist)-1]->price){
+                      					$ads[]=$ad;
+                      				}
+                      			}
+
+							}
+							
+						}
+					
+					
+					//$ads=array();
+
+					/*$ads_raw=Ad::where('ads_category_id',$adscategory->id)->where(function($q) use($minprice,$maxprice){
+                    	$q->where('price','>=',DB::raw($minprice));
+                    if($maxprice>0)
+                    	$q->where('price','<=',DB::raw($maxprice));*/
+                    //$q->orWhere('ticket_price','=','Free');
+                
+				}
+				else{
 					$ads=Ad::where('ads_category_id',$adscategory->id)->get()/*->paginate(12)*/;
 				}
 			}

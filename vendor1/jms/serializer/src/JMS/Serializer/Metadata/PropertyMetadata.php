@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2013 Johannes M. Schmitt <schmittjoh@gmail.com>
+ * Copyright 2016 Johannes M. Schmitt <schmittjoh@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ class PropertyMetadata extends BasePropertyMetadata
     public $readOnly = false;
     public $xmlAttributeMap = false;
     public $maxDepth = null;
+    public $excludeIf = null;
 
     private static $typeParser;
 
@@ -136,6 +137,7 @@ class PropertyMetadata extends BasePropertyMetadata
             parent::serialize(),
             'xmlEntryNamespace' => $this->xmlEntryNamespace,
             'xmlCollectionSkipWhenEmpty' => $this->xmlCollectionSkipWhenEmpty,
+            'excludeIf' => $this->excludeIf,
         ));
     }
 
@@ -172,7 +174,9 @@ class PropertyMetadata extends BasePropertyMetadata
         if (isset($unserialized['xmlCollectionSkipWhenEmpty'])){
             $this->xmlCollectionSkipWhenEmpty = $unserialized['xmlCollectionSkipWhenEmpty'];
         }
-        
+        if (isset($unserialized['excludeIf'])){
+            $this->excludeIf = $unserialized['excludeIf'];
+        }
 
         parent::unserialize($parentStr);
     }

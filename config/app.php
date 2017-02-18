@@ -162,6 +162,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        //Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+
         Cviebrock\EloquentTaggable\ServiceProvider::class,
         yajra\Datatables\DatatablesServiceProvider::class,
         App\Providers\JoshCrudGeneratorServiceProvider::class,

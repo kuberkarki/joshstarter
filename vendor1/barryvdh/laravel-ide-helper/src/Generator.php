@@ -84,6 +84,7 @@ class Generator
             ->with('namespaces', $this->getNamespaces())
             ->with('helpers', $this->helpers)
             ->with('version', $app->version())
+            ->with('include_fluent', $this->config->get('ide-helper.include_fluent', false))
             ->render();
     }
 
@@ -208,7 +209,7 @@ class Generator
                     $alias->addClass($this->extra[$name]);
                 }
 
-                $namespace = $alias->getNamespace();
+                $namespace = $alias->getExtendsNamespace() ?: $alias->getNamespace();
                 if (!isset($namespaces[$namespace])) {
                     $namespaces[$namespace] = array();
                 }

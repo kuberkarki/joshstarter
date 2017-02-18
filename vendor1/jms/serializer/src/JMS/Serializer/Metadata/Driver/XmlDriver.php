@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2013 Johannes M. Schmitt <schmittjoh@gmail.com>
+ * Copyright 2016 Johannes M. Schmitt <schmittjoh@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,12 @@ class XmlDriver extends AbstractFileDriver
         if ('true' === (string) $elem->attributes()->{'discriminator-disabled'}) {
             $metadata->discriminatorDisabled = true;
         } elseif ( ! empty($discriminatorFieldName) || ! empty($discriminatorMap)) {
-            $metadata->setDiscriminator($discriminatorFieldName, $discriminatorMap);
+
+            $discriminatorGroups = array();
+            foreach ($elem->xpath('./discriminator-groups/group') as $entry) {
+                $discriminatorGroups[] = (string) $entry;
+            }
+            $metadata->setDiscriminator($discriminatorFieldName, $discriminatorMap, $discriminatorGroups);
         }
 
         foreach ($elem->xpath('./xml-namespace') as $xmlNamespace) {
@@ -97,6 +102,15 @@ class XmlDriver extends AbstractFileDriver
             }
 
             $metadata->registerNamespace((string) $xmlNamespace->attributes()->uri, $prefix);
+        }
+
+        foreach ($elem->xpath('./xml-discriminator') as $xmlDiscriminator) {
+            if (isset($xmlDiscriminator->attributes()->attribute)) {
+                $metadata->xmlDiscriminatorAttribute = (string) $xmlDiscriminator->attributes()->attribute === 'true';
+            }
+            if (isset($xmlDiscriminator->attributes()->cdata)) {
+                $metadata->xmlDiscriminatorCData = (string) $xmlDiscriminator->attributes()->cdata === 'true';
+            }
         }
 
         foreach ($elem->xpath('./virtual-property') as $method) {
@@ -137,6 +151,15 @@ class XmlDriver extends AbstractFileDriver
 
                     if (null !== $expose = $pElem->attributes()->expose) {
                         $isExpose = 'true' === strtolower($expose);
+                    }
+
+                    if (null !== $excludeIf = $pElem->attributes()->{'exclude-if'}) {
+                        $pMetadata->excludeIf =$excludeIf;
+                    }
+
+                    if (null !== $excludeIf = $pElem->attributes()->{'expose-if'}) {
+                        $pMetadata->excludeIf = "!(" . $excludeIf .")";
+                        $isExpose = true;
                     }
 
                     if (null !== $version = $pElem->attributes()->{'since-version'}) {

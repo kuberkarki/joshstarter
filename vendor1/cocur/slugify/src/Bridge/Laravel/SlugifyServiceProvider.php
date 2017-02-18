@@ -52,6 +52,6 @@ class SlugifyServiceProvider extends LaravelServiceProvider
      */
     public function provides()
     {
-        return ['slugify'];
+        return array('slugify');
     }
 }

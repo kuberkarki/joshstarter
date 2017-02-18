@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "cviebrock/eloquent-sluggable": "^4.0",
+       "cviebrock/eloquent-sluggable": "^4.0",
         "laravelcollective/html": "5.2.",
         "cartalyst/sentinel": "2.0.",
         "cviebrock/eloquent-taggable": "2.0.0",
@@ -15,7 +15,6 @@
         "mews/captcha": "^2.1",
         "laravel/socialite": "^2.0",
         "willvincent/laravel-rateable": "~1.0",
-        "tshafer/laravel-reviewable": "^1.0",
         "cmgmyr/messenger": "~2.0",
         "intervention/image": "^2.3",
         "symfony/event-dispatcher": "^2.8",
@@ -41,7 +40,9 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Kuber\\ViewCounter\\": "packages/kuber/view-counter/src"
+            "Kuber\\ViewCounter\\": "packages/kuber/view-counter/src",
+            "Tshafer\\Reviewable\\": "packages/tshafer/laravel-reviewable/src",
+            "Tshafer\\ServiceProvider\\": "packages/tshafer/laravel-service-provider/src"
         }
     },
     "autoload-dev": {
