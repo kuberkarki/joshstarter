@@ -11,6 +11,8 @@ class Helper
     }
     public static function getPrice($price){
     	$value = session('currency');
+        if($price==0)
+            return "Free";
 
     	if(!$value){
     		$value='USD';

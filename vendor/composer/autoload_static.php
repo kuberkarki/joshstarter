@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd694c8e48b100f83cf2664323beecdd7
+class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -174,11 +174,11 @@ class ComposerStaticInitd694c8e48b100f83cf2664323beecdd7
         ),
         'Tshafer\\ServiceProvider\\' => 
         array (
-            0 => __DIR__ . '/..' . '/tshafer/laravel-service-provider/src',
+            0 => __DIR__ . '/../..' . '/packages/tshafer/laravel-service-provider/src',
         ),
         'Tshafer\\Reviewable\\' => 
         array (
-            0 => __DIR__ . '/..' . '/tshafer/laravel-reviewable/src',
+            0 => __DIR__ . '/../..' . '/packages/tshafer/laravel-reviewable/src',
         ),
         'Symfony\\Polyfill\\Util\\' => 
         array (
@@ -665,6 +665,10 @@ class ComposerStaticInitd694c8e48b100f83cf2664323beecdd7
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'MigrationCartalystSentinel' => __DIR__ . '/../..' . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
         'Omnipay\\Omnipay' => __DIR__ . '/..' . '/omnipay/common/src/Omnipay/Omnipay.php',
+        'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
+        'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
+        'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
+        'PHPUnit\\Framework\\TestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestListener.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -1107,10 +1111,10 @@ class ComposerStaticInitd694c8e48b100f83cf2664323beecdd7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd694c8e48b100f83cf2664323beecdd7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$classMap;
 
         }, null, ClassLoader::class);
     }

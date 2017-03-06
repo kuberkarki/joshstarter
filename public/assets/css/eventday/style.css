@@ -266,16 +266,16 @@ a.btn.btn_trans { font-size: 13px; color: #fff; min-width: 110px; background: tr
 .sal_labl { background: #222f43; color: white; font-size: 14px; line-height: 30px; padding: 0px 15px; position: absolute; left: 0px; top: 0px;}
 section#feat_propty .panel-body { padding-bottom: 0px;}
 .boxContent{ font-size:14px;}
-.boxContent h3{  color: #bc0034; font-size: 16px; text-transform: uppercase; font-weight: bold; margin-top: 10px;}
-.boxContent .address,.boxContent .time{  line-height: 26px;}
+.boxContent h3{  color: #bc0034; font-size: 20px; text-transform: uppercase; font-weight: bold; margin-top: 10px; text-align: center;}
+.boxContent .address,.boxContent .time{  text-align: center;}
 .property-meta{ border-top:1px solid #dad8d8; padding: 5px 0;}
-.panel-default p{ line-height: 25px;}
+.panel-default p{ line-height: 25px; line-height: 20px;}
 .property-meta ul{ padding-left: 0px;  list-style: none;}
 .property-meta li{ display: inline-block;}
 .property-meta li a .fa{ color: #bc0034;}
 .property-meta li a{ color: #616161}
 .property-meta li a:hover{ color: #616161; text-decoration: none;}
-.panel-body { padding-bottom: 0px;}
+.panel-body { padding-bottom: 0px; padding-top: 40px;}
 .innerBanner{ height: 288px;}
 .innercontantWrapper{ padding: 60px 0;}
 .globalWrap{ padding-bottom: 40px;}
@@ -398,3 +398,19 @@ ul.adsNav-list li a:hover{ color: #ababab;}
 display: block;}
 .pagination>li:first-child>a, .pagination>li:first-child>span,.pagination>li:last-child>a, .pagination>li:last-child>span{ padding: 9.5px;}
 .modal-dialog .form-group{  padding-bottom: 10px;}
+
+.address{max-height: 40px; height: 40px; font-weight: 600;}
+.eventPrice{  position: absolute; top: 0px; left: 0; font-weight: 600; font-size: 16px; color: #fff; background: #bc0034; line-height: 34px; padding: 0 14px;}
+.eventLogoWrap{width: 100%; position: absolute; bottom: -14%;}
+.eventlogo { position: relative; background: #bc0034; border-radius: 50%; height: 80px;  width: 80px; line-height: 80px; text-align: center; color: white;
+    margin: 0 auto;     -webkit-box-shadow: 0px 2px 16px -2px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 2px 16px -2px rgba(0,0,0,0.43);
+    box-shadow: 0px 2px 16px -2px rgba(0,0,0,0.43);
+    border: 4px solid #fff;}
+.centerShare{ width: 40%;text-align: center;}
+.centerShare .btn{ background: transparent; border-radius: 0px; color: #bc0034;  text-transform: uppercase; line-height: inherit;  padding: inherit;
+    border: 0;  text-align: center;}
+.centerShare .btn span{ color: #616161;text-transform: capitalize; }
+.centerShare .btn:hover{color: #bc0034;
+    background-color: transparent;
+    border-color: transparent;}

@@ -29,8 +29,6 @@ ul.thumbnails{
     color: #f29f00;
 }
 
-.address{min-height: 83px;}
-
 .pagination>li:first-child>a, .pagination>li:first-child>span,.pagination>li:last-child>a, .pagination>li:last-child>span{ /*padding: 9.5px;*/}
 /* Dropdown Button */
 .dropbtn {

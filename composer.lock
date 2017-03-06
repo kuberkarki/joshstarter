@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "77a4269fa5d937d5b545f47b184405d1",
+    "content-hash": "3b870896b19120a77b42bb1bad114ac3",
     "packages": [
         {
             "name": "adamwathan/eloquent-oauth",
@@ -495,23 +495,23 @@
         },
         {
             "name": "cviebrock/eloquent-sluggable",
-            "version": "4.2.0",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cviebrock/eloquent-sluggable.git",
-                "reference": "972101cd0469633258299bba189a73f7f3ee411f"
+                "reference": "20e78e7cc68facc934034024daf1fbaae7ce0c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/972101cd0469633258299bba189a73f7f3ee411f",
-                "reference": "972101cd0469633258299bba189a73f7f3ee411f",
+                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/20e78e7cc68facc934034024daf1fbaae7ce0c90",
+                "reference": "20e78e7cc68facc934034024daf1fbaae7ce0c90",
                 "shasum": ""
             },
             "require": {
                 "cocur/slugify": "^2.3",
-                "illuminate/config": "5.1.* || 5.2.* || 5.3.* || 5.4.*",
-                "illuminate/database": "5.1.* || 5.2.* || 5.3.* || 5.4.*",
-                "illuminate/support": "5.1.* || 5.2.* || 5.3.* || 5.4.*",
+                "illuminate/config": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/database": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
                 "php": "^5.6 || ^7.0"
             },
             "require-dev": {
@@ -542,7 +542,7 @@
                 "laravel",
                 "slug"
             ],
-            "time": "2017-01-25T02:04:39+00:00"
+            "time": "2016-11-09T15:42:49+00:00"
         },
         {
             "name": "cviebrock/eloquent-taggable",
@@ -3921,70 +3921,6 @@
             "time": "2016-07-26T08:03:56+00:00"
         },
         {
-            "name": "tshafer/laravel-reviewable",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tshafer/laravel-reviewable.git",
-                "reference": "fb9896e1a69dbbc9d03043d77cd96dc1428e23b3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tshafer/laravel-reviewable/zipball/fb9896e1a69dbbc9d03043d77cd96dc1428e23b3",
-                "reference": "fb9896e1a69dbbc9d03043d77cd96dc1428e23b3",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "~5.0|~5.1|~5.2",
-                "php": ">=5.5.9",
-                "tshafer/laravel-service-provider": "1.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Tshafer\\Reviewable\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Reviewable Polymorphic Eloquent Models for for Laravel 5",
-            "time": "2015-12-29T14:54:31+00:00"
-        },
-        {
-            "name": "tshafer/laravel-service-provider",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tshafer/laravel-service-provider.git",
-                "reference": "06d0fc20990684dad3464d9f850c5e7c84d208a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tshafer/laravel-service-provider/zipball/06d0fc20990684dad3464d9f850c5e7c84d208a9",
-                "reference": "06d0fc20990684dad3464d9f850c5e7c84d208a9",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Tshafer\\ServiceProvider\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "DRY Service Provider for Laravel 5 Packages",
-            "abandoned": true,
-            "time": "2016-08-05T04:44:04+00:00"
-        },
-        {
             "name": "vlucas/phpdotenv",
             "version": "v2.4.0",
             "source": {
@@ -5485,7 +5421,7 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
@@ -5650,16 +5586,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b"
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e1718c6bf57e1efbb8793ada951584b2ab27775b",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
                 "shasum": ""
             },
             "require": {
@@ -5701,7 +5637,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21T17:06:35+00:00"
+            "time": "2017-02-16T22:46:52+00:00"
         },
         {
             "name": "webmozart/assert",

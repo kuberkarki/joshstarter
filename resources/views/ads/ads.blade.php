@@ -49,25 +49,25 @@ My Ads
           <div class="leftList">
             <h3>Filter on Rating</h3>
             <ul>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
+              <li><a href="{{Request::url()}}?rating=5"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=4"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=3"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=2"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=1"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
             </ul>
           </div>
 
           <div class="leftList">
             <h3>Filter on Price</h3>
             <ul>
-              <li>0 - 100</li>
-              <li>100 - 1000</li>
-              <li>1000 - 5000</li>
-              <li>Over 5000</li>
+              <li><a href="{{Request::url()}}?price=0-100">{{Helper::getPricesymbol()}} 0 - {{Helper::getPricesymbol()}} 100</a></li>
+              <li><a href="{{Request::url()}}?price=100-1000">{{Helper::getPricesymbol()}} 100 - {{Helper::getPricesymbol()}} 1000</a></li>
+              <li><a href="{{Request::url()}}?price=1000-5000">{{Helper::getPricesymbol()}} 1000 - {{Helper::getPricesymbol()}} 5000</a></li>
+              <li><a href="{{Request::url()}}?price=5001-inf">Over {{Helper::getPricesymbol()}} 5000</a></li>
             </ul>
           </div>
           
-          <div class="leftList">
+          <!-- <div class="leftList">
             <h3>Filter on Discount</h3>
             <ul>
               <li>0 - 10% Sale</li>
@@ -80,7 +80,7 @@ My Ads
               <li>70 - 80% Sale</li>
               <li>Above</li>
             </ul>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-sm-9">
@@ -101,9 +101,9 @@ My Ads
                     @endif
                   </div>
                   @if($ad->photo)
-                        <img src="{{ URL::to('/thumbnail/'.$ad->photo)  }}" class="img-responsive img-hove" alt="{!! $ad->title !!}">
+                        <img src="{{ URL::to('/thumbnail/'.$ad->photo)  }}" class="img-responsive img-hover lazyload" alt="{!! $ad->title !!}">
                   @else
-                    <img class="img-responsive img-hover" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $ad->title !!}">
+                    <img class="img-responsive img-hover lazyload" src="{{asset('assets/images/eventday/post1.jpg')}}" alt="{!! $ad->title !!}">
                   @endif
                   </div>
                   </a>
@@ -111,11 +111,21 @@ My Ads
                   <a href="{!! url('ads/details',$ad->slug) !!}"><h3>{!! $ad->title !!} </h3></a><br/>
                 <ul class="ratingAds">
                   <li>
+                  
+
+                        @for($i=1;$i<=5;$i++)
+                                @if($ad->avragereviews()>=$i)
+                                    <span class="glyphicon glyphicon-star"></span>
+                                @else
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                @endif
+                            @endfor
+                  
                  
-                    <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div>
+                    <!-- <div data="{!! $ad->id !!}" id="stars" class="stars starrr rating" data-rating='{!! (int)$ad->averagerating !!}' data-logged="{{Sentinel::check()?true:false}}"></div> -->
                   
                   <!-- <div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div> -->
-                  <span class="review">(<span id="total-{!! $ad->id!!}">{!! count($ad->ratings) !!}</span>)</span></li>
+                  <span class="review">(<span>{!! count($ad->reviews()->get()) !!}</span>)</span></li>
                 </ul>
                 <a href="{!! url('ads/details',$ad->slug) !!}">
                   <div class="date">{{--$ad->created_at->diffForHumans()--}}</div>
@@ -256,7 +266,8 @@ My Ads
 @section('footer_scripts')
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-
+<!-- <script src="{{ asset('assets/js/eventday/jquery.lazyload-any.min.js') }}" type="text/javascript"></script>
+ -->
 <script>
 $(function() {
   return $(".starrr").starrr();
@@ -319,6 +330,16 @@ function filterbydate(){
       window.location.href = "{{Request::url()}}?from="+from+'&to='+to;
     }
   }
+
+    /*function load(img)
+    {
+
+      img.fadeIn(0, function() {
+        img.fadeOut(1000);
+      });
+    }*/
+    //$('.lazyload').lazyload({load: load});
+  
 </script>
 
 @stop

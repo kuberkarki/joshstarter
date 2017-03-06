@@ -128,7 +128,8 @@ Home
       <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-image">
-            
+              <div class="eventPrice">Price: {!! Helper::getPrice($event->ticket_price) !!}</div>
+              <div class="eventLogoWrap"><div class="eventlogo">Logo</div></div>
                 @if($event->photo)
                 <img class="img-responsive img-hover" src="thumbnail2/{!! $event->photo !!}" alt="">
                 @else
@@ -138,17 +139,16 @@ Home
             
             </div>
              <div class="panel-body">
+              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i>
+              {!! date('D, M d, g a ',strtotime($event->date)) !!}</div>
               <h3>{!! $event->name !!}</h3>
               <!-- <div class="date">Date 25th June2016</div> -->
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>Price: {!! Helper::getPrice($event->ticket_price) !!}
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> 
-              
-              {!! date('D, M d, g a ',strtotime($event->date)) !!}
-              <!-- Fri, May 6, 10pm --></div>
-                  <p style="height: 100px;">{!! str_limit($event->description,150, '...') !!}</p>
+              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>
+                  <p><!-- {!! str_limit($event->description,150, '...') !!} --></p>
               <div class="property-meta">
               <ul>
                 <li><a href="{{ URL::to('event/'.$event->slug) }}"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
+                <li class="centerShare"><a class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><span>Share</span> <i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
                 <li class="pull-right"> <a href="{{ url('events/book',$event->id) }}"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
               </ul>
               </div>
@@ -961,4 +961,19 @@ Home
     </script>
     <!--page level js ends-->
 
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+     
+                              <div class="customerSocial">
+                            
+                              <i class="fa fa-facebook-square" aria-hidden="true"></i>
+
+                              <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                              <i class="fa fa-pinterest-square" aria-hidden="true"></i>
+                              <i class="fa fa-envelope-square" aria-hidden="true"></i>
+                            </div>
+    </div>
+  </div>
+</div>
 @stop
