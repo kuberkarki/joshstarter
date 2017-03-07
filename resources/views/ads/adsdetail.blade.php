@@ -177,11 +177,11 @@ If you are looking for live wedding music at your ceremony, or to find a perform
             <h3>Business Owner</h3>
              @if($owner->company_name)
               {{$owner->company_name}}
-            @endif
-            @if($owner->first_name)
+            
+            @elseif($owner->first_name)
               {{$owner->first_name." ".$owner->last_name}}
-            @endif
-            @if($owner->name)
+            
+            @elseif($owner->name)
               {{$owner->name}}
             @endif
             @if($owner->pic)
