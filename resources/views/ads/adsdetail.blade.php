@@ -185,7 +185,7 @@ If you are looking for live wedding music at your ceremony, or to find a perform
               {{$owner->name}}
             @endif
             @if($owner->pic)
-                <img src="{!! 'thumbnail2/'.$owner->pic !!}" alt="profile pic" class="img-responsive">
+                <img src="{!! url('/').'/thumbnail2/'.$owner->pic !!}" alt="profile pic" class="img-responsive">
             @else
                 <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic">
             @endif
