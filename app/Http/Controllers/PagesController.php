@@ -22,8 +22,25 @@ class PagesController extends Controller {
 	public function showFrontend($slug)
 	{
 		$page = Page::where('slug',$slug)->first();
+
+		
 		if(!$page)
 			return Response::view('404', array(), 404);
+
+		if(str_contains($page->content, '{link:')){
+			$link_part=explode(' ',$page->content);
+			
+
+			$route=(substr($link_part[1], 1, -2));
+			//dd($route);
+
+			if($route){
+				return \Redirect::route($route);
+			}
+		}
+
+
+		
 
 		//print_r($page);exit;
 

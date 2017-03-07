@@ -21,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
             $frontarray['mainmenu']=Page::where('type','Main Menu')->get();
             $frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
                 $view->with('frontarray', $frontarray);
+            $frontarray['quicklinks']=Page::where('type','quick links')->get();
+
+            return $view->with('frontarray',$frontarray);
         });
     }
 

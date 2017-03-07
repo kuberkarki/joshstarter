@@ -130,7 +130,12 @@ Route::get('/auth/callback/{provider?}',[
 // usage inside a laravel route
 Route::get('thumbnail/{image}', function($image)
 {
-    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
+    if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
+        $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
+    } else {
+       $img = Image::make(asset('assets/images/default.jpg'))->resize(260, 175);
+    }
+    //$img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
 
     return $img->response('jpg');
 });
@@ -138,14 +143,28 @@ Route::get('thumbnail/{image}', function($image)
 // usage inside a laravel route
 Route::get('thumbnail2/{image}', function($image)
 {
-    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(358, 217);
+    //echo URL::to('/uploads/crudfiles/'.$image);
+    if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
+        $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(358, 217);
+    } else {
+       $img = Image::make(asset('assets/images/default.jpg'))->resize(358, 217);
+    }
+
+    
+    //$img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(358, 217);
 
     return $img->response('jpg');
 });
 
 Route::get('thumbnail3/{image}', function($image)
 {
-    $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(95, 78);
+    //if(file_exists())
+    if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
+        $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(95, 78);
+    } else {
+       $img = Image::make(asset('assets/images/default.jpg'))->resize(95, 78);
+    }
+   // $img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(95, 78);
 
     return $img->response('jpg');
 });

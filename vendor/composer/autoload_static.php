@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
+class ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -125,7 +125,6 @@ class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
-            'Doctrine\\Common\\Annotations\\' => 28,
             'DebugBar\\' => 9,
         ),
         'C' => 
@@ -368,10 +367,6 @@ class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
-        'Doctrine\\Common\\Annotations\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
-        ),
         'DebugBar\\' => 
         array (
             0 => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar',
@@ -514,6 +509,10 @@ class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
             'Doctrine\\Common\\Inflector\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+            'Doctrine\\Common\\Annotations\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
             ),
         ),
         'C' => 
@@ -996,6 +995,7 @@ class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
         'PHP_Token_NEW' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_C' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_SEPARATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_NULLSAFE_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NUM_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -1111,10 +1111,10 @@ class ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitb6a647986318d60c76c97cb7e4751ac8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1::$classMap;
 
         }, null, ClassLoader::class);
     }

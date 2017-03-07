@@ -120,11 +120,11 @@
       <div class="col-sm-3">
       <h3>Quick Links</h3>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Booking Online</a></li>
-        <li><a href="#">Contact Us</a></li>
+
+        @foreach($frontarray['quicklinks'] as $link)
+        <li><a href="{{ route('page',$link->slug)}}">{{$link->name}}</a></li>
+        @endforeach
+       
       </ul>
       </div>
       <div class="col-sm-3">

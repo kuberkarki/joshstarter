@@ -189,4 +189,24 @@
             </a>
         </li>
     </ul>
+</li><li {!! (Request::is('admin/testimonials') || Request::is('admin/testimonials/create') || Request::is('admin/testimonials/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Testimonials</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/testimonials') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/testimonials') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Testimonials
+            </a>
+        </li>
+        <li {!! (Request::is('admin/testimonials/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/testimonials/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Testimonial
+            </a>
+        </li>
+    </ul>
 </li>

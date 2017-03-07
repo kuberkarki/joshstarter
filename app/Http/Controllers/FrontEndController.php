@@ -41,6 +41,7 @@ class FrontEndController extends JoshController
         $this->frontarray['onenews'] = News::latest()->first();
         $this->frontarray['mainmenu']=Page::where('type','Main Menu')->get();
         $this->frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
+        $this->frontarray['quicklinks']=Page::where('type','quick links')->get();
     }
 
     /*
@@ -55,7 +56,7 @@ class FrontEndController extends JoshController
 
     public function home(Request $request){
 
-       
+
         $date = new DateTime;
         $date->modify('-50 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
@@ -94,11 +95,14 @@ class FrontEndController extends JoshController
 
         $ads_category = Ads_category::where('homepage',true)->get();
 
+        $testimonial=\App\Testimonial::inRandomOrder()->first();
+
+
         //print_r($this->frontarray);exit;
 
 
         //$tags = $this->tags;
-        return View::make('index',compact('ads_category','popularevents','sponsoredevents'))->with('events',$events)->with('news',$newss)->with('frontarray',$this->frontarray);
+        return View::make('index',compact('ads_category','popularevents','sponsoredevents','testimonial'))->with('events',$events)->with('news',$newss);
     }
 
     public function filtereventbyprice(Request $request){

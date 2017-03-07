@@ -26,4 +26,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin'])
 });Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('exchanges', 'ExchangesController');
 	Route::get('exchanges/{id}/delete', array('as' => 'admin.exchanges.delete', 'uses' => 'ExchangesController@getDelete'));
 	Route::get('exchanges/{id}/confirm-delete', array('as' => 'admin.exchanges.confirm-delete', 'uses' => 'ExchangesController@getModalDelete'));
+});Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('testimonials', 'TestimonialsController');
+	Route::get('testimonials/{id}/delete', array('as' => 'admin.testimonials.delete', 'uses' => 'TestimonialsController@getDelete'));
+	Route::get('testimonials/{id}/confirm-delete', array('as' => 'admin.testimonials.confirm-delete', 'uses' => 'TestimonialsController@getModalDelete'));
 });
