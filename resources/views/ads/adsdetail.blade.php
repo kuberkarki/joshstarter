@@ -10,6 +10,9 @@
 @section('header_styles')
     <!--page level css starts-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/blog.css') }}">
+    <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq0JqsNGNj54cF3Sb3FMNq3fPbdnpzZ2M">
+</script>
 
     <!--end of page level css-->
 @stop
@@ -172,17 +175,35 @@ If you are looking for live wedding music at your ceremony, or to find a perform
         <div class="leftContent">
           <div class="leftList">
             <h3>Business Owner</h3>
-            {{$ad->owner()->first()->company_name}}
-            <img src="{{asset('assets/images/eventday/organizer1.jpg')}}" class="img-responsive">
+             @if($owner->company_name)
+              {{$owner->company_name}}
+            @endif
+            @if($owner->first_name)
+              {{$owner->first_name." ".$owner->last_name}}
+            @endif
+            @if($owner->name)
+              {{$owner->name}}
+            @endif
+            @if($owner->pic)
+                <img src="{!! url('/').'/uploads/users/'.$owner->pic !!}" alt="profile pic" class="img-responsive">
+            @else
+                <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic">
+            @endif
+            @if($ad->owner()->first()->bio)
             <p>{!! $ad->owner()->first()->bio !!}<br>
-            <i class="fa fa-phone" aria-hidden="true"></i> {!! $ad->owner()->first()->office_phone !!}<br>
+            @endif
+             @if($owner->office_phone)
+            <i class="fa fa-phone" aria-hidden="true"></i> {!! $owner->office_phone !!}<br>
+            @endif
             <!-- <i class="fa fa-globe" aria-hidden="true"></i> www.event.com<br> -->
-            <i class="fa fa-map-marker" aria-hidden="true"></i> {!! $ad->owner()->first()->address !!}<br>
+            @if($owner->address)
+            <i class="fa fa-map-marker" aria-hidden="true"></i> {!! $owner->address !!}<br>
+            @endif
             
-            <h3>Rating</h3>
+            <!-- <h3>Rating</h3>
             <ul>
               <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-            </ul>
+            </ul> -->
           </div>
         </div>
 
@@ -190,70 +211,51 @@ If you are looking for live wedding music at your ceremony, or to find a perform
           <div class="leftList">
 
             <h3>Location</h3>
-            <img src="{{asset('assets/images/eventday/maps.jpg')}}" class="img-responsive">
+            <!-- <img src="{{asset('assets/images/eventday/maps.jpg')}}" class="img-responsive"> -->
+            <div id="map" style="width:100%; height:300px;">
           </div>
         </div>
 
         <div class="leftContent">
-          <div class="leftList">
+          <!-- <div class="leftList">
 
             <h3>Sponsors</h3>
             <img src="{{asset('assets/images/eventday/sponsor1.jpg')}}" class="img-responsive">
-          </div>
+          </div> -->
         </div>
 
         <div class="leftContent">
           <div class="leftList otherEvent">
-            <h3>Other Events</h3>
-            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
+            <h3>Other {!! $ads_category[$ad->ads_category_id] !!}</h3>
+            @if(count($otherads))
+              @foreach($otherads as $other)
+            <p><a href="{{ URL::to('ads/details',$other->slug)}}"><span class="otherEventTitle">{{ $other->title}}</span>
+{{ str_limit($other->description,40,'...')}}</a></p>
+              @endforeach
+            @endif
+            <!-- <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
 sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
             <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
 sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
             <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
 sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
             <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
-sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
-            <p><a href="#"><span class="otherEventTitle">Wedding venue NYC(New York, NY)</span>
-sed do eiusmod tempor incididunt ut labore et dolore...</a></p>
+sed do eiusmod tempor incididunt ut labore et dolore...</a></p> -->
           </div>
         </div>
 
-        <div class="leftContent">
+       <!--  <div class="leftContent">
           <div class="leftList">
             <img src="{{asset('assets/images/eventday/customerads1.jpg')}}" class="img-responsive">
           </div>
-        </div>
+        </div> -->
       </div>
       </div>
   </div>
     
 </div>
 </section>
-<section class="contantWrapper testimonial">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-3"><span class="borderBtm"></span></div>
-      <div class="col-xs-6">
-        <h2 class="noBorder"><span>What People Think</span></h2>
-      </div>
-      <div class="col-xs-3"><span class="borderBtm"></span></div>
-    </div>
-    <div class="row"> 
-      
-      <!-- <h2 class="padT6px"><span class="testiBG">What People Think</span></h2> -->
-      
-      <div class="col-sm-2">
-        <p><i class="fa fa-quote-left" aria-hidden="true"></i></p>
-      </div>
-      <div class="col-sm-8">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<span><strong>Magda Guzman</strong><br>
-          Business owner<br>
-          Hacienda Las Americas</span></p>
-      </div>
-      <div class="col-sm-2"></div>
-    </div>
-  </div>
-</section>
+
         
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -391,5 +393,60 @@ $( document ).ready(function() {
    $('#bookModal').modal('show');
 });
 </script>
+
+@if($ad->location)
+<script type="text/javascript">
+var geocoder;
+var map;
+var address = "{{ $ad->location}}";
+
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var myOptions = {
+    zoom: 8,
+    center: latlng,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+    },
+    navigationControl: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
+  if (geocoder) {
+    geocoder.geocode({
+      'address': address
+    }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+          map.setCenter(results[0].geometry.location);
+
+          var infowindow = new google.maps.InfoWindow({
+            content: '<b>' + address + '</b>',
+            size: new google.maps.Size(150, 50)
+          });
+
+          var marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map,
+            title: address
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+@endif
 
 @stop

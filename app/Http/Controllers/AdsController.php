@@ -789,6 +789,11 @@ class AdsController extends Controller {
 
 			$share=Share::load(url('ads-detail/'.$ad->slug), $ad->title)->services('facebook', 'gplus', 'twitter','email','pinterest');
 
+			$owner=$ad->owner()->first();
+
+
+		$otherads=Ad::where('ads_category_id',$ad->ads_category_id)->limit(5)->get();
+
 
 			//print_r($ad->owner()->first()->company_name);exit;;
 
@@ -796,7 +801,7 @@ class AdsController extends Controller {
 		//echo count($users);exit;
 
 		
-		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject','share'));
+		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject','share','owner','otherads'));
 	}
 
 		/**

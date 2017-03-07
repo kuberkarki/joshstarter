@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
             $frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
                 $view->with('frontarray', $frontarray);
             $frontarray['quicklinks']=Page::where('type','quick links')->get();
+            $frontarray['testimonial']=\App\Testimonial::inRandomOrder()->first();
 
             return $view->with('frontarray',$frontarray);
         });
