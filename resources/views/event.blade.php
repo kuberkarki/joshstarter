@@ -11,6 +11,9 @@
     <!--page level css starts-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/blog.css') }}">
     <!--end of page level css-->
+    <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq0JqsNGNj54cF3Sb3FMNq3fPbdnpzZ2M">
+</script>
 @stop
 
 {{-- breadcrumb --}}
@@ -45,6 +48,11 @@
             <!-- Business Deal Section Start -->
             <div class="col-sm-8 col-md-8">
                 <div class=" thumbnail featured-post-wide img">
+                <div class="sal_price"> 
+                       
+                         Price: {!! Helper::getPrice($event->ticket_price) !!}
+                        
+                      </div>
                     @if($event->photo)
                         <img src="{{ URL::to('/uploads/crudfiles/'.$event->photo)  }}" class="img-responsive" alt="Image">
                     @endif
@@ -226,24 +234,62 @@
             <!-- Recent Posts Section Start -->
             <div class="col-sm-4 col-md-4 col-full-width-left">
                 <div class="the-box">
+                    <div class="leftList">
+                        <h3>Event Organizer</h3>
+                         @if($owner->company_name)
+                          {{$owner->company_name}}<br/>
+                        
+                        @elseif($owner->first_name)
+                          {{$owner->first_name." ".$owner->last_name}}<br/>
+                        
+                        @elseif($owner->name)
+                          {{$owner->name}}<br/>
+                        @endif
+                        @if($owner->pic)
+
+                            <img src="{!! url('/').'/thumbnail2/'.$owner->pic !!}" alt="profile pic" class="img-responsive"><br/>
+                        @else
+                            <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic"><br/>
+                        @endif
+                        @if($owner->bio)
+                        <p>{!! $owner->bio !!}</p><br>
+                        @endif
+                         @if($owner->office_phone)
+                        <i class="fa fa-phone" aria-hidden="true"></i> {!! $owner->office_phone !!}<br>
+                        @endif
+                        <!-- <i class="fa fa-globe" aria-hidden="true"></i> www.event.com<br> -->
+                        @if($owner->address)
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> {!! $owner->address !!}<br>
+                        @endif
+                        
+                      
+                  </div>
+              </div>
+              <div class="the-box">
+                <div class="leftList">
+                  <h3>Location</h3>
+                  <div id="map" style="width:100%; height:300px;"></div>
+                </div>
+              </div>
+                  <div class="the-box">
                         <h3 class="small-heading text-center">UPCOMING EVENTS</h3>
                         <ul class="media-list media-xs media-dotted">
-                         @foreach($upcomingevents as $event)
+                         @foreach($upcomingevents as $uevent)
                             <li class="media">
-                                 @if($event->photo)
-                                    <img class="img-responsive img-hover pull-left" src="../thumbnail3/{!! $event->photo !!}" alt="">
+                                 @if($uevent->photo)
+                                    <img class="img-responsive img-hover pull-left" src="../thumbnail3/{!! $uevent->photo !!}" alt="">
                                     @else
                                     <img class="img-responsive img-hover pull-left" src="../thumbnail3/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
                                     @endif
                                 <div class="media-body">
                                     <h4 class="media-heading primary">
-                                                        <a href="{{ URL::to('event/'.$event->slug) }}">{!! $event->name !!}</a>
+                                                        <a href="{{ URL::to('event/'.$uevent->slug) }}">{!! $uevent->name !!}</a>
                                                     </h4>
                                     <p class="date">
-                                        <small class="text-danger">{!! date('D, M d, g a ',strtotime($event->date)) !!}</small>
+                                        <small class="text-danger">{!! date('D, M d, g a ',strtotime($uevent->date)) !!}</small>
                                     </p>
                                     <p class="small">
-                                       {!! str_limit($event->description,150, '...') !!}
+                                       {!! str_limit($uevent->description,150, '...') !!}
                                     </p>
                                 </div>
                             </li>
@@ -385,4 +431,58 @@ $( document ).ready(function() {
 });
 
 </script>
+@if($event->location)
+<script type="text/javascript">
+var geocoder;
+var map;
+var address = "{{ $event->location}}";
+
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var myOptions = {
+    zoom: 8,
+    center: latlng,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+    },
+    navigationControl: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
+  if (geocoder) {
+    geocoder.geocode({
+      'address': address
+    }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+          map.setCenter(results[0].geometry.location);
+
+          var infowindow = new google.maps.InfoWindow({
+            content: '<b>' + address + '</b>',
+            size: new google.maps.Size(150, 50)
+          });
+
+          var marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map,
+            title: address
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+@endif
 @stop

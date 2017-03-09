@@ -92,6 +92,40 @@
       </div>
     </header>
     <!-- //Header End -->
+    @if ($errors->any())
+<div class="alert alert-danger alert-dismissable ">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Error:</strong> Please check the form below for errors
+</div>
+@endif
+
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Success:</strong> {{ $message }}
+</div>
+@endif
+
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Error:</strong> {{ $message }}
+</div>
+@endif
+
+@if ($message = Session::get('warning'))
+<div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Warning:</strong> {{ $message }}
+</div>
+@endif
+
+@if ($message = Session::get('info'))
+<div class="alert alert-info alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Info:</strong> {{ $message }}
+</div>
+@endif
     
     <!-- slider / breadcrumbs section -->
     @yield('top')
@@ -129,13 +163,15 @@
       </div>
       <div class="col-sm-3">
       <div class="newsLetter">
+      {!! Form::open(['url' => route('contact'),'id'=>'frm']) !!}
         <h3>News Letter</h3>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter Your Email">
+            <input name="contact-email" type="text" class="form-control" placeholder="Enter Your Email">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Submit</button>
+              <button class="btn btn-default" type="submit">Submit</button>
             </span>
           </div><!-- /input-group -->
+        {!! Form::close() !!}
         </div>
       <div class="card">
         <h3>We Accept</h3>

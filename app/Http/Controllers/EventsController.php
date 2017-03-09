@@ -35,12 +35,21 @@ class EventsController extends Controller {
     {
         // Grab all the newss
         $events = Event::latest()->simplePaginate(5);
-        $events->setPath('event');
+        $events->setPath('events');
+        $popular= Event::select(['*', \DB::raw('count(event_comments.id) as total')])
+                ->leftJoin('event_comments', 'events.id', '=', 'event_comments.event_id')
+                ->groupBy('events.id')
+                ->orderBy('total', 'DESC')
+                ->limit(5)->get();
+        $date = new DateTime;
+		$date->modify('-5 minutes');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+        $upcoming=Event::latest()->where('date','>=',$formatted_date)->simplePaginate(5);
        // $tags = $this->tags;
         // Show the page
 
 
-        return View('events', compact('events'))->with('frontarray',$this->frontarray);
+        return View('events', compact('events','popular','upcoming'))->with('frontarray',$this->frontarray);
     }
 
     /**
@@ -54,7 +63,13 @@ class EventsController extends Controller {
 			}
         if ($slug == '') {
             $event= Event::first();
-            $reviewed=$event->reviews()->where('author_id',$user->id)->where('reviewable_id',$event->id)->first();
+            if(isset($user))
+            	$reviewed=$event->reviews()->where('author_id',$user->id)->where('reviewable_id',$event->id)->first();
+            else{
+            	$reviewed=1;
+            	$user=null;
+            }
+
         }
         try {
             $event = Event::where('slug',$slug)->first();
@@ -69,9 +84,12 @@ class EventsController extends Controller {
             return Response::view('404', array(), 404);
         }
 
-        $subject="Message on Ad-".$event->name;
-		$users = User::where('id', '=', $event->user_id)->get();
+         if(isset($user)){
 
+	        $subject="Message on Ad-".$event->name;
+			$users = User::where('id', '=', $event->user_id)->get();
+
+		}
 		$adlink= "<a href=".url('event/'.$event->slug).">".$event->name."</a>";
 
 			$share=Share::load(url('event/'.$event->slug), $event->name)->services('facebook', 'gplus', 'twitter','email','pinterest');
@@ -83,9 +101,11 @@ class EventsController extends Controller {
         $formatted_date = $date->format('Y-m-d H:i:s');
 		 $upcomingevents=Event::where('type','Public')->where('date','>',$formatted_date)->orderBy('date','ASC')->limit(6)->get();
 
+		 $owner= User::where('id',$event->user_id)->first();
+
         
         // Show the page
-        return View('event', compact('event','reviewed','user','users','share','upcomingevents'))->with('frontarray',$this->frontarray);
+        return View('event', compact('event','reviewed','user','users','share','upcomingevents','owner'))->with('frontarray',$this->frontarray);
 
     }
 

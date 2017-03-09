@@ -128,6 +128,18 @@ Route::get('/auth/callback/{provider?}',[
 ]);
 
 // usage inside a laravel route
+Route::get('mainphoto/{image}', function($image)
+{
+    if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
+        $img = Image::make(URL::to('/uploads/crudfiles/'.$image));
+    } else {
+       $img = Image::make(asset('assets/images/default.jpg'));
+    }
+    //$img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
+
+    return $img->response('jpg');
+});
+// usage inside a laravel route
 Route::get('thumbnail/{image}', function($image)
 {
     if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
@@ -228,7 +240,7 @@ Route::get('currency/{currency}', function ($currency) {
     });
 
     
-             Route::post('search', array('as' => 'search', 'uses' => 'AdsController@search'));
+             Route::any('search', array('as' => 'search', 'uses' => 'AdsController@search'));
 
         //Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
 
@@ -384,6 +396,7 @@ Route::get('currency/{currency}', function ($currency) {
     });
     Route::get('logout', array('as' => 'logout', 'uses' => 'FrontEndController@getLogout'));
 # contact form
+Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@postContact'));
    /* Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@postContact'));
     Route::post('partner', array('as' => 'partner', 'uses' => 'FrontEndController@postPartner'));
     Route::post('investor', array('as' => 'investor', 'uses' => 'FrontEndController@postInvestor'));

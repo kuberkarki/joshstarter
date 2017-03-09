@@ -770,36 +770,36 @@ class FrontEndController extends JoshController
     public function postContact(Request $request)
     {
 
-        $subscribes=$request->get('subscribe');
+        /*$subscribes=$request->get('subscribe');
         $subscribed='';
         if(count($subscribes))
         foreach($subscribes as $s){
             $subscribed =$s;
-        }
+        }*/
 
         //echo $subscribed;exit;
         
 
         // Data to be used on the email view
         $data = array(
-            'contact-name' => $request->get('contact-name'),
+            ///'contact-name' => $request->get('contact-name'),
             'contact-email' => $request->get('contact-email'),
-            'contact-msg' => $subscribed,
+            //'contact-msg' => $subscribed,
         );
 
-        if(($data['contact-name']=='') || ($data['contact-email']=='')){
+        if($data['contact-email']==''){
             
              return redirect()->route("home")->with('error','Please fill the form!!');
 
          }
 
-         Newsletter::subscribe($data['contact-email'], ['FNAME'=>$data['contact-name'], 'MMERGE3'=>$subscribed]);
+         Newsletter::subscribe($data['contact-email']);
 
-        // Send the activation code through email
+        
         Mail::send('emails.contact', compact('data'), function ($m) use ($data) {
-            $m->from($data['contact-email'], $data['contact-name']);
+            $m->from($data['contact-email']);
             $m->to('karki.kuber@gmail.com', 'Event Day Planner');
-            $m->subject('Received a mail from ' . $data['contact-name']);
+            $m->subject('Subscribed a mail from ' . $data['contact-email']);
 
         });
 

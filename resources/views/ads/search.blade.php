@@ -39,11 +39,11 @@ Search Ads
             <h3>Filter on Availability</h3>
             <div class="row">
               <div class="col-sm-5"><div class="input-group">
-                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <input name="fromdate" type="text" id='datepicker1' placeholder="Date"  class="form-control" placeholder="Date" onchange="filterbydate()" aria-describedby="basic-addon1">
                     </div></div>
               <div class="col-sm-2 txtCntr">To</div>
               <div class="col-sm-5"><div class="input-group">
-                      <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                      <input name="todate" type="text" id='datepicker2' placeholder="Date"  class="form-control" placeholder="Date" onchange="filterbydate()" aria-describedby="basic-addon1">
                     </div></div>
             </div>
           </div>
@@ -51,38 +51,25 @@ Search Ads
           <div class="leftList">
             <h3>Filter on Rating</h3>
             <ul>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
-              <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
+              <li><a href="{{Request::url()}}?rating=5"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=4"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=3"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=2"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
+              <li><a href="{{Request::url()}}?rating=1"><div class="rating"><i class="fa fa-star" aria-hidden="true"></i></div><span class="review"></span></a></li>
             </ul>
           </div>
 
           <div class="leftList">
             <h3>Filter on Price</h3>
             <ul>
-              <li>0 - 100</li>
-              <li>100 - 1000</li>
-              <li>1000 - 5000</li>
-              <li>Over 5000</li>
+              <li><a href="{{Request::url()}}?price=0-100">{{Helper::getPricesymbol()}} 0 - {{Helper::getPricesymbol()}} 100</a></li>
+              <li><a href="{{Request::url()}}?price=100-1000">{{Helper::getPricesymbol()}} 100 - {{Helper::getPricesymbol()}} 1000</a></li>
+              <li><a href="{{Request::url()}}?price=1000-5000">{{Helper::getPricesymbol()}} 1000 - {{Helper::getPricesymbol()}} 5000</a></li>
+              <li><a href="{{Request::url()}}?price=5001-inf">Over {{Helper::getPricesymbol()}} 5000</a></li>
             </ul>
           </div>
           
-          <div class="leftList">
-            <h3>Filter on Discount</h3>
-            <ul>
-              <li>0 - 10% Sale</li>
-              <li>10 - 20% Sale</li>
-              <li>20 - 30% Sale</li>
-              <li>30 - 40% Sale</li>
-              <li>40 - 50% Sale</li>
-              <li>50 - 60% Sale</li>
-              <li>60 - 70% Sale</li>
-              <li>70 - 80% Sale</li>
-              <li>Above</li>
-            </ul>
-          </div>
+         
         </div>
       </div>
       <div class="col-sm-9">
@@ -242,114 +229,10 @@ Search Ads
       </div>
       </div>
   </div>
-    <div class="container">
-      <div class="newSetion">
-        <div class="row">
-          <div class="col-sm-4">
-          <h3>latest News</h3>
-          <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-
-                    <p><a href="#"><strong> Lorem ipsum dolor </strong>
-          <span> 10 May  1:10 am</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-          </a></p>
-          </div>
-          <div class="col-sm-4">
-            <h3>Popular Events in London, UK</h3>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          </div>
-          
-          <div class="col-sm-4">
-            <h3>Events Around the World</h3>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          <p><img src="images/news1.jpg" alt=""><a href="#"><strong> Lorem ipsum dolor </strong>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-          </a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 </div>
 </section>
-<section class="contantWrapper testimonial">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-3"><span class="borderBtm"></span></div>
-      <div class="col-xs-6">
-        <h2 class="noBorder"><span>What People Think</span></h2>
-      </div>
-      <div class="col-xs-3"><span class="borderBtm"></span></div>
-    </div>
-    <div class="row"> 
-      
-      <!-- <h2 class="padT6px"><span class="testiBG">What People Think</span></h2> -->
-      
-      <div class="col-sm-2">
-        <p><i class="fa fa-quote-left" aria-hidden="true"></i></p>
-      </div>
-      <div class="col-sm-8">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<span><strong>Magda Guzman</strong><br>
-          Business owner<br>
-          Hacienda Las Americas</span></p>
-      </div>
-      <div class="col-sm-2"></div>
-    </div>
-  </div>
-</section>
+
 @stop
 {{-- page level scripts --}}
 @section('footer_scripts')
@@ -403,6 +286,21 @@ $( document ).ready(function() {
     //$('#count-existing').html(value);
   });
 });
+
+  $( function() {
+    var date = new Date();
+        date.setMonth(date.getMonth()+1);
+    $( "#datepicker1" ).datepicker(
+      {
+        dateFormat: 'yy-mm-dd',
+        minDate: 0,
+        maxDate:date
+    });
+     $( "#datepicker2" ).datepicker({dateFormat: 'yy-mm-dd',minDate: 0,maxDate:date});
+  } );
+
+
+
 </script>
 
 @stop

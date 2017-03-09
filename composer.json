@@ -22,7 +22,8 @@
         "nicolaslopezj/searchable": "1.*",
         "chencha/share": "^5.2",
         "adamwathan/eloquent-oauth-l5": "^0.5.1",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "spatie/laravel-newsletter": "^3.0"
 },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -179,6 +179,7 @@ return [
          Kuber\ViewCounter\ViewCounterServiceProvider::class,
          Chencha\Share\ShareServiceProvider::class,
          AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider::class,
+         Spatie\Newsletter\NewsletterServiceProvider::class,
     ],
 
     /*
@@ -238,6 +239,7 @@ return [
         'Share' => Chencha\Share\ShareFacade::class,
         'SocialAuth' => AdamWathan\EloquentOAuth\Facades\OAuth::class,
         'Helper' => App\Helpers\Helper::class,
+        'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
 
     ],
 
