@@ -78,7 +78,9 @@
                         </p>
                         @if($event->video_link)
                         <p class="center" style="text-align: center;">
-                            <iframe width="560" height="315" src="{!! ($event->video_link) !!}" allowfullscreen></iframe>
+                           
+
+                           {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$event->video_link)!!}
                         </p>
                         @endif
                         <p>
