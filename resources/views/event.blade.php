@@ -78,7 +78,7 @@
                         </p>
                         @if($event->video_link)
                         <p class="center" style="text-align: center;">
-                            {!! ($event->video_link) !!}
+                            <iframe width="560" height="315" src="{!! ($event->video_link) !!}" allowfullscreen></iframe>
                         </p>
                         @endif
                         <p>
