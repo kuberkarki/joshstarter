@@ -78,9 +78,15 @@
                         </p>
                         @if($event->video_link)
                         <p class="center" style="text-align: center;">
-                           
 
+                        @if(str_contains($event->video_link, 'vimeo.com'))
+                          {!! preg_replace('#http(s)?://(www\.)?(player\.)?vimeo\.com/(video/)?(\d+)#',
+                             "<iframe width=\"420\" height=\"315\" src=\"//player.vimeo.com/video/$5\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+                             $event->video_link) !!}
+                           @endif
+                        @if(str_contains($event->video_link, 'youtube.com'))
                            {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$event->video_link)!!}
+                        @endif
                         </p>
                         @endif
                         <p>
