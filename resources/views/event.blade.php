@@ -76,6 +76,11 @@
                         <p class="text-justify">
                             {!! $event->description !!}
                         </p>
+                        @if($event->video_link)
+                        <p class="center" style="text-align: center;">
+                            {!! ($event->video_link) !!}
+                        </p>
+                        @endif
                         <p>
                         <div class="socialTicket">
                           <div class="row">
