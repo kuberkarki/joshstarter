@@ -108,9 +108,9 @@
                             <?php if(isset($user)){?>
                          <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send Message</button> 
                             <?php } else{
-                                ?>
-                                <a href="{{url('login')}}">Login to Send Message</a> 
-                                <?php
+                                
+                                /*<a href="{{url('login')}}">Login to Send Message</a> */
+                               
                                 }?>
                         <a href="{{ url('events/book',$event->id) }}" ><i class="fa fa-ticket" aria-hidden="true" ></i> Book Tickets</a>
                         </p>
