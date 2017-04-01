@@ -18,6 +18,10 @@ use App\Http\Requests\EventCommentRequest;
 use App\User;
 use Share;
 use DateTime;
+use App\Booking;
+use DNS1D;
+use DNS2D;
+use PDF;
 
 class EventsController extends Controller {
 
@@ -534,6 +538,44 @@ class EventsController extends Controller {
 
 
 		
+	}
+	public function ticket(request $request,$booking_id){
+		
+		$booking=Booking::where('id',$booking_id)->where('user_id',Sentinel::getUser()->id)->first();
+		if($booking){
+			$event=Event::find($booking->event_id);
+			$organizer=User::find($event->user_id);
+			/*echo "Event Name: ".$event->name;
+			echo "<br/>";
+			echo "Date:".$event->date;
+			echo "<br/>";
+			//echo '<img src="data:image/png;base64,' . DNS2D::getBarcodePNG($booking->event_id, "PDF417") . '" alt="barcode"   />';
+			echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($booking->event_id, "C39+",3,133) . '" alt="barcode"   />';
+			echo "Download PDF";*/
+			//dd($booking);
+			return view('events.ticket',compact('event','booking','organizer'));
+		}else{
+			return redirect('/')->with('error', 'Sorry some problem occured');
+		}
+		//dd('not your ticket');
+
+		
+	}
+
+	public function downloadticket(request $request,$booking_id){
+		$booking=Booking::where('id',$booking_id)->where('user_id',Sentinel::getUser()->id)->first();
+		if($booking){
+		$event= Event::find($booking->event_id);//'<img src="data:image/png;base64,' . DNS2D::getBarcodePNG("4", "PDF417") . '" alt="barcode"   />';
+		$data['organizer']=User::find($event->user_id);
+		$data['event']=$event;
+
+		$data['booking']=$booking;
+
+	    $pdf = PDF::loadView('pdf.invoice', $data);
+	    return $pdf->download('ticket.pdf');
+	    }else{
+			return redirect('/')->with('error', 'Sorry some problem occured');
+		}
 	}
 
 }

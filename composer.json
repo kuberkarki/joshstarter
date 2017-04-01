@@ -23,7 +23,9 @@
         "chencha/share": "^5.2",
         "adamwathan/eloquent-oauth-l5": "^0.5.1",
         "guzzlehttp/guzzle": "*",
-        "spatie/laravel-newsletter": "^3.0"
+        "spatie/laravel-newsletter": "^3.0",
+        "milon/barcode": "^5.3",
+        "barryvdh/laravel-dompdf": "^0.8.0"
 },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

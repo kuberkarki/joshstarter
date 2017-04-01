@@ -55,6 +55,75 @@ class AdsController extends Controller {
 		                             $join->on('bookings.ads_id', '=', 'ads.id');
 		                             $join->on('book_date','<>',DB::raw("'$date'"));
 		                            
+		                         })->select(array('ads.*','ads_id','book_date'))->Where('location', 'like', '%' . $location . '%')->groupBy('ads.id')->orderBy('ads.id')->paginate(3);
+
+
+		     }
+		     else{
+				$ads = Ad::search($query)->Where('location', 'like', '%' . $location . '%')->orderBy('ads.id')->paginate(3);
+			}
+				$ads_category=Ads_category::all();
+		}
+
+		if($iseventsearch){
+			if($date){
+				$events = Event::search($query)
+				/*->Join('bookings', function($join) use($date){
+									
+		                             $join->on('bookings.ads_id', '=', 'ads.id');
+		                             $join->on('book_date','<>',DB::raw("'$date'"));
+		                            
+		                         })->select(array('ads.*','ads_id','book_date'))*/->Where('location', 'like', '%' . $location . '%')->groupBy('events.id')->orderBy('date')->paginate(3);
+
+		                         
+
+
+		     }
+		     else{
+				$events = Event::search($query)->Where('location', 'like', '%' . $location . '%')->orderBy('date')->paginate(3);
+			}
+				
+		}
+
+
+
+
+
+
+
+		return view('ads.search',compact('ads','ads_category','query','events','location','date','iseventsearch','isbusinesssearch'));
+
+		//dd($ads);
+	}
+
+	public function moreevents(request $request){
+
+
+
+		$query=$request->get('keyword');
+		$location=$request->get('location');
+		$date=$request->get('date');
+		
+	 if($request->get('type')=='business'){
+	 	$isbusinesssearch=1;//$request->get('business');
+	 	$iseventsearch=0;
+	 }else{
+	 	$iseventsearch=1;
+	 	$isbusinesssearch=0;
+	 }
+	 
+
+	 $ads=$events=$ads_category=null;
+
+
+		if($isbusinesssearch){
+			if($date){
+				$ads = Ad::search($query)
+				->leftJoin('bookings', function($join) use($date){
+									
+		                             $join->on('bookings.ads_id', '=', 'ads.id');
+		                             $join->on('book_date','<>',DB::raw("'$date'"));
+		                            
 		                         })->select(array('ads.*','ads_id','book_date'))->Where('location', 'like', '%' . $location . '%')->groupBy('ads.id')->paginate(15);
 
 
@@ -83,15 +152,16 @@ class AdsController extends Controller {
 				
 		}
 
+		$e='';
+		foreach($events as $event){
+			$e .='<div class="col-sm-4 unique-class">'.$event->name.'</div>';
+		}
 
 
 
-
-
-
-		return view('ads.search',compact('ads','ads_category','query','events','location','date','iseventsearch','isbusinesssearch'));
-
-		//dd($ads);
+		
+        return response($e,200);
+    
 	}
 
 	/**

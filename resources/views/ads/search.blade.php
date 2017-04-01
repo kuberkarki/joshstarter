@@ -173,7 +173,7 @@ Search Ads
           @elseif($iseventsearch)
           @if(count($events))
             @foreach($events as $event)
-              <div class="col-sm-4">
+              <div class="col-sm-4 unique-class" id="{{$event->id}}">
                 <div class="panel panel-default">
                   <a href="{!! url('event',$event->slug) !!}">
                     <div class="panel-image">
@@ -221,6 +221,12 @@ Search Ads
                 @if(count($events))
                 @include('pagination.default', ['paginator' => $events])
                 @endif
+          <div class="morediv"></div>
+         <!--  <div class="col-sm-1 col-md-12">
+              <div class="media services-wrap55 wow fadeInDown"> 
+                  <center><h3 class="media-heading"><div class="more" id="more">Load More Events</div></h3></center>
+              </div>
+          </div> -->
           @else
           @endif
 
@@ -298,6 +304,22 @@ $( document ).ready(function() {
     });
      $( "#datepicker2" ).datepicker({dateFormat: 'yy-mm-dd',minDate: 0,maxDate:date});
   } );
+
+  $(document).ready(function() {
+    $('#more').click(function() {
+        var get_last_post_display = $('.unique-class:last').attr('id'); //get ip last <li>
+        $('#more').html('<img src=\"{{ asset("assets/img/loading.gif") }}\"/>');
+        $.get('moreevents', 'last_id_post='+get_last_post_display, function(html) {
+          console.log(html);
+            if(html) {
+                $('.morediv').append(html);//$('.main-div') ?
+                $('#more').text('Load More Project'); //add text "Load More Post" to button again
+            } else {
+                $('#more').text('No more Project to load'); // when last record add text "No more posts to load" to button.
+            }
+        }, 'html');
+    });
+});
 
 
 

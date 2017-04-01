@@ -180,6 +180,8 @@ return [
          Chencha\Share\ShareServiceProvider::class,
          AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider::class,
          Spatie\Newsletter\NewsletterServiceProvider::class,
+         Milon\Barcode\BarcodeServiceProvider::class,
+         Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -240,6 +242,9 @@ return [
         'SocialAuth' => AdamWathan\EloquentOAuth\Facades\OAuth::class,
         'Helper' => App\Helpers\Helper::class,
         'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
 
     ],
 

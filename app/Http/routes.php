@@ -181,6 +181,13 @@ Route::get('thumbnail3/{image}', function($image)
     return $img->response('jpg');
 });
 
+Route::get('barcode',function(){
+    $data['barcode']= 'PDF417';//'<img src="data:image/png;base64,' . DNS2D::getBarcodePNG("4", "PDF417") . '" alt="barcode"   />';
+
+    $pdf = PDF::loadView('pdf.invoice', $data);
+    return $pdf->download('invoice.pdf');
+});
+
 Route::get('currency/{currency}', function ($currency) {
     // Retrieve a piece of data from the session...
      //echo $value = session('currency');exit;
@@ -241,6 +248,7 @@ Route::get('currency/{currency}', function ($currency) {
 
     
              Route::any('search', array('as' => 'search', 'uses' => 'AdsController@search'));
+             Route::get('moreevents', 'AdsController@moreevents');
 
         //Route::get('ads-detail/{slug?}', array('as' => 'ads-detail', 'uses' => 'AdsController@adsdetail'));
 
@@ -502,6 +510,9 @@ Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@po
             
             Route::get('book/{event_id}', array('as' => 'book', 'uses' => 'EventsController@getbook'));
             Route::post('bookings', array('as' => 'bookings', 'uses' => 'EventsController@submitbook'));
+
+            Route::get('ticket/{booking_id}',array('as'=>'ticket','uses'=>'EventsController@ticket'));
+            Route::get('downloadticket/{booking_id}',array('as'=>'downloadticket','uses'=>'EventsController@downloadticket'));
            // Route::get('manage-ads/{ad_id}', array('as'=>'manage-ads','uses'=>'AdsController@manageads'));
 
 

@@ -31,6 +31,8 @@ use App\ads_prices;
 use App\Booking;
 use App\Payment;
 use App\Event;
+use DNS2D;
+use PDF;
 
 class PaymentController extends BaseController
 {
@@ -537,7 +539,10 @@ class PaymentController extends BaseController
             return  Redirect::to('events/book/'.$id)->with('error', 'No Event Selected');
         }
 
-        if(!$price_amount && !is_numeric($price_amount)){
+
+
+        if(!$price_amount || !is_numeric($price_amount)){
+           
 
             //freebooking
                 $booking=new Booking();
@@ -546,10 +551,20 @@ class PaymentController extends BaseController
                 $booking->quantity=$quantity;
                 
                 $booking->price=$price_amount;
+
                 $booking->user_id=Sentinel::getUser()->id;
                 $booking->save();
-            return  Redirect::to('events/book/'.$id)->with('success', 'Booked Successfully!!');
+            return  Redirect::to('events/ticket/'.$booking->id)->with('success', 'Booked Successfully!!');
         }
+       
+
+        //$data['barcode']= $booking->id;//
+       // echo '<img src="data:image/png;base64,' . DNS2D::getBarcodePNG("4", "PDF417") . '" alt="barcode"   />';
+
+   // $pdf = PDF::loadView('pdf.invoice', $data);
+   // echo  $pdf->download('invoice.pdf');
+//exit;
+
 
         
 

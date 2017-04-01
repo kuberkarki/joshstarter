@@ -37,8 +37,11 @@
     @foreach($events_booked as $event)
     	<li><div>
     			<h3><a href="{{url('event',$event->event->slug)}}">{{$event->event->name}}</a></h3>
+          <p>Date: {{$event->event->date}}</p>
     			<b>Quantity:</b>{{$event->quantity}}<br/>
-    			<b>Price:</b>{!! Helper::getPrice($event->price) !!}
+    			<b>Price:</b>{!! Helper::getPrice($event->price) !!}<br/>
+          <a href="{{url('events/ticket',$event->id)}}">View Ticket</a><br/>
+          <a href="{{url('events/downloadticket',$event->id)}}">Download PDF</a><br/>
     		</div>
     	</li>
     @endforeach
