@@ -42,28 +42,19 @@
 @section('content')
     <!-- Container Section Start -->
     <div class="container">
-        <h2 class="primary marl12">{{$event->name}}</h2>
-        <div class="row content">
-        @include('notifications')
-            <!-- Business Deal Section Start -->
-            <div class="col-sm-8 col-md-8">
-                <div class=" thumbnail featured-post-wide img">
-                <div class="sal_price"> 
-                       
-                         Price: {!! Helper::getPrice($event->ticket_price) !!}
-                        
-                      </div>
-                    @if($event->photo)
-                        <img src="{{ URL::to('/uploads/crudfiles/'.$event->photo)  }}" class="img-responsive" alt="Image">
-                    @endif
-                    <!-- /.event-detail-image -->
-                    <div class="the-box no-border event-detail-content">
-    
+      <!-- <div class="row">
+      <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+          </div>
+          </div> -->
+
+
+
+        <!-- <h2 class="primary marl12">{{$event->name}}</h2> -->
 
                         <p class="additional-post-wrap">
-                            <span class="additional-post">
+                            <!-- <span class="additional-post">
                               <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>     
-                            </span>
+                            </span> -->
                             <span class="additional-post">
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> 
               
@@ -73,6 +64,49 @@
                                     
                                 </span>
                         </p>
+
+
+        <div class="row content">
+        @include('notifications')
+            <!-- Business Deal Section Start -->
+            <div class="col-sm-8 col-md-8">
+            <div  class="row">
+              <div class="col-sm-8">                
+              <ul class="event-list">
+                <li>
+                  <time datetime="2017-03-12">
+                    <span class="day">4</span>
+                    <span class="month">Mar</span>
+                    <span class="year">2017</span>
+                    <span class="time">ALL DAY</span>
+                  </time>
+                  <div class="info">
+                    <h2 class="title">{{$event->name}}</h2>
+                    <p class="desc"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</p>
+                  </div>
+                </li>
+                </ul>
+              </div>
+              <div class="col-sm-4">
+              <div class="eventbooking"> Price: <span class="priceEventTop">{!! Helper::getPrice($event->ticket_price) !!} </span>
+                        <a href="{{ url('events/book',$event->id) }}" class="Book" ><i class="fa fa-ticket" aria-hidden="true" ></i> Book Tickets</a>
+                        </div>
+                        </div>
+            </div>
+
+                <div class=" thumbnail featured-post-wide img">
+                <!-- <div class="sal_price"> 
+                       
+                         Price: {!! Helper::getPrice($event->ticket_price) !!}
+                        
+                      </div> -->
+                    @if($event->photo)
+                        <div class="eventBannerImg"><img src="{{ URL::to('/uploads/crudfiles/'.$event->photo)  }}" class="img-responsive" alt="Image"></div>
+                    @endif
+                    <!-- /.event-detail-image -->
+                    <div class="the-box no-border event-detail-content">
+    
+
                         <p class="text-justify">
                             {!! $event->description !!}
                         </p>
@@ -103,8 +137,9 @@
                             </div>
                             </div>
                             <div class="col-sm-6">
-                              <div class="favBox pull-right"><a href="{{ route('view_counter.like', array('class_name' => 'Event', 'object_id' => $event->id)) }}"  class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> ({{ $event->likes_count()?$event->likes_count():0 }}) Likes</a>
+                            <a href="#" class="loginmsg btn btn-secondary">Login to Send Message</a>
 
+                              <div class="favBox pull-right"><a href="{{ route('view_counter.like', array('class_name' => 'Event', 'object_id' => $event->id)) }}"  class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> ({{ $event->likes_count()?$event->likes_count():0 }}) Likes</a>
                               
                              <!--  {{-- route('view_counter.like', array('class_name' => 'Ad', 'object_id' => $ad->id)) }}
                 {{ route('view_counter.unlike', array('class_name' => 'Ad', 'object_id' => $ad->id)) --}} --></div>
@@ -120,7 +155,7 @@
                                 /*<a href="{{url('login')}}">Login to Send Message</a> */
                                
                                 }?>
-                        <a href="{{ url('events/book',$event->id) }}" ><i class="fa fa-ticket" aria-hidden="true" ></i> Book Tickets</a>
+                        <!-- <a href="{{ url('events/book',$event->id) }}" ><i class="fa fa-ticket" aria-hidden="true" ></i> Book Tickets</a> -->
                         </p>
                         <!-- <p>
                             <strong>Tags: </strong>
@@ -132,6 +167,76 @@
                         </p> -->
                     </div>
                 </div>
+                
+                <!-- Comment Section --> 
+     <div class="row commentBox">
+     <div class="col-sm-12">
+      <h2 class="page-header">Latest updates by Organizer</h2>
+      <div class="postplaceHolder">
+       <strong>Organizer profile images:</strong> <a href="#">Latest Announcement</a> | <a href="#">Text</a> | <a href="#">Embed video</a> | <a href="#">Upload photo</a> <strong><a href="#">Post Now</a></strong>
+      </div>
+        <section class="comment-list">
+          <!-- First Comment -->
+          <article class="row">
+            <div class="col-md-2 col-sm-2 hidden-xs">
+              <figure class="thumbnail">
+                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                <figcaption class="text-center">username</figcaption>
+              </figure>
+            </div>
+            <div class="col-md-10 col-sm-10">
+              <div class="panel panel-default arrow left">
+                <div class="panel-body">
+                  <header class="text-left">
+                    <div class="comment-user"><i class="fa fa-user"></i> Organizer Name</div>
+                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> March 25, 2017</time>
+                  </header>
+                  <div class="comment-post">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8 commentNumber">Total no of comments by user</div>
+                    <div class="col-sm-4 text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <!-- Second Comment Reply -->
+          <article class="row">
+            <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
+              <figure class="thumbnail">
+                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                <figcaption class="text-center">username</figcaption>
+              </figure>
+            </div>
+            <div class="col-md-9 col-sm-9">
+              <div class="panel panel-default arrow left">
+                <div class="panel-heading right">Reply</div>
+                <div class="panel-body">
+                  <header class="text-left">
+                    <div class="comment-user"><i class="fa fa-user"></i> User one</div>
+                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> March 25, 2017</time>
+                  </header>
+                  <div class="comment-post">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                  <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+  </div>
+  </div>
+
+  <!-- Comment Section --> 
+
+
                 @if(isset($user))
                 <div class="reviewSection">
                     <div class="headingCustomerPara">Reviews( {!! count($event->reviews()->get()) !!} )</div>
@@ -207,6 +312,28 @@
                     @endforeach
                 </ul>
                 <!-- //Media left section End -->
+
+
+                <!-- Review Section -->
+                <div class="reviewSectionInner">
+                <div class="row">
+                <h3 class="reviewTitle">Reviews (1)</h3>
+                  <div class="col-sm-8">
+                    
+                                        <div class="rating">
+                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
+                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
+                                            </i><i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="reviewUser">Bob Gurung</div>
+
+                                        <div class="reviewContent">Very Specious</div>
+                  </div>
+                  <div class="col-sm-4 text-right"><div class="reviewTime">6 month Ago</div></div>
+                </div>
+                </div>
+                 <!-- Review Section -->
+
                 <!-- Comment Section Start -->
                 <h3 id="comment">Leave a Comment</h3>
                 {!! Form::open(array('url' => URL::to('event/'.$event->slug.'/comment'), 'method' => 'post', 'class' => 'bf', 'files'=> true)) !!}
@@ -247,6 +374,7 @@
             <!-- Recent Posts Section Start -->
             <div class="col-sm-4 col-md-4 col-full-width-left">
                 <div class="the-box">
+                <div class="eventLogoWrap"><div class="eventlogo">Logo</div></div>
                     <div class="leftList">
                         <h3>Event Organizer</h3>
                          @if($owner->company_name)
