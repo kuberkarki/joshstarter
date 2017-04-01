@@ -310,7 +310,10 @@ class PaymentController extends BaseController
             //Session::forget('bookData');
             Session::forget('params');
             //dd($paypalResponse);
-            return Redirect('mybookings');
+            //return Redirect('mybookings');
+            //
+            return Redirect('events/ticket/'.$booking->id);
+            
 
         } 
         else { 
