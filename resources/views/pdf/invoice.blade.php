@@ -17,4 +17,4 @@ Amount: {{$booking->amount}}
 <br/>
 <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($booking->id,'C39+',3,133) }}" alt="barcode"   /><br/>
 powered by: <a href="http://eventdayplanner.com">www.eventdayplanner.com</a><br/>
-<img src="http://eventdayplanner.com/public/assets/images/eventday/eventdayPlanner.png" class="img-responsive">
+<img src="http://eventdayplanner.com/dev/public/assets/images/eventday/eventdayPlanner.png" class="img-responsive">
