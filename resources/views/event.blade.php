@@ -289,9 +289,11 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-8 commentNumber">&nbsp;</div>
+                      @if($user)
                       <div class="col-sm-4 text-right"><a href="#" data-toggle="modal" data-announcement="{{$event_anouncement->id}}" data-target="#myModalreply" class="open-reply btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></div>
                       @if($is_owner)
                       <p class="text-right"><a href="{{ url('anouncement_delete/'.$event_anouncement->id)}}" onclick="return confirm('Are you sure you want to delete this announcement?');">Delete</a></p>
+                      @endif
                       @endif
                     </div>
                   </div>
@@ -339,8 +341,10 @@
                                       </p>
                                     </div>
                                     <!-- <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p> -->
-                                    @if($reply_user->id==$event_anouncement->user_id)
+                                    @if($user)
+                                    @if($user->id==$event_anouncement->user_id)
                                   <p class="text-right"><a href="{{ url('anouncement_delete/'.$event_anouncement->id)}}" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a></p>
+                                  @endif
                                   @endif
                                   </div>
                                 </div>
