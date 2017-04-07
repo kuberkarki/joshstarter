@@ -209,4 +209,24 @@
             </a>
         </li>
     </ul>
-</li>
+<!-- </li><li {!! (Request::is('admin/event_anouncements') || Request::is('admin/event_anouncements/create') || Request::is('admin/event_anouncements/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Event_anouncements</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/event_anouncements') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/event_anouncements') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Event_anouncements
+            </a>
+        </li>
+        <li {!! (Request::is('admin/event_anouncements/create') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/event_anouncements/create') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Add New Event_anouncement
+            </a>
+        </li>
+    </ul>
+</li> -->

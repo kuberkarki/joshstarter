@@ -65,6 +65,7 @@ class EventsController extends Controller {
     	if(Sentinel::check()){
 				$user=Sentinel::getUser();
 			}
+
         if ($slug == '') {
             $event= Event::first();
             if(isset($user))
@@ -107,9 +108,23 @@ class EventsController extends Controller {
 
 		 $owner= User::where('id',$event->user_id)->first();
 
+
+
+		 $event_anouncements = \App\Event_anouncement::where('event_id',$event->id)->whereNull('parent_id')->orderBy('created_at', 'desc')->get();
+
+		$anouncement_reply=\App\Event_anouncement::where('event_id',$event->id)->whereNotNull('parent_id')->orderBy('created_at', 'asc')->get();
+		 if(isset($user) && $event->user_id==$user->id)
+		 	$is_owner=true;
+		 else
+		 	$is_owner=false;
+		
+
+
+		 //dd($is_owner);
+
         
         // Show the page
-        return View('event', compact('event','reviewed','user','users','share','upcomingevents','owner'))->with('frontarray',$this->frontarray);
+        return View('event', compact('event','reviewed','user','users','share','upcomingevents','owner','event_anouncements','anouncement_reply','is_owner'))->with('frontarray',$this->frontarray);
 
     }
 

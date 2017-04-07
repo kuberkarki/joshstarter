@@ -29,4 +29,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin'])
 });Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('testimonials', 'TestimonialsController');
 	Route::get('testimonials/{id}/delete', array('as' => 'admin.testimonials.delete', 'uses' => 'TestimonialsController@getDelete'));
 	Route::get('testimonials/{id}/confirm-delete', array('as' => 'admin.testimonials.confirm-delete', 'uses' => 'TestimonialsController@getModalDelete'));
+});Route::group(array('prefix' => 'admin', 'middleware' => ['web','SentinelAdmin']), function () {Route::resource('event_anouncements', 'Event_anouncementsController');
+	Route::get('event_anouncements/{id}/delete', array('as' => 'admin.event_anouncements.delete', 'uses' => 'Event_anouncementsController@getDelete'));
+	Route::get('event_anouncements/{id}/confirm-delete', array('as' => 'admin.event_anouncements.confirm-delete', 'uses' => 'Event_anouncementsController@getModalDelete'));
 });

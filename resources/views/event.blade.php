@@ -67,7 +67,7 @@
 
 
         <div class="row content">
-        @include('notifications')
+       <!--  @include('notifications') -->
             <!-- Business Deal Section Start -->
             <div class="col-sm-8 col-md-8">
             <div  class="row">
@@ -137,8 +137,8 @@
                             </div>
                             </div>
                             <div class="col-sm-6">
-                            <a href="#" class="loginmsg btn btn-secondary">Login to Send Message</a>
-
+                            <!-- <a href="#" class="loginmsg btn btn-secondary">Login to Send Message</a>
+ -->
                               <div class="favBox pull-right"><a href="{{ route('view_counter.like', array('class_name' => 'Event', 'object_id' => $event->id)) }}"  class="btn btn-secondary"><i class="fa fa-heart-o" aria-hidden="true"></i> ({{ $event->likes_count()?$event->likes_count():0 }}) Likes</a>
                               
                              <!--  {{-- route('view_counter.like', array('class_name' => 'Ad', 'object_id' => $ad->id)) }}
@@ -172,64 +172,187 @@
      <div class="row commentBox">
      <div class="col-sm-12">
       <h2 class="page-header">Latest updates by Organizer</h2>
+      @if($is_owner)
       <div class="postplaceHolder">
-       <strong>Organizer profile images:</strong> <a href="#">Latest Announcement</a> | <a href="#">Text</a> | <a href="#">Embed video</a> | <a href="#">Upload photo</a> <strong><a href="#">Post Now</a></strong>
+       <strong>Organizer profile images:</strong>  <a href="javascript:void(0);" id="anouncement_text_btn">Text</a> | <a id="anouncement_video_btn" href="javascript:void(0);">Embed video</a> | <a id="anouncement_photo_btn" href="javascript:void(0);">Upload photo</a>
+       <div id="anouncement_text">
+        {!! Form::open(['url' => 'event_anouncements','files'=>true]) !!}
+              {!! Form::hidden('user_id', $user->id, ['class' => 'form-control']) !!}
+              {!! Form::hidden('event_id', $event->id, ['class' => 'form-control']) !!}
+          <div class="form-group">
+              {!! Form::label('description', 'Anouncement: ') !!}
+              {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+          </div>
+          <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-4">
+                  <button type="submit" class="btn btn-success">
+                      Post
+                  </button>
+              </div>
+          </div>
+          {!! Form::close() !!}
+       </div>
+
+       <div id="anouncement_video">
+        {!! Form::open(['url' => 'event_anouncements_video','files'=>true]) !!}
+              {!! Form::hidden('user_id', $user->id, ['class' => 'form-control']) !!}
+              {!! Form::hidden('event_id', $event->id, ['class' => 'form-control']) !!}
+          <div class="form-group">
+              {!! Form::label('description', 'Anouncement Video url (youtube or vimeo): ') !!}
+              {!! Form::text('description', null, ['class' => 'form-control']) !!}
+          </div>
+          <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-4">
+                  <button type="submit" class="btn btn-success">
+                      Post
+                  </button>
+              </div>
+          </div>
+          {!! Form::close() !!}
+       </div>
+
+       <div id="anouncement_image">
+        {!! Form::open(['url' => 'event_anouncements_photo','files'=>true]) !!}
+              {!! Form::hidden('user_id', $user->id, ['class' => 'form-control']) !!}
+              {!! Form::hidden('event_id', $event->id, ['class' => 'form-control']) !!}
+          <div class="form-group">
+              {!! Form::label('Photo', 'Anouncement photo: ') !!}
+              {!! Form::file('photo', null, ['class' => 'form-control']) !!}
+          </div>
+          <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-4">
+                  <button type="submit" class="btn btn-success">
+                      Post
+                  </button>
+              </div>
+          </div>
+          {!! Form::close() !!}
+       </div>
+        <div style="clear: both;"></div>
+
       </div>
+      
+      @endif
+      <div style="clear: both;"></div>
         <section class="comment-list">
-          <!-- First Comment -->
-          <article class="row">
-            <div class="col-md-2 col-sm-2 hidden-xs">
-              <figure class="thumbnail">
-                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                <figcaption class="text-center">username</figcaption>
-              </figure>
-            </div>
-            <div class="col-md-10 col-sm-10">
-              <div class="panel panel-default arrow left">
-                <div class="panel-body">
-                  <header class="text-left">
-                    <div class="comment-user"><i class="fa fa-user"></i> Organizer Name</div>
-                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> March 25, 2017</time>
-                  </header>
-                  <div class="comment-post">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-8 commentNumber">Total no of comments by user</div>
-                    <div class="col-sm-4 text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></div>
+            @foreach ($event_anouncements as $event_anouncement)
+             <article class="row">
+               <div class="col-md-2 col-sm-2 hidden-xs">
+                <figure class="thumbnail">
+
+                  <img class="img-responsive profile pic" src="{{ $owner->pic?url('uploads/users/'.$owner->pic):asset('assets/images/default.jpg') }}" />
+                  <!-- <figcaption class="text-center"></figcaption> -->
+                </figure>
+              </div>
+              <div class="col-md-10 col-sm-10">
+                <div class="panel panel-default arrow left">
+                  <div class="panel-body">
+                    <header class="text-left">
+                      <div class="comment-user"><i class="fa fa-user"></i> 
+
+                      
+                                      @if($owner->company_name)
+                                        {{$owner->company_name}}
+                                      @elseif($owner->first_name)
+                                        {{$owner->first_name.' '.$owner->last_name}}
+                                      @elseif($owner->name)
+                                        {{$owner->name}}
+                                      @else
+                                        No Name
+                                      @endif
+                      </div>
+                      <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{ Carbon\Carbon::parse($event_anouncement->created_at)->format('F j Y')}}</time>
+                    </header>
+                    <div class="comment-post">
+
+                     @if($event_anouncement->post_type=='video')
+                        <p class="center" style="text-align: center;">
+
+                        @if(str_contains($event_anouncement->description, 'vimeo.com'))
+                          {!! preg_replace('#http(s)?://(www\.)?(player\.)?vimeo\.com/(video/)?(\d+)#',
+                             "<iframe width=\"420\" height=\"315\" src=\"//player.vimeo.com/video/$5\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+                             $event_anouncement->description) !!}
+                           @endif
+                        @if(str_contains($event_anouncement->description, 'youtube.com'))
+                           {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$event_anouncement->description)!!}
+                        @endif
+                        </p>
+                      @elseif($event_anouncement->post_type=='photo')
+                        <p>
+                          <img  class="img-responsive img-hover" src="{{ url('mainphoto/'.$event_anouncement->description)}}" />
+                        </p>
+                        @else
+                      <p>
+                        {{$event_anouncement->description}}
+                      </p>
+                      @endif
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-8 commentNumber">&nbsp;</div>
+                      <div class="col-sm-4 text-right"><a href="#" data-toggle="modal" data-announcement="{{$event_anouncement->id}}" data-target="#myModalreply" class="open-reply btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></div>
+                      @if($is_owner)
+                      <p class="text-right"><a href="{{ url('anouncement_delete/'.$event_anouncement->id)}}" onclick="return confirm('Are you sure you want to delete this announcement?');">Delete</a></p>
+                      @endif
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </article>
-          <!-- Second Comment Reply -->
-          <article class="row">
-            <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
-              <figure class="thumbnail">
-                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                <figcaption class="text-center">username</figcaption>
-              </figure>
-            </div>
-            <div class="col-md-9 col-sm-9">
-              <div class="panel panel-default arrow left">
-                <div class="panel-heading right">Reply</div>
-                <div class="panel-body">
-                  <header class="text-left">
-                    <div class="comment-user"><i class="fa fa-user"></i> User one</div>
-                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> March 25, 2017</time>
-                  </header>
-                  <div class="comment-post">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                  </div>
-                  <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                </div>
-              </div>
-            </div>
-          </article>
+            </article>
+
+                @foreach ($anouncement_reply as $reply)
+                        @if ( $reply->parent_id === $event_anouncement->id )
+                        <?php $reply_user=\App\User::find($reply->user_id);?>
+
+                       
+
+                            <article class="row">
+                              <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
+                                <figure class="thumbnail">
+                                  <img class="img-responsive" src="{{$reply_user->pic?url('uploads/users/'.$reply_user->pic):asset('assets/images/default.jpg')}}" />
+                                  <!-- <figcaption class="text-center">username</figcaption> -->
+                                </figure>
+                              </div>
+                              <div class="col-md-9 col-sm-9">
+                                <div class="panel panel-default arrow left">
+                                  <div class="panel-heading right">Reply</div>
+                                  <div class="panel-body">
+                                    <header class="text-left">
+                                      <div class="comment-user"><i class="fa fa-user"></i> 
+
+                                      @if($reply_user->company_name)
+                                        {{$reply_user->company_name}}
+                                      @elseif($reply_user->first_name)
+                                        {{$reply_user->first_name.' '.$reply_user->last_name}}
+                                      @elseif($reply_user->name)
+                                        {{$reply_user->name}}
+                                      @else
+                                        No Name
+                                      @endif
+                                      
+  
+                                      </div>
+                                      <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {{ Carbon\Carbon::parse($reply->created_at)->format('F j Y')}}</time>
+                                    </header>
+                                    <div class="comment-post">
+                                      <p>
+                                        {{$reply->description}}
+                                      </p>
+                                    </div>
+                                    <!-- <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p> -->
+                                    @if($reply_user->id==$event_anouncement->user_id)
+                                  <p class="text-right"><a href="{{ url('anouncement_delete/'.$event_anouncement->id)}}" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a></p>
+                                  @endif
+                                  </div>
+                                </div>
+                              </div>
+                            </article>
+                            
+                            @endif
+                    @endforeach
+               </li>
+            @endforeach
+            
+          
         </section>
   </div>
   </div>
@@ -494,6 +617,44 @@
 
 <?php } ?>
 
+<div class="modal fade" id="myModalreply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Reply</h4>
+      </div>
+      <div class="modal-body">
+       {!! Form::open(['route' => 'event_anouncement_reply','class'=>'form-horizontal','role'=>'form']) !!}
+                  
+                    
+                        <input type="hidden" name="event_id" 
+                        id="event_id" value="{!! $event->id !!}" />
+                        <input type="hidden" name="anouncement_id" id="announcement_id"/>
+                    
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Reply</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="description" 
+                            id="message" placeholder="Reply"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Reply</button>
+                    </div>
+                  </div>
+                </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
     <div class="modal-content">
@@ -525,6 +686,35 @@
 
 $(function() {
   return $(".starrr").starrr();
+});
+
+$(function(){
+
+  $(".open-reply").click(function(){
+
+    var anouncement_id = $(this).data('announcement');
+     $("#announcement_id").val( anouncement_id );
+  });
+      $("#anouncement_image").hide();
+      $("#anouncement_video").hide();
+      $("#anouncement_text").hide();
+
+  $("#anouncement_text_btn").click(function(){
+      $("#anouncement_image").hide();
+      $("#anouncement_video").hide();
+      $("#anouncement_text").show();
+  });
+
+  $("#anouncement_video_btn").click(function(){
+       $("#anouncement_image").hide();
+      $("#anouncement_video").show();
+      $("#anouncement_text").hide();
+  });
+  $("#anouncement_photo_btn").click(function(){
+       $("#anouncement_image").show();
+      $("#anouncement_video").hide();
+      $("#anouncement_text").hide();
+  });
 });
 
 $( document ).ready(function() {

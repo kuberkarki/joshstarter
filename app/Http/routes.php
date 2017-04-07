@@ -1,5 +1,16 @@
 <?php
 Route::group(['middleware' => 'web'], function () {
+
+
+
+    Route::post('event_anouncements_video',array('as' => 'event_anouncements_video','uses' => 'Event_anouncementsController@storevideo'));
+    Route::post('event_anouncements_photo',array('as' => 'event_anouncements_photo','uses' => 'Event_anouncementsController@storephoto'));
+    Route::post('event_anouncement_reply',array('as' => 'event_anouncement_reply','uses' => 'Event_anouncementsController@storereply'));
+
+    Route::get('anouncement_delete/{announcement_id}',array('as' => 'anouncement_delete','uses' => 'Event_anouncementsController@deleteanouncement'));
+
+
+
     
     Route::group(array('prefix' => 'api'), function () {
     // Customer API Routes
@@ -528,6 +539,10 @@ Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@po
 
 
      });
+
+
+    Route::resource('event_anouncements', 'Event_anouncementsController');
+
      
 
     Route::get('{name?}', 'JoshController@showFrontEndView');
