@@ -4462,12 +4462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "afd47046302aff65c4c64a7bfa971894e0e57593"
+                "reference": "3d5653df7102d7b0ea78ab836ea4108f5220f900"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/afd47046302aff65c4c64a7bfa971894e0e57593",
-                "reference": "afd47046302aff65c4c64a7bfa971894e0e57593",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/3d5653df7102d7b0ea78ab836ea4108f5220f900",
+                "reference": "3d5653df7102d7b0ea78ab836ea4108f5220f900",
                 "shasum": ""
             },
             "require": {
@@ -4508,7 +4508,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2017-03-15T13:40:38+00:00"
+            "time": "2017-03-31T09:22:31+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -4516,12 +4516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "144a50e8ee020d9185e4480ffb4e5fec03832324"
+                "reference": "75e1f22ec670d5104b28819335a39bccd65dd9b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/144a50e8ee020d9185e4480ffb4e5fec03832324",
-                "reference": "144a50e8ee020d9185e4480ffb4e5fec03832324",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/75e1f22ec670d5104b28819335a39bccd65dd9b9",
+                "reference": "75e1f22ec670d5104b28819335a39bccd65dd9b9",
                 "shasum": ""
             },
             "require": {
@@ -4534,6 +4534,8 @@
             },
             "require-dev": {
                 "doctrine/dbal": "~2.3",
+                "illuminate/config": "^5.0,<5.5",
+                "illuminate/view": "^5.0,<5.5",
                 "phpunit/phpunit": "4.*",
                 "scrutinizer/ocular": "~1.1",
                 "squizlabs/php_codesniffer": "~2.3"
@@ -4574,7 +4576,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2017-03-16T10:46:50+00:00"
+            "time": "2017-03-31T09:14:28+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
