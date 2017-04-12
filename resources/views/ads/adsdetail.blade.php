@@ -194,22 +194,104 @@
                         <ul>
                           <li><div class="rating"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></div><span class="review">(23)</span></li>
                         </ul> -->
+
+<!-- left Discription 4-9-2017 -->
+<br>
+          <div class="row">
+            <div class="col-sm-7">              
+            <h3>Business Name:</h3>
+            <p>Wedding planner Ltd</p>
+            <p>Location: 12Oman Avenue,</p>
+            <p>Cricklewood, United Kingdom</p>
+            <p>NW2</p>
+            <p><i class="fa fa-phone" aria-hidden="true"></i> Tel:02070543546</p>
+
+            </div>
+            <div class="col-sm-5">
+            <div class="reviewP"> 90% positive review</div>
+            
+              <div class="customerSocial">
+              <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-envelope-square" aria-hidden="true"></i></a>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+            <p class="shortDisc">Short Descrition:</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+            </div>
+          </div>
+          <!-- left Discription 4-9-2017 -->
                </div>
             </div>
             <div class="leftContent">
                <div class="leftList">
                   <h3>Location</h3>
                   <!-- <img src="{{asset('assets/images/eventday/maps.jpg')}}" class="img-responsive"> -->
-                  <div id="map" style="width:100%; height:300px;">
+                  <div id="map" style="width:100%; height:100px;">
                   </div>
                </div>
+               
+               <!--  <div class="leftContent">
+                  <div class="leftList">
+                    <img src="{{asset('assets/images/eventday/customerads1.jpg')}}" class="img-responsive">
+                  </div>
+                  </div> -->
+            </div>
                <div class="leftContent">
-                  <!-- <div class="leftList">
-                     <h3>Sponsors</h3>
-                     <img src="{{asset('assets/images/eventday/sponsor1.jpg')}}" class="img-responsive">
-                     </div> -->
+                  <div class="leftList">
+                     <h3>Ads List</h3>
+                     <!-- <img src="{{asset('assets/images/eventday/sponsor1.jpg')}}" class="img-responsive"> -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="carousel carousel-showmanymoveone slide" id="carousel123">
+        <div class="carousel-inner">
+          <div class="item active">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/0054A6/fff/&amp;text=1" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/002d5a/fff/&amp;text=2" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/d6d6d6/333&amp;text=3" class="img-responsive"></a></div>
+          </div>          
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/002040/eeeeee&amp;text=4" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/0054A6/fff/&amp;text=5" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/002d5a/fff/&amp;text=6" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/eeeeee&amp;text=7" class="img-responsive"></a></div>
+          </div>
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-3"><a href="#"><img src="http://placehold.it/500/40a1ff/002040&amp;text=8" class="img-responsive"></a></div>
+          </div>
+        </div>
+        <a class="left carousel-control" href="#carousel123" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        <a class="right carousel-control" href="#carousel123" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+      </div>
+    </div>
+  </div> 
+
+
+
+                     </div>
                </div>
+
                <div class="leftContent">
+                  <div class="leftList">
+                     <h3>Google Ads Banner</h3>
+                     <div class="googleBanner">Google Ads Banner</div>
+                     </div>
+               </div>
+            <div class="leftContent">
                   <div class="leftList otherEvent">
                      <h3>Other {!! $ads_category[$ad->ads_category_id] !!}</h3>
                      @if(count($otherads))
@@ -229,12 +311,6 @@
                         sed do eiusmod tempor incididunt ut labore et dolore...</a></p> -->
                   </div>
                </div>
-               <!--  <div class="leftContent">
-                  <div class="leftList">
-                    <img src="{{asset('assets/images/eventday/customerads1.jpg')}}" class="img-responsive">
-                  </div>
-                  </div> -->
-            </div>
          </div>
       </div>
    </div>
@@ -415,5 +491,37 @@
    }
    google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+<!-- Carousel -->
+<script type="text/javascript">
+   (function(){
+  // setup your carousels as you normally would using JS
+  // or via data attributes according to the documentation
+  // http://getbootstrap.com/javascript/#carousel
+  $('#carousel123').carousel({ interval: 2000 });
+  $('#carouselABC').carousel({ interval: 3600 });
+}());
+
+(function(){
+  $('.carousel-showmanymoveone .item').each(function(){
+    var itemToClone = $(this);
+
+    for (var i=1;i<4;i++) {
+      itemToClone = itemToClone.next();
+
+      // wrap around if at end of item collection
+      if (!itemToClone.length) {
+        itemToClone = $(this).siblings(':first');
+      }
+
+      // grab item, clone, add marker class, add to collection
+      itemToClone.children(':first-child').clone()
+        .addClass("cloneditem-"+(i))
+        .appendTo($(this));
+    }
+  });
+}());
+
+</script>
+<!-- Carousel -->
 @endif
 @stop
