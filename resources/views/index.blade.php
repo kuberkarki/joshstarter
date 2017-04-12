@@ -129,7 +129,7 @@ Home
         <div class="panel panel-default">
             <div class="panel-image">
               <div class="eventPrice">Price: {!! Helper::getPrice($event->ticket_price) !!}</div>
-              <div class="eventLogoWrap"><div class="eventlogo">Logo</div></div>
+              <div class="eventLogoWrap"><div class="eventlogo"><img class="img-responsive img-circle" src="{{url('user_circularthumb',$event->organizer()->first()->pic)}}"/></div></div>
                 @if($event->photo)
                 <img class="img-responsive img-hover" src="thumbnail2/{!! $event->photo !!}" alt="">
                 @else
