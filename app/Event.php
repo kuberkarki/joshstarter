@@ -85,4 +85,9 @@ class Event extends Model  {
         return $this->hasMany('App\EventComment');
     }
 
+    public function organizer()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
+
 }

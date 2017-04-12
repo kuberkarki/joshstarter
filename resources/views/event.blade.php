@@ -55,11 +55,11 @@
                             <!-- <span class="additional-post">
                               <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> {!! $event->location !!}</div>     
                             </span> -->
-                            <span class="additional-post">
+                            <!-- <span class="additional-post">
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> 
               
-              {!! date('D, M d, g a ',strtotime($event->date)) !!}
-                                </span>
+              {{-- date('D, M d, g a ',strtotime($event->date)) --}}
+                                </span> -->
                             <span class="additional-post">
                                     
                                 </span>
@@ -75,10 +75,10 @@
               <ul class="event-list">
                 <li>
                   <time datetime="2017-03-12">
-                    <span class="day">4</span>
-                    <span class="month">Mar</span>
-                    <span class="year">2017</span>
-                    <span class="time">ALL DAY</span>
+                    <span class="day">{!! date('d',strtotime($event->date)) !!}</span>
+                    <span class="month">{!! date('M',strtotime($event->date)) !!}</span>
+                    <span class="year">{!! date('Y',strtotime($event->date)) !!}</span>
+                    <span class="time">{!! date('g a ',strtotime($event->date)) !!}</span>
                   </time>
                   <div class="info">
                     <h2 class="title">{{$event->name}}</h2>
@@ -501,7 +501,7 @@
             <!-- Recent Posts Section Start -->
             <div class="col-sm-4 col-md-4 col-full-width-left">
                 <div class="the-box">
-                <div class="eventLogoWrap"><div class="eventlogo">Logo</div></div>
+                <div class="eventLogoWrap"><div class="eventlogo"><img class="img-responsive img-circle" src="{{url('user_circularthumb',$owner->pic)}}"/></div></div>
                     <div class="leftList">
                         <h3>Event Organizer</h3>
                          @if($owner->company_name)

@@ -139,6 +139,23 @@ Route::get('/auth/callback/{provider?}',[
 ]);
 
 // usage inside a laravel route
+Route::get('user_circularthumb/{image?}', function($image=null)
+{
+    if(!$image){
+         $img = Image::make(asset('assets/images/default.jpg'))->resize(175, 175);
+         return $img->response('jpg');
+     }
+    if(file_exists(public_path().('/uploads/user/'.$image))) {
+        $img = Image::make(URL::to('/uploads/user/'.$image))->resize(175, 175);
+    } else {
+       $img = Image::make(asset('assets/images/default.jpg'))->resize(175, 175);
+    }
+    //$img = Image::make(URL::to('/uploads/crudfiles/'.$image))->resize(260, 175);
+
+    return $img->response('jpg');
+});
+
+// usage inside a laravel route
 Route::get('mainphoto/{image}', function($image)
 {
     if(file_exists(public_path().('/uploads/crudfiles/'.$image))) {
