@@ -8,6 +8,7 @@ Home
 
 @section('header_styles')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/jquery.share.css') }}"/>
 @stop
 
 @section('top')
@@ -148,7 +149,35 @@ Home
               <div class="property-meta">
               <ul>
                 <li><a href="{{ URL::to('event/'.$event->slug) }}"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="centerShare"><a class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><span>Share</span> <i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
+                <li class="centerShare">
+
+                <p class="text-center">
+        <button type="button"  class=" btn-share btn btn-simple popover-html" data-text="{{$event->name}}" data-link="{{ URL::to('event/'.$event->slug) }}" data-container="body" data-toggle="popover" data-placement="top">
+          
+           <span>Share</span> <i class="fa fa-share-alt" aria-hidden="true"></i>
+          
+        </button>
+        <!-- Popover hidden content -->
+        <span id="popoverExampleHiddenContent" class="hidden">
+          <a target="_blank" href="#" class="btn-media twitter">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a target="_blank" href="#" class="btn-media facebook">
+            <i class="fa fa-facebook"></i>
+          </a>
+          <a target="_blank" href="#" class="btn-media google-plus">
+            <i class="fa fa-google-plus"></i>
+          </a>
+          <a target="_blank" href="#" class="btn-media pinterest">
+            <i class="fa fa-pinterest"></i>
+          </a>
+          <a target="_blank" href="#" class="btn-media envelope">
+            <i class="fa fa-envelope"></i>
+          </a>
+        </span>
+      </p>
+                
+                </li>
                 <li class="pull-right"> <a href="{{ url('events/book',$event->id) }}"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
               </ul>
               </div>
@@ -156,129 +185,6 @@ Home
         </div>
       </div>
     @endforeach
-
-
-      <!-- <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image">
-                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
-                        </div>
-                        <div class="panel-body">
-              <h3>Everest base camp Trek</h3>
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-              <div class="property-meta">
-              <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
-              </ul>
-              </div>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image">
-                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
-                        </div>
-                        <div class="panel-body">
-              <h3>Everest base camp Trek</h3>
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-              <div class="property-meta">
-              <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
-              </ul>
-              </div>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image">
-                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
-                        </div>
-                        <div class="panel-body">
-              <h3>Everest base camp Trek</h3>
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-              <div class="property-meta">
-              <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
-              </ul>
-              </div>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image">
-                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
-                        </div>
-                        <div class="panel-body">
-              <h3>Everest base camp Trek</h3>
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-              <div class="property-meta">
-              <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
-              </ul>
-              </div>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image">
-                            <img class="img-responsive img-hover" src="{{ asset('assets/images/eventday/post1.jpg')}}" alt="">
-                        </div>
-                        <div class="panel-body">
-              <h3>Everest base camp Trek</h3>
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-              <div class="property-meta">
-              <ul>
-                <li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> More Info</a></li>
-                <li class="pull-right"> <a href="#"><i class="fa fa-ticket" aria-hidden="true"></i> Book Tickets</a></li>
-              </ul>
-              </div>
-            </div>
-          </div>
-      </div> -->
-          <!-- <div class="col-sm-8">
-            <div class="box1 clearfix">
-              <div class="imgContent"><img src="{{ asset('assets/images/eventday/post1.jpg')}}" class="img-responsive"></div>
-              <div class="txtContent">
-              <div class="date">Date 25th June2016</div>
-              <div class="address"><i class="fa fa-map-marker" aria-hidden="true"></i> 121 King Street, London 2500 UK</div>
-              <div class="time"> <i class="fa fa-clock-o" aria-hidden="true"></i> Fri, May 6, 10pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                  tempor incididunt ut labore et dolore</p>
-                  <div class="buttmLink">
-                    <div class="moreInfo">More Info</div>
-                    <div class="bookTickets">Book Tickets</div>
-                  </div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
       </div>
@@ -369,12 +275,44 @@ Home
 <!-- page level js starts-->
     
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/frontend/jquery.share.js') }}"></script>
     <script src="{{ asset('assets/js/eventday/moment.js') }}"></script>
     <script>
+    var link=window.location.href;
+    var text="eventdayplanner.com";
+    $(".btn-share").popover({
+      html : true, 
+      container : '.btn-share',
+      content: function() {
+        return $('#popoverExampleHiddenContent').html();
+      },
+      template: '<div class="popover" role="tooltip"><div class="popover-content"></div></div>'
+    });
+
+    $('.btn-share').click(function (event) {
+      $('.btn-share').not(this).popover('hide');
+        text=($(this).data('text'));
+        link=($(this).data('link'));
+         $("a.twitter").attr("href", "https://twitter.com/home?status=" + link+"&text=" + text);
+        $("a.facebook").attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + link +"&title=" + text);
+        $("a.google-plus").attr("href", "https://plus.google.com/share?url=" + link +"&content="+text);
+        $("a.pinterest").attr("href", "https://plus.google.com/share?url=" + link+"&description=" + text);
+        $("a.envelope").attr("href", "mailto:?subject="+ text +"&body=" + link);
+       
+            // hide share button popover
+            if (!$(event.target).closest('.btn-share').length) {
+                $('.btn-share').popover('hide')
+            }
+        });
+
+   
+
+   
+
     $( function() {
-    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
-  } );
-    </script>
+        $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+    } );
+</script>
     <!--page level js ends-->
 @stop
 
@@ -947,6 +885,7 @@ Home
 {{-- footer scripts --}}
 @section('footer_scripts_comingsoon')
     <!-- page level js starts-->
+    
     <script type="text/javascript" src="{{ asset('assets/js/frontend/jquery.circliful.js') }}"></script>
     <script src="{{ asset('assets/vendors/wow/js/wow.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/owl.carousel/js/owl.carousel.min.js') }}"></script>
