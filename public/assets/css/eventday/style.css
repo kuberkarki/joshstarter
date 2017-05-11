@@ -873,4 +873,11 @@ time.comment-date {
 @media (min-width: 767px) {
 .carousel-inner li{ width: 80px; float: left; padding: 0 6px; }
 }*/
-/*--------------------Carousel 4-9-2017--------------------
+/*--------------------Carousel 4-9-2017--------------------*/
+
+
+/*--------------------CSS for Login--------------------*/
+.textsmall{ margin-top: 30px; margin-bottom: 30px; }
+.flipInX ul{ list-style: none;    padding-left: 0; }
+.flipInX form input[type="submit"]{  margin: 0 auto; background: #ccc; padding-left: 20px; padding-right: 20px; width: inherit; margin-bottom: 6px; }
+.flipInX form img{ padding-bottom: 10px; }
