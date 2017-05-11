@@ -36,7 +36,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-7"><div class="newsHighlight"><span>News!</span> {{$frontarray['onenews']->title}}</div></div>
-            <div class="col-sm-5"><div class="topLogin"><a href="{!! url('create-event-menu')!!}"> Create an Event</a> | <a href="#">List Your Business</a></div></div>
+            <div class="col-sm-5"><div class="topLogin"><a href="{!! url('create-event-menu')!!}"> Create an Event</a> | <a href="{{url('ads')}}">List Your Business</a></div></div>
           </div>
         </div>
       </div>

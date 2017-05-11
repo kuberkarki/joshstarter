@@ -148,14 +148,17 @@ class FrontEndController extends JoshController
                 if(Session::get('bookData'))
                    return Redirect::intended('ads/book');
 
+               
+
                 if(Sentinel::inRole('event-organizer'))
-                    return Redirect::route("my-account-event-organizer")->with('success', Lang::get('auth/message.login.success'));
+                    return redirect()->intended('my-account-event-organizer')->with('success', Lang::get('auth/message.login.success'));
+                    //return Redirect::route("my-account-event-organizer")->with('success', Lang::get('auth/message.login.success'));
                 elseif(Sentinel::inRole('freelancer'))
-                    return Redirect::route("my-account-freelancer")->with('success', Lang::get('auth/message.login.success'));
+                    return redirect()->intended("my-account-freelancer")->with('success', Lang::get('auth/message.login.success'));
                 elseif(Sentinel::inRole('business'))
-                    return Redirect::route("my-account-business")->with('success', Lang::get('auth/message.login.success'));
+                    return redirect()->intended("my-account-business")->with('success', Lang::get('auth/message.login.success'));
                 else
-                    return Redirect::route("my-account")->with('success', Lang::get('auth/message.login.success'));
+                    return redirect()->intended("my-account")->with('success', Lang::get('auth/message.login.success'));
             } else {
                 return Redirect::to('login')->with('error', 'Username or password is incorrect.');
                 //return Redirect::back()->withInput()->withErrors($validator);

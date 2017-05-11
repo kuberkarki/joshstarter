@@ -515,7 +515,7 @@
                         @endif
                         @if($owner->pic)
 
-                            <img src="{!! url('/').'/thumbnail2/'.$owner->pic !!}" alt="profile pic" class="img-responsive"><br/>
+                            <img src="{!! url('/').'/user_circularthumb/'.$owner->pic !!}" alt="profile pic" class="img-responsive"><br/>
                         @else
                             <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic"><br/>
                         @endif

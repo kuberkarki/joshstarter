@@ -120,7 +120,7 @@ class EventsController extends Controller {
 		
 
 
-		 //dd($is_owner);
+		 //dd($owner);
 
         
         // Show the page

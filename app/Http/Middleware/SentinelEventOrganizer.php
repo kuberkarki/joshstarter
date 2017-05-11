@@ -18,10 +18,14 @@ class SentinelEventOrganizer
     public function handle($request, Closure $next)
     {
         if (!Sentinel::check()) {
-            return Redirect::route('login');
+            //return Redirect::route('login');
+            return redirect()->guest('login');
+
         }
-        if(!Sentinel::inRole('event-organizer'))
-                 return Redirect::route('login');
+        /*if(!Sentinel::inRole('event-organizer'))
+            return redirect()->guest('login')->with('error', 'Not Event organizer');;
+*/
+                // return Redirect::route('login');
         return $next($request);
     }
 }
