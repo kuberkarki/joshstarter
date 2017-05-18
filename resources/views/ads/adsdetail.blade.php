@@ -164,7 +164,7 @@
          </div>
          <div class="col-sm-4">
             <div class="leftContent">
-            <div class="eventLogoWrap"><div class="eventlogo">Logo</div></div>
+            <div class="eventLogoWrap"><div class="eventlogo"><img class="img-responsive img-circle" src="{{url('user_circularthumb',$owner->pic)}}"/></div></div>
                <div class="leftList">
                   <h3>Business Owner</h3>
                   @if($owner->company_name)
@@ -175,7 +175,7 @@
                   {{$owner->name}}
                   @endif
                   @if($owner->pic)
-                  <img src="{!! url('/').'/thumbnail2/'.$owner->pic !!}" alt="profile pic" class="img-responsive">
+                  <img src="{!! url('/').'/user_circularthumb/'.$owner->pic !!}" alt="profile pic" class="img-responsive">
                   @else
                   <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic">
                   @endif

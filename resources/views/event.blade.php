@@ -364,7 +364,7 @@
   <!-- Comment Section --> 
 
 
-                @if(isset($user))
+                @if(isset($user) && 1==2)
                 <div class="reviewSection">
                     <div class="headingCustomerPara">Reviews( {!! count($event->reviews()->get()) !!} )</div>
                       <ul class="media-list">
@@ -424,6 +424,7 @@
 
               @endif
                 <!-- Media left section start -->
+                 @if(isset($review_enable))
                 <h3 class="comments">{{$event->comments->count()}} Comments</h3><br />
                 <ul class="media-list">
                     @foreach($event->comments as $comment)
@@ -442,6 +443,7 @@
 
 
                 <!-- Review Section -->
+               
                 <div class="reviewSectionInner">
                 <div class="row">
                 <h3 class="reviewTitle">Reviews (1)</h3>
@@ -487,6 +489,7 @@
                     </button>
                 </div>
                 {!! Form::close() !!}
+                @endif
                 <!-- //Comment Section End -->
                 <!-- /the.box .no-border -->
                 <!-- Media left section start -->
