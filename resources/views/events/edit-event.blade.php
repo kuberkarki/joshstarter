@@ -94,8 +94,13 @@
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 150px;">
                                             
-                                                <img src="http://placehold.it/200x150" alt="..."
-                                                     class="img-responsive"/>
+                                                @if(isset($event->photo) && $event->photo !='')
+                                        <img src="{{ URL::to('/uploads/crudfiles/'.$event->photo)  }}" alt="..."
+                                             class="img-responsive"/>
+                                    @else
+                                    <img src="http://placehold.it/200x150" alt="..."
+                                             class="img-responsive"/>
+                                    @endif
                                            
                                         </div>
                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
