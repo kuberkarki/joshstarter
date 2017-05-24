@@ -791,7 +791,11 @@ class AdsController extends Controller {
 					}
         		}
 
-                $ad->update($request->except('photo_image','mytext','myprice','myguest'));
+        		//dd($request); 
+
+                $ad->update($request->except('photo_image','mytext','myprice','myguest','services','serviceprice'));
+
+                //dd('test');
 
 
              if(count($photos) && $request['mytext'][0]){
