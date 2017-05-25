@@ -848,9 +848,15 @@ class AdsController extends Controller {
 
 		$ad = Ad::where('slug',$slug)->first();
 		$ads_category=Ads_category::lists('name','id');
+		$reviewable=false;
 		if(Sentinel::check()){
 				$user=Sentinel::getUser();
 				$reviewed=$ad->reviews()->where('author_id',$user->id)->where('reviewable_id',$ad->id)->first();
+
+				$chk=Booking::where('user_id',$user->id)->where('ads_id',$ad->id)->first();
+				if($chk){
+					$reviewable=true;
+				}
 			}
 		$ad->view();
 			if(!isset($reviewed))
@@ -875,7 +881,7 @@ class AdsController extends Controller {
 		//echo count($users);exit;
 
 		
-		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject','share','owner','otherads'));
+		return view('ads.adsdetail', compact('ad','ads_category','reviewed','users','subject','share','owner','otherads','reviewable'));
 	}
 
 		/**

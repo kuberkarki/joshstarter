@@ -111,6 +111,7 @@
                     <div class="col-sm-6"><span class="publish"><a href="#"> Publish</a></span></div>
                   </div>
                   </div> -->
+             
                <div class="reviewSection">
                   <div class="headingCustomerPara">Reviews( {!! count($ad->reviews()->get()) !!} )</div>
                   <ul class="media-list">
@@ -132,6 +133,7 @@
                      </div>
                      @endforeach
                   </ul>
+                   @if($reviewable)
                   @if(!$reviewed)
                   <h3>Leave a Review</h3>
                   {!! Form::open(array('url' => URL::to('submit-review'), 'method' => 'post', 'class' => 'bf', 'id'=>'frmreview' ,'files'=> true)) !!}
@@ -159,7 +161,9 @@
                      </button>
                   </div>
                   {!! Form::close() !!}
+                   @endif
                </div>
+              
             </div>
          </div>
          <div class="col-sm-4">
