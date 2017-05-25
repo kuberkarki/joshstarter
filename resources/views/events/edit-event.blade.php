@@ -76,9 +76,19 @@
                     </div> 
 
                     <div class="form-group">
-                        {!! Form::label('date', 'Date: ') !!}
+                        {!! Form::label('date', 'Start Date: ') !!}
                         <div class='input-group date' >
                             <input type='text' value="{!! $event->date !!}" name="date" class="form-control" id='datetimepicker1' />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('enddatetime', 'End Date: ') !!}
+                        <div class='input-group date' >
+                            <input type='text' value="{!! $event->enddatetime !!}" name="enddatetime" class="form-control" id='datetimepicker2' />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -225,6 +235,11 @@
       });
 
       $('#datetimepicker1').datetimepicker({
+           // dateFormat: 'dd-mm-yy',
+           format:'YYYY-MM-DD HH:mm:ss'
+           // minDate: getFormattedDate(new Date())
+        });
+      $('#datetimepicker2').datetimepicker({
            // dateFormat: 'dd-mm-yy',
            format:'YYYY-MM-DD HH:mm:ss'
            // minDate: getFormattedDate(new Date())

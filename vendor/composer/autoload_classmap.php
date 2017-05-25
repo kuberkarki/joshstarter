@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddDurationTousersTable' => $baseDir . '/database/migrations/2016_09_01_184618_addDurationTousersTable.php',
+    'AddEnddatetimeToEventsTable' => $baseDir . '/database/migrations/2017_05_25_101443_add_enddatetime_to_events_table.php',
     'AddEventIdAndQuantityToBookingsTable' => $baseDir . '/database/migrations/2017_02_15_164208_add_event_id_and_quantity_to_bookings_table.php',
     'AddExtraFieldsTousersTable' => $baseDir . '/database/migrations/2016_09_01_170204_addExtraFieldsTousersTable.php',
     'AddFeildsToAds' => $baseDir . '/database/migrations/2016_09_02_172822_addFeildsToAds.php',
