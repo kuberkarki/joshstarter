@@ -46,16 +46,26 @@ My Ads
                     <td>
                         <div class="row">
                           @if($ad->photo)
-                             <div class="col-sm-6"><img src="{{ URL::to('thumbnail/'.$ad->photo)  }}" class="img-responsive" alt="Image"></div>
+                            <div class="col-sm-3"><img src="{{ URL::to('thumbnail/'.$ad->photo)  }}" class="img-responsive" alt="Image"></div>
                         @else
-                        <div class="col-sm-6"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
-                            @endif
-                          <div class="col-sm-6">
+                          <div class="col-sm-3"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
+                        @endif
+                          <div class="col-sm-3">
                             <ul class="ratingAds">
                             <li>{{$ad->title}}</li>
                              
                             </ul>
                            <a href="{{ route('manage-ads',$ad) }}" class="manage">Manage Booking</a>
+                          </div>
+                          <div class="col-sm-4">
+                            {!!$calendar[$ad->id]!!}
+                          </div>
+                          <div class="col-sm-2">
+                          <span style="display: inline-block;width:10px;height:20px;background-color:#00ff00;"></span>&nbsp;Booked<br/>
+                            <span style="display: inline-block;width:10px;height:20px;background-color:#ff0000;"></span>&nbsp;Blocked<br/>
+                            <span style="display: inline-block;width:10px;height:20px;background-color:none;"></span>&nbsp;Available
+                            
+                          </ul>
                           </div>
                         </div>
                     </td>
