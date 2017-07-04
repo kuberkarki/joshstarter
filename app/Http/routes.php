@@ -255,6 +255,9 @@ Route::get('currency/{currency}', function ($currency) {
     Route::group(array('middleware' => 'SentinelUser'), function () {
         Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
         Route::get('booking-management', array('as' => 'booking-management', 'uses' => 'AdsController@bookingmanagement'));
+        Route::get('bookings-detail/{id}/{date}', array('as' => 'bookings-detail', 'uses' => 'AdsController@bookingdetail'));
+
+        Route::get('booking-management/{id}/load-{action}','AdsController@loadModal');
         Route::get('reviews-management', array('as' => 'reviews-management', 'uses' => 'AdsController@reviewsmanagement'));
         Route::get('events-reviews-management', array('as' => 'events-reviews-management', 'uses' => 'EventsController@reviewsmanagement'));
 

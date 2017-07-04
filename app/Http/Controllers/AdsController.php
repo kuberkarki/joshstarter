@@ -719,6 +719,25 @@ class AdsController extends Controller {
 		return view('ads.manage', compact('ad','bookings','user'));
 	}
 
+	public function bookingdetail($id,$date,Request $request){
+		
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+
+		$ad = Ad::where('id',$id)->where('user_id',$user->id)->first();
+		//dd($ad);
+
+		if(!$ad)
+			return redirect('ads')->with('error','Error');
+
+		$bookings=Booking::where('ads_id',$id)->where('book_date',$date)->orderBy('book_date','DESC')->with('user')->get();
+
+		
+
+		return view('ads.bookingdetail', compact('ad','bookings','user','date'));
+	}
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -1183,12 +1202,13 @@ function draw_calendar($month,$year,$id){
 			//$currentday=Carbon::parse(Carbon::createFromFormat('Y-m-d',$youttimestring));
 			if($booking->contains('book_date', $youttimestring)){
 				if($booking->contains('user_id',$user->id))
-					$calendar.= '<div class="day-number blocked"><a href="#">'.$list_day.'</a></div>';
+					$calendar.= '<div class="day-number blocked"><a href="{{url(\"bookings-detail\",$id,$youttimestring)}}"   data-id="{{ $id  }}" data-toggle="modal" data-target="#myModal">'.$list_day.'</a></div>';
 				else
-				$calendar.= '<div class="day-number booked"><a href="#">'.$list_day.'</a></div>';
+				$calendar.= '<div class="day-number booked" ><a href="{{url(\"bookings-detail\",$id,$youttimestring)}}">'.$list_day.'</a></div>';
 			}
 			else
-				$calendar.= '<div class="day-number"><a href="#">'.$list_day.'</a></div>';
+				$calendar.= '<div class="day-number"><a href="'.url('bookings-detail',array($id,$youttimestring)).'" data-post="data-php" data-action="empty"  data-id="{{ $id  }}"  >'.$list_day.'</a></div>';
+			
 
 			/** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
 			$calendar.= str_repeat('<p> </p>',2);
@@ -1221,5 +1241,14 @@ function draw_calendar($month,$year,$id){
 	/* all done, return result */
 	return $calendar;
 }
+
+ public function loadModal($id, $action)
+    {
+       //return view for specified action
+       //if action is delete, call this view, etc...
+        //return View::make('ads.modal_'.$action)->render();
+        $id=$id;
+        return view('ads.modal_'.$action,compact('id'));
+    }
 
 }

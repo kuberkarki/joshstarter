@@ -91,35 +91,20 @@ My Ads
     </div>
 </section>
 
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
-      </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content load_modal">
           <div class="modal-body">
-          <div class="form-group">
-        <input class="form-control " type="text" placeholder="test">
+          <em>Loading...</em>?
+         </div>
+         <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_close">Close</button>
+
+         </div>
         </div>
-        <div class="form-group">
-        
-        <input class="form-control " type="text" placeholder="test">
-        </div>
-        <div class="form-group">
-        <textarea rows="2" class="form-control" placeholder="test"></textarea>
-    
-        
-        </div>
-      </div>
-          <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
     </div>
+</div>
+
     
 @stop
 
@@ -129,11 +114,44 @@ My Ads
 @section('footer_scripts')
 <script src="{{ asset('assets/js/eventday/stars.js') }}" type="text/javascript"></script>
 <script>
+ var base_url="{{route('booking-management')}}"+"/";
+
 $(function() {
+  
+$('.openmodal').on('click', function(ev){
+
+    var this_id = $(this).attr('data-id');
+    var this_action = $(this).attr('data-action');
+
+  
+   
+        $.get( base_url + this_id + '/load-' + this_action, function( data ) {
+            $('#myModal').modal();
+            $('#myModal').on('shown.bs.modal', function(){
+                $('#myModal .load_modal').html(data);
+            });
+            $('#myModal').on('hidden.bs.modal', function(){
+                $('#myModal .modal-body').data('');
+            });
+        });
+
+
+
+
+    
+});
   return $(".starrr").starrr();
 });
 $('#delete').on('show.bs.modal', function(e) {
     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 });
+
+
+
+
+/*$("#myModal").on("show.bs.modal", function(e) {
+    var link = $(e.relatedTarget);
+    $(this).find(".modal-body").load(link.attr("href"));
+});*/
 </script>
 @stop
