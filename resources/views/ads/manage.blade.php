@@ -44,7 +44,20 @@ My Ads
         <div class="col-sm-12">
         &nbsp;
         </div>
+        <div class="col-sm-12">
+        <div class="col-sm-4">
+            {!!$calendar!!}
+          </div>
+          <div class="col-sm-2">
+              <span style="display: inline-block;width:10px;height:20px;background-color:#00ff00;"></span>&nbsp;Booked<br/>
+                <span style="display: inline-block;width:10px;height:20px;background-color:#ff0000;"></span>&nbsp;Blocked<br/>
+                <span style="display: inline-block;width:10px;height:20px;background-color:none;"></span>&nbsp;Available
+                
+              
+          </div>
+        </div>
         <div  class="col-sm-12">
+
 
           <ul>
 
@@ -112,6 +125,7 @@ My Ads
          
          {{Form::close()}}
       </div>
+
     </div>
   </div>
 </section>

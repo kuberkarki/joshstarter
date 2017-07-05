@@ -24,7 +24,7 @@ My Ads
   <div class="contantWrapper innercontantWrapper">
     <div class="container">
       <div class="row">
-            <div class="col-sm-12"><h3>Booking Details -> {{ $ad->title }}</h3></div>
+            <div class="col-sm-12"><h3>Booking Details -> <a href="{{url('ads/details',$ad->slug)}}"> {{ $ad->title }}</a></h3></div>
             @include('business.usermenu')
            
             <div class="col-sm-9">
@@ -34,16 +34,68 @@ My Ads
             
       </div>
       <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-12">
+
+
           Date: {{$date}}
-          @if(isset($bookings->user))
-            user:{{dd($bookings->user)}}
-          @endif
-          @if(isset($bookings->book_date))
-            Bookings:{{dd($bookings)}}
+
+          @if(isset($bookings))
+          
+            @if($bookings->user->id==$user->id)
+              <h3 class="alert alert-danger">Blocked</h3>
+            @elseif(isset($bookings->book_date))
+              <h3>Booked By</h3>
+
+              <table>
+                <tr>
+                  <td>Name:</td>
+                  <td>{{$bookings->user->first_name.' '.$bookings->user->last_name}}
+                  
+                </tr>
+              </table>
+
+              
+            
+              <h3>Bookings</h3>
+                 <table>
+                <tr>
+                  <td>Price:</td>
+                  <td>{{$bookings->price==0?'Free':$bookings->price}}</td>
+
+                  
+                </tr>
+                <tr>
+                  <td>Quantity:</td>
+                  <td>{{$bookings->quantity or 0}}</td>
+                </tr>
+              </table>
+            @else
+              <h3>No Booking Registered</h3>
+              {{Form::open(array('url' => url('ads/block'),'id'=>'frmbook'))}}
+              <input type="hidden" name="ads" value="{{$ad->id}}" />
+              <input  name="date" value="{{$date}}" /><input type="submit" value="Block this date"/>
+              {{Form::close()}}
+            @endif
           @else
-            No Booking Registered
+              <h3>No Bookings Registered</h3>
+              {{Form::open(array('url' => url('ads/block'),'id'=>'frmbook'))}}
+              <input type="hidden" name="ads" value="{{$ad->id}}" />
+              <input type="hidden"  name="date" value="{{$date}}" /><input type="submit" value="Block this date"/>
+              {{Form::close()}}
           @endif
+
+          <h3>More Bookings for this Ads</h3>
+
+          <div class="col-sm-4">
+            {!!$calendar!!}
+          </div>
+          <div class="col-sm-2">
+              <span style="display: inline-block;width:10px;height:20px;background-color:#00ff00;"></span>&nbsp;Booked<br/>
+                <span style="display: inline-block;width:10px;height:20px;background-color:#ff0000;"></span>&nbsp;Blocked<br/>
+                <span style="display: inline-block;width:10px;height:20px;background-color:none;"></span>&nbsp;Available
+                
+              
+          </div>
         </div>
 
         

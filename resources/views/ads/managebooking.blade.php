@@ -65,7 +65,7 @@ My Ads
                             <span style="display: inline-block;width:10px;height:20px;background-color:#ff0000;"></span>&nbsp;Blocked<br/>
                             <span style="display: inline-block;width:10px;height:20px;background-color:none;"></span>&nbsp;Available
                             
-                          </ul>
+                          
                           </div>
                         </div>
                     </td>

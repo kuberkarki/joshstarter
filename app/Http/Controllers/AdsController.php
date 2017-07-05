@@ -364,7 +364,7 @@ class AdsController extends Controller {
 		$ad=Ad::find($id)->where('user_id',Sentinel::getUser()->id);
 
 		if(!$ad){
-			return redirect()->route('manage-ads',$id)->with('error', 'Ads Can\'t be blocked');
+			return redirect()->route('bookings-detail',array($id,$dates))->with('error', 'Ads Can\'t be blocked');
 		}
 
 		$booking=Booking::where('book_date',$dates)->where('ads_id',$id)->first();
@@ -372,7 +372,7 @@ class AdsController extends Controller {
 		
 
 		if($booking){
-			return redirect()->route('manage-ads',$id)->with('error', 'Ads Already Blocked or Booked');
+			return redirect()->route('bookings-detail',array($id,$dates))->with('error', 'Ads Already Blocked or Booked');
 		}
 
 
@@ -384,7 +384,7 @@ class AdsController extends Controller {
 			$booking->save();
 		
 
-		return redirect()->route('manage-ads',$id)->with('success', 'Successfully Blocked');
+		return redirect()->route('bookings-detail',array($id,$dates))->with('success', 'Successfully Blocked');
 		
 
 	}
@@ -714,9 +714,11 @@ class AdsController extends Controller {
 
 		$bookings=Booking::where('ads_id',$id)->groupBy('book_date')->orderBy('book_date','DESC')->with('user')->get();
 
+		$calendar=$this->draw_calendar(date('m'),date('Y'),$ad->id);
+
 		
 
-		return view('ads.manage', compact('ad','bookings','user'));
+		return view('ads.manage', compact('ad','bookings','user','calendar'));
 	}
 
 	public function bookingdetail($id,$date,Request $request){
@@ -731,11 +733,12 @@ class AdsController extends Controller {
 		if(!$ad)
 			return redirect('ads')->with('error','Error');
 
-		$bookings=Booking::where('ads_id',$id)->where('book_date',$date)->orderBy('book_date','DESC')->with('user')->get();
+		$bookings=Booking::where('ads_id',$id)->where('book_date',$date)->orderBy('book_date','DESC')->with('user')->first();
+		$calendar=$this->draw_calendar(date('m'),date('Y'),$ad->id);
 
 		
 
-		return view('ads.bookingdetail', compact('ad','bookings','user','date'));
+		return view('ads.bookingdetail', compact('ad','bookings','user','date','calendar'));
 	}
 
 	/**
@@ -1202,9 +1205,9 @@ function draw_calendar($month,$year,$id){
 			//$currentday=Carbon::parse(Carbon::createFromFormat('Y-m-d',$youttimestring));
 			if($booking->contains('book_date', $youttimestring)){
 				if($booking->contains('user_id',$user->id))
-					$calendar.= '<div class="day-number blocked"><a href="{{url(\"bookings-detail\",$id,$youttimestring)}}"   data-id="{{ $id  }}" data-toggle="modal" data-target="#myModal">'.$list_day.'</a></div>';
+					$calendar.= '<div class="day-number blocked"><a href="'.url('bookings-detail',array($id,$youttimestring)).'"   data-id="{{ $id  }}">'.$list_day.'</a></div>';
 				else
-				$calendar.= '<div class="day-number booked" ><a href="{{url(\"bookings-detail\",$id,$youttimestring)}}">'.$list_day.'</a></div>';
+				$calendar.= '<div class="day-number booked" ><a href="'.url('bookings-detail',array($id,$youttimestring)).'">'.$list_day.'</a></div>';
 			}
 			else
 				$calendar.= '<div class="day-number"><a href="'.url('bookings-detail',array($id,$youttimestring)).'" data-post="data-php" data-action="empty"  data-id="{{ $id  }}"  >'.$list_day.'</a></div>';
