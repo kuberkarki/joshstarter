@@ -392,6 +392,8 @@ Route::get('currency/{currency}', function ($currency) {
         });
 
         Route::get('withdrawl', array('as' => 'withdrawl','uses' => 'AdsController@getWithdrawlReqest'));
+        Route::post('approvewithdrawl', array('as' => 'approvewithdrawl','uses' => 'AdsController@approvewithdrawl'));
+        Route::post('disapprovewithdrawl', array('as' => 'disapprovewithdrawl','uses' => 'AdsController@disapprovewithdrawl'));
 
 
         //tasks section

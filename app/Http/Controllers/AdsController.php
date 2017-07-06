@@ -563,6 +563,36 @@ class AdsController extends Controller {
 
 	}
 
+	public function approvewithdrawl(Request $request){
+
+		$id=$request->get('id');
+
+		$withdrawl=Withdrawl::find($id);
+		$withdrawl->approved=1;
+		$withdrawl->remarks=$request->get('comment');
+		$withdrawl->save();
+		return redirect('admin/withdrawl')->with('success', 'Withdrawl Request approved');
+
+
+
+	}
+
+	public function disapprovewithdrawl(Request $request){
+
+		$id=$request->get('id');
+
+		$withdrawl=Withdrawl::find($id);
+		$withdrawl->approved=0;
+		$withdrawl->remarks=$request->get('comment');
+		$withdrawl->save();
+		return redirect('admin/withdrawl')->with('success', 'Withdrawl Request disapproved');
+
+
+
+	}
+
+
+
 	public function getWithdrawlReqest(){
 		$withdrawls=Withdrawl::where('approved',0)->with('user')->get();
 		//$user=User::find($withdrawls->user_id);
