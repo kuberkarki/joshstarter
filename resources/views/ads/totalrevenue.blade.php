@@ -32,6 +32,36 @@ My Ads
       
 </div>
 <div class="row">
+  <div class="table-responsive">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9">
+        <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+            <tr>
+              <td>Total Earnings</td>
+              <td>Withdrawls</td>
+              <td>Expenses</td>
+              <td>Pending Clearance</td>
+              <td>Available Balance</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${{$total_earnings}}</td>
+              <td>${{$withdrawl_total}}</td>
+              <td>${{$expenses}}</td>
+              <td>${{$pending_clearence}}</td>
+              <td>${{$available_balance}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="#" class="link withdraw" data-toggle="modal" data-target="#myModal">Withdraw amount</a>
+
+      </div>
+    </div>
+  </div>
     <div class="table-responsive">
         <table id="mytable" class="table table-bordred table-striped">
             <thead>
@@ -51,45 +81,32 @@ My Ads
                         <div class="col-sm-3"><img width="231" src="{{ asset('assets/images/eventday/adspic.jpg') }}" class="img-responsive"></div>
                             @endif
                           <div class="col-sm-9">
-                            <ul class="ratingAds">
-                            <li>{{$ad->title}}</li>
-                            <li>Total bookings: {{ count($ad->booking) }}</li>
-                            <li>Total Amount:
+                          <h3><a href="{{url('details',$ad->slug)}}"> {{$ad->title}}</a></h3>
+                            
                             <?php 
                               $price=0;
                             foreach($ad->booking as $book){
                                 $price += $book->price;
                                 
                             }
-                            echo $price;
+                            //echo "$".$price;
                             ?>
-                             </li>
                              
-                            </ul>
 
 
                            <a href="{{ route('manage-ads',$ad) }}" class="manage">View Bookings</a>
                            <table class="table table-bordred">
-                            <tr><th>Total Earn</th><th>Withdrawls</th><th>Use to Order</th><th>Pending Clearance</th><th>Available Balance</th></tr>
+                            <tr><th>Total Booking</th><th>Total Earning</th></tr>
                             <tr>
+                              <td>{{ count($ad->booking) }}</td>
                               <td>{{$price}}</td>
-                              <td>0</td>
-                              <td>0</td>
-                              <td>{{$price}}</td>
-                              <td>{{$price}}</td>
+                              
                               
                              
                             </tr>
                            </table>
 
-                            <table class="table table-bordred">
-                            <tr><th>Withdraw</th><th>Paypal</th><th>Banktransfer</th></tr>
-                            <tr>
-                              <td>{{$price}}</td>
-                              <td>0</td>
-                              <td>0</td>
-                            </tr>
-                           </table>
+                            
                           </div>
                         </div>
                     </td>
@@ -108,35 +125,58 @@ My Ads
     </div>
 </section>
 
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content load_modal">
           <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
-      </div>
+              <button type="button" class="close" 
+                 data-dismiss="modal">
+                     <span aria-hidden="true">&times;</span>
+                     <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">
+                  Withdrawl Request
+              </h4>
+          </div>
           <div class="modal-body">
-          <div class="form-group">
-        <input class="form-control " type="text" placeholder="test">
+                <form action="{{ url('withdrawrequest') }}" class="form-horizontal" role="form" method="post">
+                {!! csrf_field() !!}
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label"
+                              for="inputEmail3">Payment Type</label>
+                    <div class="col-sm-10">
+                        <select name="type" class="form-control">
+                          <option value="paypal">Paypal</option>
+                          <option value="banktransfer">Bank Transfer</option>
+                        </select>
+
+                        
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                          for="inputPassword3" >Amount</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="amount" class="form-control"
+                            id="amount" placeholder="Amount"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                  </div>
+
+                  </form>
+                        
+         </div>
+         <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_close">Close</button> -->
+
+         </div>
         </div>
-        <div class="form-group">
-        
-        <input class="form-control " type="text" placeholder="test">
-        </div>
-        <div class="form-group">
-        <textarea rows="2" class="form-control" placeholder="test"></textarea>
-    
-        
-        </div>
-      </div>
-          <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
     </div>
+</div>
     
 @stop
 

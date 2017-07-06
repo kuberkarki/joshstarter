@@ -47,11 +47,11 @@ View User Details
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             Change Password</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{ URL::to('admin/user_profile') }}" >
                             <i class="livicon" data-name="gift" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             Advanced User Profile</a>
-                    </li>
+                    </li> -->
 
                 </ul>
                 <div  class="tab-content mar-top">
@@ -72,8 +72,15 @@ View User Details
                                                 @if($user->pic)
                                                     <img src="{!! url('/').'/uploads/users/'.$user->pic !!}" alt="profile pic" class="img-max">
                                                 @else
-                                                    <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic">
+                                                    <img src="{{ asset('assets/images/eventday/news1.jpg') }}" alt="profile pic">
                                                 @endif
+                                            </div>
+                                            <div>
+                                                <ul>
+                                                    <li>Total Earnings:${{$total_earnings}}</li>
+                                                    <li>Total Withdrawl:${{$withdrawl_total}}</li>
+                                                    <li>Available Balance:${{$total_earnings-$withdrawl_total}}</li>
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-8">

@@ -208,7 +208,24 @@
                 Add New Testimonial
             </a>
         </li>
+
+
+    
+        
     </ul>
+    <li {!! (Request::is('admin/withdrawl') || Request::is('admin/withdrawl/create') || Request::is('admin/withdrawl/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+        <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+        <span class="title">Withdrawl</span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li {!! (Request::is('admin/withdrawl') ? 'class="active" id="active"' : '') !!}>
+            <a href="{{ URL::to('admin/withdrawl') }}">
+                <i class="fa fa-angle-double-right"></i>
+                Withdrawl Request
+            </a>
+        </li>
 <!-- </li><li {!! (Request::is('admin/event_anouncements') || Request::is('admin/event_anouncements/create') || Request::is('admin/event_anouncements/*') ? 'class="active"' : '') !!}>
     <a href="#">
         <i class="livicon" data-name="list-ul" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>

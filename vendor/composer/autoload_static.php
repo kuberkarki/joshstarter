@@ -635,6 +635,7 @@ class ComposerStaticInit37208bcd8d7a4266d475cadf21c3e7d1
         'CreateTestimonialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_07_091935_create_testimonials_table.php',
         'CreateThreadsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_28_175635_create_threads_table.php',
         'CreateUserCounterTable' => __DIR__ . '/../..' . '/database/migrations/2015_02_15_080328_create_user_counter_table.php',
+        'CreateWithdrawlsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_06_093236_create_withdrawls_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',

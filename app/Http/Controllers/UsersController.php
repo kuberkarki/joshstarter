@@ -390,6 +390,27 @@ class UsersController extends JoshController
             // Get the user information
             $user = Sentinel::findUserById($id);
 
+            $ads = \App\Ad::where('user_id',$user->id)->with('booking')->get();
+        //$ads_category = Ads_category::lists('name', 'id');
+        $total_earnings=$withdrawl_total=0;
+        
+        foreach($ads as $ad){
+            foreach($ad->booking as $book){
+                                $total_earnings += $book->price;
+                                
+                            }
+        }
+        $withdrawls=\App\Withdrawl::where('user_id',$user->id)->where('approved',1)->get();
+
+        foreach($withdrawls as $withdrawl){
+            $withdrawl_total +=$withdrawl->amount;
+        }
+        //$total_earnings=20000;
+        //$withdrawls=5000;
+        $expenses=0;
+        $pending_clearence=$total_earnings-$withdrawl_total;
+        $available_balance=$pending_clearence-$expenses;
+
             //get country name
             if ($user->country) {
                 $user->country = $this->countries[$user->country];
@@ -404,7 +425,7 @@ class UsersController extends JoshController
         }
 
         // Show the page
-        return View('admin.users.show', compact('user'));
+        return View('admin.users.show', compact('user','total_earnings','withdrawl_total'));
 
     }
 

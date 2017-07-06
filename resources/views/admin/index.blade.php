@@ -24,7 +24,7 @@
 @section('content')
 
     <section class="content-header">
-        <h1>Welcome to Dashboard</h1>
+        <h1>Welcome to Admin</h1>
         <ol class="breadcrumb">
             <li class="active">
                 <a href="#">
@@ -39,7 +39,7 @@
         
         
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
+           <?php /* <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="panel panel-border">
                     <div class="panel-heading border-light">
                         <h4 class="panel-title">
@@ -124,6 +124,7 @@
                     </div>
                 </div>
             </div>
+            */ ?>
         </div>
        
         <div class="clearfix"></div>

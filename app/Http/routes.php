@@ -256,6 +256,7 @@ Route::get('currency/{currency}', function ($currency) {
         Route::get('my-events', array('as' => 'my-events', 'uses' => 'EventsController@myevents'));
         Route::get('booking-management', array('as' => 'booking-management', 'uses' => 'AdsController@bookingmanagement'));
         Route::get('bookings-detail/{id}/{date}', array('as' => 'bookings-detail', 'uses' => 'AdsController@bookingdetail'));
+        Route::post('withdrawrequest', array('as' => 'withdrawrequest', 'uses' => 'AdsController@withdrawrequest'));
 
         Route::get('booking-management/{id}/load-{action}','AdsController@loadModal');
         Route::get('reviews-management', array('as' => 'reviews-management', 'uses' => 'AdsController@reviewsmanagement'));
@@ -389,6 +390,8 @@ Route::get('currency/{currency}', function ($currency) {
             Route::get('{newscategory}/confirm-delete', array('as' => 'confirm-delete/newscategory', 'uses' => 'NewsCategoryController@getModalDelete'));
             Route::get('{newscategory}/restore', array('as' => 'restore/newscategory', 'uses' => 'NewsCategoryController@getRestore'));
         });
+
+        Route::get('withdrawl', array('as' => 'withdrawl','uses' => 'AdsController@getWithdrawlReqest'));
 
 
         //tasks section

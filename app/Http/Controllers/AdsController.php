@@ -23,6 +23,7 @@ use Session;
 use DB;
 use App\Event;
 use Helper;
+use App\Withdrawl;
 
 class AdsController extends Controller {
 	private $objFoo;
@@ -486,10 +487,86 @@ class AdsController extends Controller {
 		if(Sentinel::check()){
 			$user=Sentinel::getUser();
 		}
-		$ads = Ad::where('user_id',$user->id)->with('booking')->paginate(15);
+		$ads = Ad::where('user_id',$user->id)->with('booking')->get();
 		//$ads_category = Ads_category::lists('name', 'id');
+		$total_earnings=$withdrawl_total=0;
 		
-		return view('ads.totalrevenue', compact('ads','ads_category'));
+		foreach($ads as $ad){
+			foreach($ad->booking as $book){
+                                $total_earnings += $book->price;
+                                
+                            }
+		}
+		$withdrawls=Withdrawl::where('user_id',$user->id)->where('approved',1)->get();
+
+		foreach($withdrawls as $withdrawl){
+			$withdrawl_total +=$withdrawl->amount;
+		}
+		//$total_earnings=20000;
+		//$withdrawls=5000;
+		$expenses=0;
+		$pending_clearence=$total_earnings-$withdrawl_total;
+		$available_balance=$pending_clearence-$expenses;
+		
+		return view('ads.totalrevenue', compact('ads','ads_category','total_earnings','withdrawl_total','expenses','pending_clearence','available_balance'));
+	}
+
+	public function withdrawrequest(Request $request){
+		if(Sentinel::check()){
+			$user=Sentinel::getUser();
+		}
+		$ads = Ad::where('user_id',$user->id)->with('booking')->get();
+		//$ads_category = Ads_category::lists('name', 'id');
+		$total_earnings=$withdrawl_total=0;
+		
+		foreach($ads as $ad){
+			foreach($ad->booking as $book){
+                                $total_earnings += $book->price;
+                                
+                            }
+		}
+		$withdrawls=Withdrawl::where('user_id',$user->id)->where('approved',1)->get();
+
+		foreach($withdrawls as $withdrawl){
+			$withdrawl_total +=$withdrawl->amount;
+		}
+		//$total_earnings=20000;
+		//$withdrawls=5000;
+		$expenses=0;
+		$pending_clearence=$total_earnings-$withdrawl_total;
+		$available_balance=$pending_clearence-$expenses;
+
+		if($request->get('amount')>$available_balance){
+			return redirect('total-revenue')->with('error', 'Try again!! Amount is too high');
+		}
+
+		if($request->get('amount')<100){
+			return redirect('total-revenue')->with('error', 'Try again!! Amount is too low');
+		}
+
+		$withdraw['amount']=$request->get('amount');
+		$withdraw['description']=$request->get('type');
+		$withdraw['date']=date('Y-m-d');
+		$withdraw['user_id']=$user->id;
+		$withdraw['approved']=0;
+
+		$withdraw = new Withdrawl;
+
+        $withdraw->amount = $request->get('amount');
+        $withdraw->description = $request->get('type');
+        $withdraw->date = date('Y-m-d');
+        $withdraw->user_id = $user->id;
+        $withdraw->approved = 0;
+
+        $withdraw->save();
+        return redirect('total-revenue')->with('success', 'Withdrawl Request Sent');
+
+	}
+
+	public function getWithdrawlReqest(){
+		$withdrawls=Withdrawl::where('approved',0)->with('user')->get();
+		//$user=User::find($withdrawls->user_id);
+		return view('admin.withdrawls',compact('withdrawls','user'));
 	}
 
 	
