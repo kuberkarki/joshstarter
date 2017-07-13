@@ -43,6 +43,7 @@ class FrontEndController extends JoshController
         $this->frontarray['OurExpertServices']=Page::where('type','Our Expert Services')->get();
         $this->frontarray['quicklinks']=Page::where('type','quick links')->get();
     }
+    
 
     /*
      * $user_activation set to false makes the user activation via user registered email

@@ -46,7 +46,7 @@ Register
                 <li><a href="{{ route('businessauth.getSocialAuth','twitter') }}">Register with Twitter</a></li>
                 <li><a href="{{ route('businessauth.getSocialAuth','linkedin') }}">Register with Linkedin</a></li>
             </ul>
-        </div>
+            </div>
             <form action="{{ route('register-business') }}" method="POST">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
