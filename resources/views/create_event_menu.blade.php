@@ -49,10 +49,10 @@
                             @endforeach
                         </ul>
                     @endif
-                    <div class="row ">
+                    <div class="row createEventPage">
                         <div class="box">
-                        <div class="box col-md-6 col-sm-6 col-xs-12"><h2><a href="#">I want to Book Event</a></h2></div>
-                        <div class="box col-md-6 col-sm-6 col-xs-12"><h2><a href="{!! route('create-event') !!}">I Want to Create Event</a></h2></div>
+                        <div class="box"><a href="#">I want to Book Event</a></div>
+                        <div class="box"><a href="{!! route('create-event') !!}">I Want to Create Event</a></div>
                         </div>
                         </div>
 

@@ -4,7 +4,7 @@
 .textsmall {
     font-size: 14px;
 }
-.box{
+.textsmall .box{
     background: #ffffff;
     border:1px solid #ddd;
     width:400px;
@@ -13,17 +13,18 @@
     border-bottom:5px solid #bc0034;
     margin:auto;
 }
-.box1{
+.textsmall .box1{
     padding:20px 20px;
 }
-.box img{
+.textsmall .box img{
     margin-top:10px;
     margin-bottom:5px;
     margin:auto;
 }
-.box h3{
+.textsmall .box h3{
     margin-top:0;
 }
+
 input{
     border-radius:0 !important;
 }
@@ -40,7 +41,7 @@ input[type="submit"]{
     padding-top:8px;
     padding-bottom:8px;
 }
-.checkbox label{
+.textsmall .checkbox label{
     padding-left:0;
 }
 

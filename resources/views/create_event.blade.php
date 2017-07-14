@@ -33,6 +33,8 @@
         
         <div class="row">
             <div class="row">
+
+                <div class="col-sm-3"></div>
                 <div class="col-md-6">
                     <!--main content-->
                     <div class="position-center">
@@ -99,7 +101,7 @@
                     <div class="form-group">
                     {!! Form::label('photo', 'Banner or Photo:') !!}
                                 
-                                <div class="col-md-12">
+                                <div class="">
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 150px;">
                                             
@@ -166,7 +168,7 @@
                     <div class="form-group">
                     {!! Form::label('verify', 'Verify: ') !!}
 
-                    {!! captcha_img('captcha') !!} <br/>
+                    <div style="margin-bottom: 10px; display: inline-block;">{!! captcha_img('captcha') !!}</div> <br/>
                      <input type="text" name="captcha" class="form-control">
                      </div>
 
@@ -177,7 +179,7 @@
                     
 
                     <div class="form-group">
-                        <div class=" col-sm-4">
+                        <div class="sendMsg">
                             <!-- <a class="btn btn-danger" href="{{ route('admin.events.index') }}">
                                 @lang('button.cancel')
                             </a> -->
@@ -192,6 +194,9 @@
                 </div>
                     </div>
                 </div>
+
+
+                <div class="col-sm-3"></div>
             </div>
         </div>
     </div>

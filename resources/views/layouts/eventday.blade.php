@@ -37,7 +37,31 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-7"><div class="newsHighlight"><span>News!</span> {{$frontarray['onenews']->title}}</div></div>
-            <div class="col-sm-5"><div class="topLogin"><a href="{!! url('create-event-menu')!!}"> Create an Event</a> | <a href="{{url('ads')}}">List Your Business</a></div></div>
+            <div class="col-sm-5"><div class="topLogin"><a href="#" data-toggle="modal" data-target="#creatEventPageModel"> Create an Event</a> | <a href="{{url('ads')}}">List Your Business</a></div></div>
+
+          <div id="creatEventPageModel" class="modal fade">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content modal-contentCreate">
+                      
+                      <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">x</button>
+                      <h3>Create an Event</h3>
+                    </div>
+                      <div class="modal-body">                      
+                              <div class="row createEventPage">
+                                <ul>
+                                  <li><a href="#">I want to Book Event</a></li>
+                                  <li><a href="{!! route('create-event') !!}">I Want to Create Event</a></li>
+                                </ul>
+                              </div>
+                          
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+          </div>
+
+
+
           </div>
         </div>
       </div>
@@ -510,7 +534,7 @@
                 <li><a href="{{ route('businessauth.getSocialAuth','linkedin') }}">Register with Linkedin</a></li>
             </ul>
             </div>
-            <form action="{{ route('register-business') }}" method="POST">
+            <form action="{{ route('register-business') }}" method="POST" class="modal-contentBusinessForm">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

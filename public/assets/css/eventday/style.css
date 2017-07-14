@@ -317,7 +317,7 @@ section#feat_propty .panel-body { padding-bottom: 0px;}
 .headingCustomerPara{ font-weight: 600;}
 .favBox { margin: 12px 0; }
 .favBox .btn-secondary{border: 1px solid #d5d5d5; padding: 0 40px; color: #bc0034; font-size: 16px; text-align: center; line-height: 40px; 
-    background:#fff; display: inline-block; font-weight: 300;}
+    background:#fff; display: inline-block; font-weight: 300; border-radius: 0;}
 .customerSocial{/*background: #fafafa;*/ padding: 20px; display: inline-block;}
 .customerSocial .fa{ font-size: 30px; padding-right: 10px;}
 .customerSocial a .fa{ color: #737373;}
@@ -879,5 +879,56 @@ time.comment-date {
 /*--------------------CSS for Login--------------------*/
 .textsmall{ margin-top: 30px; margin-bottom: 30px; }
 .flipInX ul{ list-style: none;    padding-left: 0; }
-.flipInX form input[type="submit"]{  margin: 0 auto; background: #ccc; padding-left: 20px; padding-right: 20px; width: inherit; margin-bottom: 6px; }
+.flipInX form input[type="submit"]{  margin: 0 auto; padding-left: 20px; padding-right: 20px; width: inherit; margin-bottom: 6px; }
 .flipInX form img{ padding-bottom: 10px; }
+
+.modal-body{     padding: inherit;}
+.modal-content { height: 600px; overflow-y: auto; padding-bottom: 20px;}
+.modal-content h3{ margin-top: 0; color: #8e063c;}
+.modal-body form,.modal-content form{padding-left: 20px; padding-right: 20px; border-top: 4px solid #ccc; padding-top: 20px;}
+.modal-body img, .modal-content  img{ margin-bottom: 10px;}
+.modal-body input[name="captcha"], .modal-content input[name="captcha"],.panel-body input[name="captcha"]{ width: 200px;}
+.social ul { padding-left: 20px; padding-top: 10px;}
+.social li { list-style: none; display: inline-block; border-right: 1px solid #8e063c; padding-right: 5px; font-size: 14px; line-height: 14px;}
+.social li:last-child{ border-right: 0;}
+.social li a { color: #8e063c; font-weight: 600; font-size: 14px;}
+.social li a:hover{ text-decoration: none;}
+.modal-content .btn{ background: #bc0034; width: auto !important; margin-bottom: 10px; border-radius: 0px; color: white; text-transform: uppercase;}
+.modal-content a{ color: #bc0034;}
+.captcha{ width: 150px; margin-top: 10px;}
+.modal-header .close { color: #bc0034; opacity: inherit; margin-top: -9px; font-size: 25px;}
+.box { padding-top: 10px; display: inline-block; margin-left: 20px; width: 250px;}
+.box h2 { font-size: 16px; line-height: 21px; margin-top: 0; margin-bottom: 0; background: #bc0034; padding: 5px 20px; text-align: center;}
+.box h2 a { color: white;}
+.box h2 a:hover { text-decoration: none;}
+.textsmall .box{ margin: 0 auto;    display: inherit;}
+.textsmall .box a{ color: #bc0034; font-weight: 600;}
+.flipInX ul li { border-bottom: 1px solid #e6e6e6; line-height: 22px;}
+.flipInX ul li a { color: #bc0034; font-weight: normal !important;}
+.flipInX form input[type="submit"]{ background: #bc0034; color: #fff; text-transform: uppercase;}
+.flipInX form input[type="submit"]:hover,.modal-content .btn{    background: #920129;}
+.leftContent .leftList img{ width: 100%;}
+.the-box h3{ color: #bc0034;}
+.eventPoster { font-weight: 600; margin-bottom: 10px; font-size: 14px;}
+.imgPoster { height: 150px;  overflow: hidden;}
+.imgPoster img{ width: 100%;}
+.videoBox{ margin-top: 20px;}
+.discriptionInnerTxt p{ font-size: 14px;}
+.media-list hr{margin-top: 5px;}
+.media-list hr:last-child{ display: none;}
+.eventBannerImg { height: 400px; overflow: hidden;}
+.createEventPage .box{ margin: 0 auto; width: 350px;}
+h4.media-heading a { color: #505050; font-size: 14px; font-weight: 600;}
+.sendMsg .btn, .btn-file > input{padding: 6px 12px; font-size: 14px; background: #bc0034; border-radius: 0px; color: white; text-transform: uppercase; border: none;}
+.modal-contentCreate{  height: inherit; overflow-y: inherit; padding-bottom: inherit;}
+.modal-contentCreate .createEventPage{ margin-right: 20px;}
+.modal-contentCreate .createEventPage ul{ list-style: none; padding-left: 30px; padding-top: 10px;}
+.modal-contentCreate .createEventPage ul li { line-height: 24px; border-bottom: 1px solid #e8e8e8; display: inline; background: #bc0034; color: white;
+ padding: 5px 20px; font-size: 16px; text-align: center;}
+ .modal-contentCreate .createEventPage ul li a { color: white;}
+ .media-list h4{ margin-bottom: 5px; line-height: 10px;}
+.media-list .date{ margin-bottom: 0;}
+.media-list p.small { line-height: 16px; font-size: 14px;}
+@media (max-width: 767px) {
+.createEventPage .box{ width: auto;}
+}

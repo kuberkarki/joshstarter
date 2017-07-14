@@ -107,21 +107,23 @@
                     <div class="the-box no-border event-detail-content">
     
 
-                        <p class="text-justify">
+                        <div class="discriptionInnerTxt">
+                          <p>
                             {!! $event->description !!}
-                        </p>
+                            </p>
+                        </div>
                         @if($event->video_link)
-                        <p class="center" style="text-align: center;">
+                        <div class="center videoBox" style="text-align: center;">
 
                         @if(str_contains($event->video_link, 'vimeo.com'))
                           {!! preg_replace('#http(s)?://(www\.)?(player\.)?vimeo\.com/(video/)?(\d+)#',
-                             "<iframe width=\"420\" height=\"315\" src=\"//player.vimeo.com/video/$5\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+                             "<iframe width=\"100%\" height=\"315\" src=\"//player.vimeo.com/video/$5\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
                              $event->video_link) !!}
                            @endif
                         @if(str_contains($event->video_link, 'youtube.com'))
-                           {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$event->video_link)!!}
+                           {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"100%\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$event->video_link)!!}
                         @endif
-                        </p>
+                        </div>
                         @endif
                         <p>
                         <div class="socialTicket">
@@ -147,7 +149,7 @@
                           </div>
                         </div>
                         </p>
-                        <p class="pull-right">
+                        <p class="pull-right sendMsg">
                             <?php if(isset($user)){?>
                          <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send Message</button> 
                             <?php } else{
@@ -507,8 +509,9 @@
                 <div class="eventLogoWrap"><div class="eventlogo"><img class="img-responsive img-circle" src="{{url('user_circularthumb',$owner->pic)}}"/></div></div>
                     <div class="leftList">
                         <h3>Event Organizer</h3>
-                         @if($owner->company_name)
-                          {{$owner->company_name}}<br/>
+                         <div class="eventPoster">
+                          @if($owner->company_name)
+                          {{$owner->company_name}}
                         
                         @elseif($owner->first_name)
                           {{$owner->first_name." ".$owner->last_name}}<br/>
@@ -516,22 +519,31 @@
                         @elseif($owner->name)
                           {{$owner->name}}<br/>
                         @endif
+                        </div>
+                        <div class="imgPoster">
                         @if($owner->pic)
 
                             <img src="{!! url('/').'/user_circularthumb/'.$owner->pic !!}" alt="profile pic" class="img-responsive"><br/>
                         @else
                             <img src="{{ asset('assets/img/authors/avatar3.jpg') }}" alt="profile pic"><br/>
                         @endif
+                      </div>
+                      <div>
                         @if($owner->bio)
                         <p>{!! $owner->bio !!}</p><br>
                         @endif
+                      </div>
+                      <div>
                          @if($owner->office_phone)
                         <i class="fa fa-phone" aria-hidden="true"></i> {!! $owner->office_phone !!}<br>
                         @endif
+                      </div>
+                      <div>
                         <!-- <i class="fa fa-globe" aria-hidden="true"></i> www.event.com<br> -->
                         @if($owner->address)
                         <i class="fa fa-map-marker" aria-hidden="true"></i> {!! $owner->address !!}<br>
                         @endif
+                      </div>
                         
                       
                   </div>
@@ -539,11 +551,11 @@
               <div class="the-box">
                 <div class="leftList">
                   <h3>Location</h3>
-                  <div id="map" style="width:100%; height:300px;"></div>
+                  <div id="map" style="width:100%; height:150px;"></div>
                 </div>
               </div>
                   <div class="the-box">
-                        <h3 class="small-heading text-center">UPCOMING EVENTS</h3>
+                        <h3 class="small-heading">UPCOMING EVENTS</h3>
                         <ul class="media-list media-xs media-dotted">
                          @foreach($upcomingevents as $uevent)
                             <li class="media">
@@ -560,7 +572,7 @@
                                         <small class="text-danger">{!! date('D, M d, g a ',strtotime($uevent->date)) !!}</small>
                                     </p>
                                     <p class="small">
-                                       {!! str_limit($uevent->description,150, '...') !!}
+                                       {!! str_limit($uevent->description,75, '...') !!}
                                     </p>
                                 </div>
                             </li>
