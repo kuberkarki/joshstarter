@@ -118,7 +118,7 @@ My Ads
             </tbody>
         </table>
         <div class="clearfix"></div>
-        @include('pagination.limit_links', ['paginator' => $ads])
+       
     </div>
     </div>
     </div>
