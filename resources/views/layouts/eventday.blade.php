@@ -37,7 +37,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-7"><div class="newsHighlight"><span>News!</span> {{$frontarray['onenews']->title}}</div></div>
-            <div class="col-sm-5"><div class="topLogin"><a href="#" data-toggle="modal" data-target="#creatEventPageModel"> Create an Event</a> | <a href="{{url('ads')}}">List Your Business</a></div></div>
+            <div class="col-sm-5"><div class="topLogin"><a href="{!! route('create-event') !!}" > Create an Event</a> | <a href="{{url('ads')}}">List Your Business</a></div></div>
 
           <div id="creatEventPageModel" class="modal fade">
               <div class="modal-dialog" role="document">

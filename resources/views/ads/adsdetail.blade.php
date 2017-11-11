@@ -57,11 +57,12 @@
                   <img src="{{ URL::to('/uploads/crudfiles/'.$ad->photo)  }}" class="img-responsive" alt="Image">
                   @endif
                </div>
-               <div class="navPhotoVideo">
-                  <a href="#">Photo</a><a href="#">Video Promo</a>
+               <div class=" navPhotoVideo">
+                 @if(count($ad->photos()->get())) <a href="javascript:void();" id="showphoto">Photo</a>@endif
+                 @if($ad->video)<a href="javascript:void();" id="showvideo">Video Promo</a>@endif
                </div>
                <p>{!! $ad->description !!}</p>
-               <div class="customerGallery" >
+               <div class="photobox customerGallery" >
                   <div id="gallery" >
                      @if(count($ad->photos()))
                      @foreach($ad->photos()->get() as $photo)            
@@ -73,6 +74,20 @@
                      @endif
                   </div>
                </div>
+               @if($ad->video)
+                        <div class="center videoBox" style="text-align: center;">
+
+                        @if(str_contains($ad->video, 'vimeo.com'))
+                          {!! preg_replace('#http(s)?://(www\.)?(player\.)?vimeo\.com/(video/)?(\d+)#',
+                             "<iframe width=\"100%\" height=\"315\" src=\"//player.vimeo.com/video/$5\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+                             $ad->video) !!}
+                           @endif
+                        @if(str_contains($ad->video, 'youtube.com'))
+                           {!!  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"100%\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$ad->video)!!}
+                        @endif
+                        </div>
+                        @endif
+                        
                <div class="socialTicket">
                   <div class="row">
                      <div class="col-sm-6">
@@ -503,6 +518,26 @@
   // http://getbootstrap.com/javascript/#carousel
   $('#carousel123').carousel({ interval: 2000 });
   $('#carouselABC').carousel({ interval: 3600 });
+  $(".videoBox").hide();
+
+
+  $( "#showvideo" ).click(function() {
+    $( ".videoBox" ).toggle( "slow", function() {
+       if($(".photobox").is(":visible")){
+        $(".photobox").hide();
+      }
+      // Animation complete.
+    });
+  });
+
+  $( "#showphoto" ).click(function() {
+  $( ".photobox" ).toggle( "slow", function() {
+      if($(".videoBox").is(":visible")){
+        $(".videoBox").hide();
+      }
+    // Animation complete.
+  });
+});
 }());
 
 (function(){

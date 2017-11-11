@@ -32,7 +32,7 @@ Home
           @foreach($ads_category as $cat)
               <li><a href="{!! url('list-ads',$cat->slug) !!}">{!! $cat->name !!}</a></li>
             @endforeach
-          <li><a href="#">More <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+          <li><a href="{{route('ads-category')}}">More <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
         </ul>
       </div>
       </div>
@@ -131,11 +131,13 @@ Home
             <div class="panel-image">
               <div class="eventPrice">Price: {!! Helper::getPrice($event->ticket_price) !!}</div>
               <div class="eventLogoWrap"><div class="eventlogo"><img class="img-responsive img-circle" src="{{url('user_circularthumb',$event->organizer()->first()->pic)}}"/></div></div>
+              <a href="{{ URL::to('event/'.$event->slug) }}">
                 @if($event->photo)
                 <img class="img-responsive img-hover" src="thumbnail2/{!! $event->photo !!}" alt="">
                 @else
                 <img class="img-responsive img-hover" src="thumbnail2/lfgRuzbVrvzTfc2vwqnJ.jpg" alt="">
                 @endif
+                </a>
 
             
             </div>

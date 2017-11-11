@@ -170,6 +170,18 @@ class AdsController extends Controller {
 	 *
 	 * @return Response
 	 */
+	public function listadscategory(Request $request)
+	{
+		$ads_category=Ads_category::all();
+		return view('ads.listadscategory', compact('ads_category'));
+	}
+
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
 	public function ads($slug=null,Request $request)
 	{
 		$from= $request->get('from');
