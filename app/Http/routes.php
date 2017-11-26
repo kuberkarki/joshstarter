@@ -572,7 +572,7 @@ Route::post('contact', array('as' => 'contact', 'uses' => 'FrontEndController@po
 
      
 
-    Route::get('{name?}', 'JoshController@showFrontEndView');
+   // Route::get('{name?}', 'JoshController@showFrontEndView');
 
 
 # End of frontend views
